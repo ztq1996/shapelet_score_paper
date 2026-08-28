@@ -1,0 +1,25 @@
+# LaTeX build products
+*.aux
+*.log
+*.out
+*.toc
+*.blg
+*.bbl
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.spl
+main.pdf
+
+# Notebook cruft
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Data must never be committed — it lives in ../data/
+*.npz
+*.pq
+*.parquet
+*.pickle
+*.pkl

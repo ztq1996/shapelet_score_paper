@@ -1,0 +1,151 @@
+% ============================================================================
+%  PSF Shapelet Score and Moment Score for the Rubin Observatory
+%  SPIE Astronomical Telescopes + Instrumentation 2026
+%
+%  NOTE: spie.cls and spiebib.bst are NOT in this repo yet. Download the SPIE
+%  author template and place spie.cls + spiebib.bst in this directory before
+%  compiling.  See CLAUDE.md.
+% ============================================================================
+
+\documentclass[]{spie}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\graphicspath{{fig/}}
+
+% ---- Draft comment macros (remove before submission) -----------------------
+\newcommand{\tianqing}[1]{\textcolor{teal}{[TZ: #1]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+% ---- Notation --------------------------------------------------------------
+\newcommand{\sshape}{S_{\rm shapelet}}
+\newcommand{\smom}{S_{\rm moment}}
+\newcommand{\bpq}{b_{pq}}
+\newcommand{\arcsec}{\ensuremath{^{\prime\prime}}}
+
+\title{\todo{title}}
+
+\author[a]{Tianqing Zhang}
+\affil[a]{\todo{affiliation}}
+
+\authorinfo{Send correspondence to T. Zhang: \todo{email}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\todo{abstract: 150--250 words. Problem (second-moment metrics are
+atmosphere-dominated and blind to optical asymmetry) $\rightarrow$ the two scores
+$\rightarrow$ dataset and scale $\rightarrow$ headline quantitative results
+$\rightarrow$ application as an observatory monitor.}
+\end{abstract}
+
+\keywords{Rubin Observatory, LSST, point spread function, shapelets, image quality,
+active optics, wavefront sensing}
+
+
+% ============================================================================
+\section{INTRODUCTION}
+\label{intro:0}
+% (1) wide-field survey landscape and why PSF quality matters
+% (2) the gap: FWHM and ellipticity are second-moment, atmosphere-dominated,
+%     and do not flag optical asymmetry (coma, trefoil) from AOS failure modes
+% (3) what this paper does: two dimensionless scores, measured across DP2 and
+%     post-DP2, validated against AOS Zernikes, deployed as a nightly monitor
+% (4) paper layout
+\todo{introduction}
+
+
+% ============================================================================
+\section{DATA}
+\label{data:0}
+\todo{roadmap opener}
+
+\subsection{LSSTCam DP2 and post-DP2 visits}
+\label{data:visits}
+\todo{}
+
+\subsection{PSF star stamps}
+\label{data:stamps}
+\todo{}
+
+\subsection{Higher-order moment catalog}
+\label{data:moments}
+\todo{}
+
+\subsection{Active-optics wavefront Zernikes}
+\label{data:zernike}
+\todo{}
+
+
+% ============================================================================
+\section{PSF QUALITY SCORES}
+\label{method:0}
+\todo{roadmap opener}
+
+\subsection{Shapelet decomposition of the PSF}
+\label{method:shapelet}
+\todo{}
+
+\subsection{The shapelet score}
+\label{method:shapelet_score}
+\todo{}
+
+\subsection{The moment score}
+\label{method:moment_score}
+\todo{}
+
+\subsection{Score tiers}
+\label{method:tiers}
+\todo{}
+
+
+% ============================================================================
+\section{RESULTS}
+\label{results:0}
+\todo{roadmap opener}
+
+\subsection{Score distributions}
+\label{results:distributions}
+\todo{}
+
+\subsection{Visual validation by tier}
+\label{results:gallery}
+\todo{}
+
+\subsection{Shapelet score versus moment score}
+\label{results:score_comparison}
+\todo{}
+
+\subsection{Nightly observatory monitoring}
+\label{results:monitoring}
+\todo{}
+
+\subsection{Dependence on observing conditions}
+\label{results:conditions}
+\todo{}
+
+\subsection{Link to optical aberration}
+\label{results:optics}
+\todo{}
+
+
+% ============================================================================
+\section{CONCLUSION}
+\label{conclusion:0}
+\todo{conclusion}
+
+
+% ============================================================================
+\acknowledgments
+\todo{acknowledgments}
+
+\bibliography{main}
+\bibliographystyle{spiebib}
+
+\end{document}
