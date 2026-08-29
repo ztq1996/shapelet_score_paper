@@ -224,9 +224,26 @@ def day_obs(visit_id):
 
 
 def detector_to_raft():
-    """Map detector id -> raft name (e.g. 42 -> 'R12'). Needs the LSST stack."""
-    from lsst.obs.lsst import LsstCam
-    return {det.getId(): det.getName().split('_')[0] for det in LsstCam.getCamera()}
+    """Map detector id -> raft name for the 189 science CCDs (e.g. 42 -> 'R12').
+
+    LSSTCam numbers the science detectors 0-188, nine per raft, in the raft
+    order of ``SCIENCE_RAFTS``, so ``raft = SCIENCE_RAFTS[det // 9]``. This has
+    been verified against the ``detector``/``raft`` pairs stored in the stamp
+    files; it avoids depending on the LSST stack, which is not importable in the
+    bare environment these notebooks run in.
+    """
+    return {det: SCIENCE_RAFTS[det // 9] for det in range(9 * len(SCIENCE_RAFTS))}
+
+
+def detector_to_raft_from_stamps(n_files=6):
+    """Independent check: derive the mapping from the stamp files themselves."""
+    import numpy as _np
+    out = {}
+    for f in sorted(STAMPS_DIR.glob('stamps_*.npz'))[:n_files]:
+        d = _np.load(f, allow_pickle=True)
+        for det, raft in zip(d['detector'], d['raft']):
+            out[int(det)] = str(raft)
+    return out
 
 
 # ── Matplotlib defaults ──────────────────────────────────────────────────────

@@ -488,23 +488,249 @@ Section~\ref{results:gallery}.
 % ============================================================================
 \section{RESULTS}
 \label{results:0}
-\todo{roadmap opener}
+
+In this section we present the measured scores. In Section~\ref{results:distributions} we
+give the score distributions and use them to justify the tier boundaries. In
+Section~\ref{results:fwhm} we test the claim that the score is independent of PSF size, and
+in Section~\ref{results:gallery} we validate the tiers visually. In
+Section~\ref{results:score_comparison} we compare the shapelet and moment scores against
+each other. Sections~\ref{results:conditions} and \ref{results:optics} examine the
+dependence on observing conditions and on the AOS wavefront estimates, and
+Section~\ref{results:monitoring} demonstrates the score as a nightly monitoring tool.
 
 \subsection{Score distributions}
 \label{results:distributions}
-\todo{}
+
+Figure~\ref{fig:dist} shows the distribution of the shapelet score in each band, for both
+epochs, and Table~\ref{tab:percentiles} lists the corresponding percentiles. The
+distribution is broad and strongly right-skewed: it peaks near $S_{\rm shapelet} \approx
+10^{-4}$ and extends over more than two decades, with a long tail reaching above $10^{-2}$.
+This shape is what makes the score useful --- most PSFs are clean, and the metric spends its
+dynamic range on the minority that are not.
+
+The distributions are similar in all six bands but shift systematically to higher scores
+with wavelength. In DP2 the median rises from $1.8 \times 10^{-4}$ in $u$ to $4.9 \times
+10^{-4}$ in $y$, and in post-DP2 from $1.8 \times 10^{-4}$ to $1.1 \times 10^{-3}$. We note
+two plausible contributions to this trend, which we do not attempt to separate here: the
+redder bands see systematically better seeing, so a fixed amount of optical aberration
+represents a larger fraction of the total PSF power, and the $u$ band has the fewest and
+faintest stars per stamp, so its scores are the most affected by noise.
+
+Comparing epochs, the post-DP2 distribution is shifted to modestly higher scores than DP2 in
+$i$, $z$ and $y$ --- the $i$-band median rises from $4.0 \times 10^{-4}$ to $7.6 \times
+10^{-4}$ --- while $u$ improves. We note that post-DP2 covers a period of active work on the
+telescope optics, so we caution against reading the epoch difference as a simple
+degradation; Section~\ref{results:monitoring} shows that most of the difference is driven by
+a limited number of nights rather than by a uniform shift.
+
+The tier boundaries of Section~\ref{method:tiers} were chosen as round numbers near the
+$80$th, $95$th and $99$th percentiles, and the measured distributions bear this out. Pooling
+all bands, $S_{\rm shapelet} = 0.002$ falls at the $87.1$st percentile in DP2 and the
+$79.6$th in post-DP2; $0.005$ falls at the $95.5$th and $93.5$th; and $0.02$ falls at the
+$99.5$th and $99.4$th. The resulting tier occupancies are $87.1\%$ LOW, $8.4\%$ MEDIUM,
+$4.0\%$ HIGH and $0.5\%$ VERY HIGH for DP2, and $79.6\%$, $13.9\%$, $5.9\%$ and $0.6\%$ for
+post-DP2. We note that fixing the boundaries at absolute values rather than at percentiles
+is deliberate: a percentile-based threshold would by construction flag the same fraction of
+visits every night and could not register a genuine change in image quality.
+
+\begin{table}[htbp]
+\caption{Percentiles of the shapelet score by band and epoch. $N$ is the number of
+raft-stacked PSFs. The tier boundaries used in this work are $0.002$, $0.005$ and $0.02$,
+which may be compared directly with the P80, P95 and P99 columns.}
+\label{tab:percentiles}
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Band & $N$ & P50 & P80 & P95 & P99 \\
+\midrule
+\multicolumn{6}{l}{\textit{DP2}} \\
+\quad $u$ & 42,698 & 0.00018 & 0.00053 & 0.00189 & 0.00681 \\
+\quad $g$ & 88,863 & 0.00029 & 0.00088 & 0.00271 & 0.00902 \\
+\quad $r$ & 104,521 & 0.00030 & 0.00100 & 0.00370 & 0.01272 \\
+\quad $i$ & 164,443 & 0.00040 & 0.00151 & 0.00527 & 0.01479 \\
+\quad $z$ & 121,771 & 0.00039 & 0.00145 & 0.00520 & 0.01597 \\
+\quad $y$ & 90,215 & 0.00049 & 0.00179 & 0.00634 & 0.01715 \\
+\addlinespace
+\multicolumn{6}{l}{\textit{Post-DP2}} \\
+\quad $u$ & 28,112 & 0.00018 & 0.00047 & 0.00128 & 0.00301 \\
+\quad $g$ & 58,213 & 0.00032 & 0.00101 & 0.00316 & 0.00867 \\
+\quad $r$ & 105,190 & 0.00034 & 0.00112 & 0.00346 & 0.00891 \\
+\quad $i$ & 341,331 & 0.00076 & 0.00218 & 0.00609 & 0.01658 \\
+\quad $z$ & 187,323 & 0.00072 & 0.00216 & 0.00617 & 0.01548 \\
+\quad $y$ & 135,542 & 0.00105 & 0.00312 & 0.00856 & 0.01860 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{score_distribution.pdf}
+\end{center}
+\caption{Distribution of the shapelet score for the DP2 epoch (left panel) and the post-DP2
+epoch (right panel). Each coloured step histogram is one band, using the colour scheme
+$u$ purple, $g$ teal, $r$ orange, $i$ blue, $z$ gold, $y$ grey; the vertical axis is the
+fraction of PSFs falling in each logarithmic bin. Grey dashed vertical lines mark the tier
+boundaries at $S_{\rm shapelet} = 0.002$, $0.005$ and $0.02$, labelled along the top of the
+right panel. Note the logarithmic horizontal axis: the distribution spans more than two
+decades in all bands.}
+\label{fig:dist}
+\end{figure}
 
 \subsection{Independence from PSF size}
 \label{results:fwhm}
-\todo{}
+
+A metric intended to complement the FWHM is only useful if it carries information the FWHM
+does not. We test this directly in Figure~\ref{fig:fwhm}, which shows the $i$-band shapelet
+score against the measured PSF FWHM for both epochs.
+
+We find no strong relation. The Pearson correlation coefficient between score and FWHM is
+$r = +0.152$ in DP2 and $r = +0.110$ in post-DP2, and across all bands and both epochs it
+never exceeds $|r| = 0.20$. The running median, shown as the orange line, is close to flat:
+in DP2 it varies from $5.0 \times 10^{-4}$ at $0.6$--$0.8\arcsec$ to $3.8 \times 10^{-4}$ at
+$1.2$--$1.5\arcsec$, a change of only $30\%$ across the full useful seeing range.
+
+The more important point is the vertical extent of the distribution. At every FWHM the score
+spans essentially the entire plotted range: averaged over bins between $0.6\arcsec$ and
+$1.5\arcsec$, the ratio of the $95$th to the $5$th percentile of the score at fixed FWHM is
+$84$ in DP2 and $124$ in post-DP2, whereas the median itself varies by only a factor of
+$1.3$ and $3.1$ respectively over the same range. In other words, the scatter at fixed
+seeing is one to two orders of magnitude larger than any trend with seeing. Knowing the FWHM
+of a visit therefore tells one almost nothing about whether its PSF is aberrated. This is
+exactly the complementarity we set out to demonstrate: PSFs in the HIGH and VERY HIGH tiers
+are found at all seeing values, including the best.
+
+We do note a real, if weak, effect in the post-DP2 panel, where the median score falls by a
+factor of $\sim\!3$ between $0.8\arcsec$ and $1.5\arcsec$ and the rank correlation reaches
+$\rho_{\rm s} = -0.22$. We interpret this as dilution rather than as a size dependence of the
+aberration: because the score is a \emph{fraction} of total power, a larger atmospheric
+contribution increases the denominator and suppresses the score at fixed optical
+aberration. We note that this makes the score mildly conservative in poor seeing, and that
+the effect is in the opposite direction to any trend that would mimic aberration.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{score_vs_fwhm.pdf}
+\end{center}
+\caption{Shapelet score against PSF FWHM for $i$-band raft-stacked PSFs, for DP2 (left
+panel) and post-DP2 (right panel). The greyscale shows the number of PSFs per bin on a
+logarithmic colour scale. The solid orange line is the median score in bins of FWHM, and the
+dashed orange lines are the $5$th and $95$th percentiles at fixed FWHM; the upper dashed
+line leaves the plotted range above $1.6\arcsec$ in the right panel. Horizontal dotted lines
+mark the tier boundaries: green for MEDIUM ($0.002$), orange for HIGH ($0.005$) and red for
+VERY HIGH ($0.02$). The Pearson $r$ and Spearman $\rho_{\rm s}$ between score and FWHM are
+quoted in each panel. Note that the vertical separation between the two dashed lines at any
+given FWHM is much larger than the variation of the solid line across the whole FWHM range.}
+\label{fig:fwhm}
+\end{figure}
 
 \subsection{Visual validation by tier}
 \label{results:gallery}
-\todo{}
+
+Any quality metric should be checked against what the images actually look like.
+Figure~\ref{fig:gallery} shows four randomly drawn $i$-band raft-stacked PSFs from each
+tier, together with the residual after subtracting the fitted shapelet model.
+
+The progression is clear by eye. LOW-tier stamps are round and compact, and their residuals
+are consistent with noise. MEDIUM-tier stamps show mild elongation and faint structure in
+the residual. HIGH-tier stamps display an unmistakable comatic profile --- a displaced,
+asymmetric core with a one-sided flare --- and their residuals show coherent, large-scale
+structure rather than noise. VERY HIGH-tier stamps are strongly aberrated, several showing
+the double-lobed morphology characteristic of a large defocus or misalignment term. We
+emphasise that these examples were drawn at random within each tier rather than selected for
+appearance.
+
+The moment scores annotated on each panel track the tiers independently, and their ranges
+are almost disjoint: $S_{\rm moment}$ spans $0.0005$--$0.0025$ for the LOW examples,
+$0.0064$--$0.0222$ for MEDIUM, $0.0228$--$0.0595$ for HIGH and $0.055$--$0.171$ for VERY
+HIGH. We also note that the FWHM values annotated on the panels are interleaved across
+tiers, ranging from $0.82\arcsec$ to $1.59\arcsec$ within the HIGH and VERY HIGH tiers
+alone, reinforcing the conclusion of Section~\ref{results:fwhm} that PSF size and PSF
+asymmetry are close to independent. We quantify the agreement between the two scores next.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.86\textwidth]{tier_gallery.pdf}
+\end{center}
+\caption{Example $i$-band raft-stacked PSF stamps from each quality tier, drawn at random
+from the DP2 sample. For each tier, the upper row shows the stacked star image on a
+\texttt{magma} colour scale stretched to the $99.7$th percentile of the stamp, and the lower
+row shows the residual after subtracting the best-fitting $n \le 6$ shapelet model, on a
+symmetric red--blue scale at one twelfth of the image stretch. Each stamp is $51 \times 51$
+pixels, or $10.2\arcsec$ on a side. Panel titles give the shapelet score
+$S_{\rm sh}$, the moment score $S_{\rm mom}$, and the FWHM in arcseconds. Note that the
+stamps were required to have at least $40$ contributing stars and no bright neighbour, so
+that the residuals reflect PSF structure rather than photon noise or blending.}
+\label{fig:gallery}
+\end{figure}
 
 \subsection{Shapelet score versus moment score}
 \label{results:score_comparison}
-\todo{}
+
+The shapelet score and the moment score are constructed from the same physical property of
+the PSF but by unrelated numerical routes: one is a fractional power from a linear
+least-squares expansion of the image in an orthogonal basis, the other a weighted sum of
+squared adaptive moments. Neither uses the other's machinery. Their agreement is therefore
+a genuine test rather than a tautology.
+
+We match the two per (visit, raft, band) over the DP2 epoch, for which the per-raft moment
+catalog is available, taking the median shapelet score of the PSFs in each raft. This yields
+$607{,}948$ matched measurements. Figure~\ref{fig:comparison} shows the result.
+
+We find that the two scores are strongly correlated, with a Spearman rank correlation of
+$\rho_{\rm s} = +0.923$ over the full matched sample. The correlation is consistent across
+bands, ranging only from $\rho_{\rm s} = +0.908$ in $r$ to $+0.936$ in $u$
+(Table~\ref{tab:rho}). The relation is close to a power law over three decades,
+$\smom \propto \sshape^{\alpha}$ with $\alpha = 0.95$ and a scatter of $0.24$ dex about the
+fit --- that is, very nearly proportional, with $\smom \approx 3.2\,\sshape$. As the right
+panel of Figure~\ref{fig:comparison} shows, the median relation is essentially identical
+in all six bands, with the curves lying on top of one another. We note that this
+band-independence is a useful practical property: a single threshold in either score means
+the same thing regardless of filter.
+
+We also computed the correlation using a restricted shapelet score built only from the
+$n = 3$ modes, which is the closest shapelet analogue of the third-order moment score. This
+raises the agreement slightly, to $\rho_{\rm s} = +0.933$. The improvement is small, which
+tells us that the $n = 5$ modes carry information that is largely redundant with the
+third-order moments in this dataset. We retain them in the definition because they extend
+the dynamic range of the score for the most strongly aberrated PSFs, where third-order
+moments alone become a poor description of the profile.
+
+We conclude that the shapelet score and the moment score are close to interchangeable as
+rank-orderings of PSF asymmetry. In practice the moment score is cheaper, since the moments
+are already computed by the pipeline for every star, while the shapelet score is better
+behaved for strongly aberrated PSFs and provides the full coefficient vector for
+diagnostics.
+
+\begin{table}[htbp]
+\caption{Spearman rank correlation $\rho_{\rm s}$ between the shapelet score and the moment
+score, per band, over the DP2 epoch, matched per (visit, raft).}
+\label{tab:rho}
+\begin{center}
+\begin{tabular}{lcccccc}
+\toprule
+Band & $u$ & $g$ & $r$ & $i$ & $z$ & $y$ \\
+\midrule
+$\rho_{\rm s}$ & $+0.936$ & $+0.919$ & $+0.908$ & $+0.930$ & $+0.912$ & $+0.932$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{score_comparison.pdf}
+\end{center}
+\caption{Comparison of the shapelet score and the moment score, matched per (visit, raft)
+over the DP2 epoch. \textit{Left:} two-dimensional histogram of the two scores, all bands
+pooled, on logarithmic axes, with the number of (visit, raft) pairs per bin shown on a
+logarithmic greyscale. The Spearman rank correlation and the sample size are annotated.
+\textit{Right:} the median moment score in bins of shapelet score, plotted separately for
+each band using the colour scheme of Figure~\ref{fig:dist}. Note that the six curves are
+nearly indistinguishable, indicating that the relation between the two scores does not
+depend on the filter.}
+\label{fig:comparison}
+\end{figure}
 
 \subsection{Nightly observatory monitoring}
 \label{results:monitoring}
