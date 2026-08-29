@@ -60,8 +60,8 @@ of shapelet power carried by the odd-$m$ modes, together with a companion \emph{
 score} built from third-order adaptive moments. We measure both for $1{,}468{,}222$
 raft-stacked PSFs from $71{,}015$ LSSTCam visits taken between 2025 April and 2026 May,
 covering the Data Preview 2 processing and the subsequent nightly validation. The shapelet
-score is essentially independent of PSF size, correlating with FWHM at $|r| < 0.20$ while
-spanning two orders of magnitude at fixed seeing; it agrees with the independently
+score is essentially independent of PSF size, showing no appreciable correlation with FWHM
+while spanning two orders of magnitude at fixed seeing; it agrees with the independently
 constructed moment score at a Spearman rank correlation of $+0.923$; and it responds
 preferentially to the odd-$m$ Zernike aberrations measured by the corner wavefront sensors,
 most strongly to coma. Used as a nightly monitor, the fraction of PSFs it flags varies from
@@ -396,9 +396,10 @@ odd-$m$ power at all. Odd-$m$ power can only be produced by a genuine asymmetry.
 
 The lower panel of Figure~\ref{fig:atm} makes the same point in terms of correlations with
 the input parameters. The even-$m$ coefficients correlate with the atmospheric FWHM at up to
-$|r| = 0.45$, whereas no odd-$m$ coefficient exceeds $|r| = 0.086$ with FWHM or $|r| = 0.056$
-with $|g|$, consistent with noise given $1000$ realisations. We note that the residual
-odd-$m$ values are set by floating-point arithmetic in the fit, not by any physical effect.
+$|r| = 0.45$, whereas the odd-$m$ coefficients show no appreciable correlation with either
+the input FWHM or the input ellipticity, consistent with noise given $1000$ realisations. We
+note that the residual odd-$m$ values are set by floating-point arithmetic in the fit, not
+by any physical effect.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -524,6 +525,13 @@ each other. Sections~\ref{results:conditions} and \ref{results:optics} examine t
 dependence on observing conditions and on the AOS wavefront estimates, and
 Section~\ref{results:monitoring} demonstrates the score as a nightly monitoring tool.
 
+Throughout this section we compare quantities measured over samples of $10^4$ to $10^5$
+visits. At these sample sizes a correlation coefficient of even a few hundredths is
+formally distinguishable from zero while carrying almost no practical information about an
+individual visit. We therefore quote correlation coefficients only where they reach
+$|\rho_{\rm s}| \gtrsim 0.3$, and describe weaker relationships qualitatively; where we say
+that we find no appreciable correlation, the measured coefficient is below that threshold.
+
 \subsection{Score distributions}
 \label{results:distributions}
 
@@ -610,11 +618,10 @@ A metric intended to complement the FWHM is only useful if it carries informatio
 does not. We test this directly in Figure~\ref{fig:fwhm}, which shows the $i$-band shapelet
 score against the measured PSF FWHM for both epochs.
 
-We find no strong relation. The Pearson correlation coefficient between score and FWHM is
-$r = +0.152$ in DP2 and $r = +0.110$ in post-DP2, and across all bands and both epochs it
-never exceeds $|r| = 0.20$. The running median, shown as the orange line, is close to flat:
-in DP2 it varies from $5.0 \times 10^{-4}$ at $0.6$--$0.8\arcsec$ to $3.8 \times 10^{-4}$ at
-$1.2$--$1.5\arcsec$, a change of only $30\%$ across the full useful seeing range.
+We find no appreciable correlation between the two, in any band or either epoch. The running
+median, shown as the orange line, is close to flat: in DP2 it varies from
+$5.0 \times 10^{-4}$ at $0.6$--$0.8\arcsec$ to $3.8 \times 10^{-4}$ at $1.2$--$1.5\arcsec$,
+a change of only $30\%$ across the full useful seeing range.
 
 The more important point is the vertical extent of the distribution. At every FWHM the score
 spans essentially the entire plotted range: averaged over bins between $0.6\arcsec$ and
@@ -627,8 +634,8 @@ exactly the complementarity we set out to demonstrate: PSFs in the HIGH and VERY
 are found at all seeing values, including the best.
 
 We do note a real, if weak, effect in the post-DP2 panel, where the median score falls by a
-factor of $\sim\!3$ between $0.8\arcsec$ and $1.5\arcsec$ and the rank correlation reaches
-$\rho_{\rm s} = -0.22$. We interpret this as dilution rather than as a size dependence of the
+factor of $\sim\!3$ between $0.8\arcsec$ and $1.5\arcsec$. We interpret this as dilution
+rather than as a size dependence of the
 aberration: because the score is a \emph{fraction} of total power, a larger atmospheric
 contribution increases the denominator and suppresses the score at fixed optical
 aberration. We note that this makes the score mildly conservative in poor seeing, and that
@@ -644,9 +651,9 @@ logarithmic colour scale. The solid orange line is the median score in bins of F
 dashed orange lines are the $5$th and $95$th percentiles at fixed FWHM; the upper dashed
 line leaves the plotted range above $1.6\arcsec$ in the right panel. Horizontal dotted lines
 mark the tier boundaries: green for MEDIUM ($0.002$), orange for HIGH ($0.005$) and red for
-VERY HIGH ($0.02$). The Pearson $r$ and Spearman $\rho_{\rm s}$ between score and FWHM are
-quoted in each panel. Note that the vertical separation between the two dashed lines at any
-given FWHM is much larger than the variation of the solid line across the whole FWHM range.}
+VERY HIGH ($0.02$). Note that the vertical separation between the two dashed lines at any
+given FWHM is much larger than the variation of the solid line across the whole FWHM range,
+which is the sense in which the score is independent of PSF size.}
 \label{fig:fwhm}
 \end{figure}
 
@@ -775,22 +782,22 @@ Figure~\ref{fig:conditions} we plot the visit-median score against three quantit
 available from consDB for every visit: the sky background, the AOS estimate of the delivered
 FWHM (\texttt{aos\_fwhm}), and the donut-blur FWHM (\texttt{donut\_blur\_fwhm}).
 
-The dependence on sky background is weak, with $\rho_{\rm s} = +0.12$ in DP2 and $+0.22$ in
-post-DP2, and the running median is close to flat across the full range. Some positive
-correlation is expected: a brighter sky means noisier stamps, and photon noise projects onto
-the odd-$m$ modes as well as the rest. We note that this sets a practical noise floor on the
-score for the shallowest visits, and it is one reason we stack up to $100$ stars per stamp.
+We find no appreciable correlation with the sky background in either epoch, and the running
+median is close to flat across the full range. A weak positive trend is expected: a brighter
+sky means noisier stamps, and photon noise projects onto the odd-$m$ modes as well as the
+rest. We note that this sets a practical noise floor on the score for the shallowest visits,
+and it is one reason we stack up to $100$ stars per stamp.
 
 The two AOS quantities behave very differently from one another, and understanding why is
 instructive. The score correlates \emph{positively} with \texttt{aos\_fwhm}
-($\rho_{\rm s} = +0.45$ in DP2, $+0.25$ in post-DP2) but \emph{negatively} with
+($\rho_{\rm s} = +0.45$ in DP2, and more weakly in post-DP2) but \emph{negatively} with
 \texttt{donut\_blur\_fwhm} ($\rho_{\rm s} = -0.33$ and $-0.57$). At first sight the negative
 sign is puzzling, since a larger donut blur should indicate a larger wavefront error and
 therefore a more aberrated PSF. The explanation is the dilution effect already identified in
 Section~\ref{results:fwhm}. We measured the correlation of each of these quantities with the
 directly measured PSF FWHM, and find that \texttt{donut\_blur\_fwhm} is very nearly a proxy
 for the delivered image size, with $\rho_{\rm s} = +0.81$ in DP2 and $+0.73$ in post-DP2,
-whereas \texttt{aos\_fwhm} tracks it much more weakly ($\rho_{\rm s} = +0.37$ and $+0.29$).
+whereas \texttt{aos\_fwhm} tracks it much more weakly ($\rho_{\rm s} = +0.37$ in DP2).
 Because the shapelet score is a fraction of total power, anything that raises the
 atmospheric contribution lowers it at fixed optical aberration. The negative correlation
 with \texttt{donut\_blur\_fwhm} is therefore the seeing-dilution trend seen through a
@@ -811,9 +818,11 @@ row) and post-DP2 (bottom row): sky background (left column), AOS FWHM (middle c
 donut-blur FWHM (right column). All bands are pooled. The greyscale shows the number of
 visits per bin on a logarithmic scale, the solid orange line is the running median, and the
 green and orange dotted lines mark the MEDIUM ($0.002$) and HIGH ($0.005$) tier boundaries.
-The Spearman rank correlation is quoted in each panel. Note that the negative correlation
-with donut-blur FWHM reflects that quantity's strong correlation with the delivered PSF size
-($\rho_{\rm s} = +0.81$), combined with the dilution of a fractional score in poor seeing.}
+The Spearman rank correlation is quoted in each panel where it reaches
+$|\rho_{\rm s}| = 0.3$, and marked ``no appr.\ corr.'' otherwise. Note that the negative
+correlation with donut-blur FWHM reflects that quantity's strong correlation with the
+delivered PSF size ($\rho_{\rm s} = +0.81$), combined with the dilution of a fractional
+score in poor seeing.}
 \label{fig:conditions}
 \end{figure}
 
@@ -827,21 +836,23 @@ using neither the science pixels nor any part of our analysis. For each visit we
 peak-to-peak spread of each Zernike coefficient across the four corner positions, which
 measures how strongly that aberration varies over the field.
 
-Figure~\ref{fig:zernike} shows the correlation of the visit-median score with each of these
-eight field spreads. The result follows the prediction of the mode selection remarkably
-closely. The two coma modes, $z_7$ and $z_8$, show the strongest response
-($\rho_{\rm s} = +0.170$ and $+0.201$); the trefoil modes $z_9$ and $z_{10}$ follow
-($+0.070$ and $+0.101$); and the weakest response of all is the astigmatism mode $z_5$
-($+0.028$). Coma and trefoil are the odd-$m$ Zernike aberrations --- $m = 1$ and $m = 3$
-respectively --- and they are precisely the aberrations that produce odd-$m$ shapelet power.
-Defocus, astigmatism and spherical aberration have even $m$, and produce PSF distortions
-that the score is constructed to ignore. Averaging over modes, the odd-$m$ Zernikes give a
-mean $\rho_{\rm s} = +0.135$ against $+0.065$ for the even-$m$ ones.
+Figure~\ref{fig:zernike} shows how strongly the visit-median score responds to each of these
+eight field spreads, and the ordering follows the prediction of the mode selection
+remarkably closely. The clearest way to see the effect is in absolute terms: between the
+lowest and the highest quintile of field spread, the median shapelet score rises by a factor
+of $2.35$ for $z_8$ and $2.05$ for $z_7$, by $1.53$ and $1.40$ for $z_{10}$ and $z_9$, and
+by only $1.10$ for $z_5$. The same ordering appears in the rank correlations shown in the
+left panel of the figure, where the two coma modes are the only ones to reach
+$\rho_{\rm s} \simeq +0.17$ and $+0.20$ while the rest fall well below.
 
-The effect is also visible in absolute terms. Between the lowest and the highest quintile of
-field spread, the median shapelet score rises by a factor of $2.35$ for $z_8$ and $2.05$ for
-$z_7$, compared with only $1.10$ for $z_5$. Given that the score spans two orders of
-magnitude, these are modest but highly significant shifts across $29{,}502$ visits.
+This ordering is the point. Coma and trefoil are the odd-$m$ Zernike aberrations --- $m = 1$
+and $m = 3$ respectively --- and they are precisely the aberrations capable of producing
+odd-$m$ shapelet power. Defocus, astigmatism and spherical aberration have even $m$, and
+produce PSF distortions that the score is constructed to ignore. Averaged over modes, the
+odd-$m$ Zernikes give a mean rank correlation about twice that of the even-$m$ ones. We
+stress that the absolute correlations are small, for reasons we return to below; it is
+their relative ordering, which matches the symmetry argument of
+Section~\ref{method:atm} with no free parameters, that we regard as meaningful.
 
 We note two limitations. First, the separation between odd-$m$ and even-$m$ Zernikes is not
 perfectly clean: the astigmatism mode $z_6$ gives a ratio of $1.42$, comparable to the
@@ -862,8 +873,10 @@ epoch. \textit{Left:} Spearman rank correlation between the visit-median shapele
 the peak-to-peak spread of each Zernike coefficient across the four corner wavefront
 sensors. Bars are ordered and coloured by the azimuthal order $m$ of the Zernike mode:
 orange for odd $m$ (coma, $m = 1$; trefoil, $m = 3$) and blue for even $m$ (defocus and
-spherical, $m = 0$; astigmatism, $m = 2$). Note that the odd-$m$ aberrations, which are the
-ones capable of generating odd-$m$ shapelet power, give the largest correlations.
+spherical, $m = 0$; astigmatism, $m = 2$). Note that the absolute correlations are small ---
+the corner sensors sample only four field positions, all outside the science rafts --- so it
+is the ordering of the bars rather than their length that carries the result: the odd-$m$
+aberrations, which are the ones capable of generating odd-$m$ shapelet power, rank highest.
 \textit{Right:} the visit-median score against the field spread of $z_8$, the mode with the
 strongest response, with the number of visits per bin on a logarithmic greyscale, the
 running median in orange, and the MEDIUM and HIGH tier boundaries as dotted lines.}
@@ -957,8 +970,8 @@ Our main findings are as follows.
         profile satisfying $I(r,\theta) = I(r,\theta+\pi)$ has identically zero odd-$m$
         power. The shapelet score, defined as the odd-$m$ fraction of total shapelet power,
         has a median of $1.3 \times 10^{-32}$ on that simulated population.
-  \item \textbf{The score is close to independent of PSF size.} The correlation between the
-        score and the measured FWHM never exceeds $|r| = 0.20$ in any band or epoch. At
+  \item \textbf{The score is close to independent of PSF size.} We find no appreciable
+        correlation between the score and the measured FWHM, in any band or epoch. At
         fixed FWHM the score spans a $5$th-to-$95$th percentile range of $84$--$124$, while
         the median varies by only $1.3$--$3.1$ across the useful seeing range. Knowing the
         seeing of a visit says almost nothing about whether its PSF is aberrated.
@@ -969,10 +982,10 @@ Our main findings are as follows.
         bands.
   \item \textbf{The score tracks real optical aberration.} Compared against the AOS corner
         wavefront sensors --- an entirely independent instrument --- the score responds most
-        strongly to the odd-$m$ Zernike aberrations. The coma modes $z_7$ and $z_8$ give
-        $\rho_{\rm s} = +0.170$ and $+0.201$ and a factor $2.05$ and $2.35$ rise in median
-        score across quintiles of field spread, against $1.10$ for the astigmatism mode
-        $z_5$.
+        strongly to the odd-$m$ Zernike aberrations. The coma modes $z_7$ and $z_8$ give a
+        factor $2.05$ and $2.35$ rise in median score between the lowest and highest
+        quintile of field spread, against $1.10$ for the astigmatism mode $z_5$, and are the
+        only modes whose rank correlation with the score reaches $\rho_{\rm s} \simeq 0.2$.
   \item \textbf{The score is a practical nightly monitor.} The fraction of PSFs above the
         HIGH threshold has a median over nights of $3.2\%$ but ranges from $0\%$ to $28.9\%$,
         with coherent month-scale structure. A single stacked bar chart, one bar per night,
