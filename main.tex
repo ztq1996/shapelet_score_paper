@@ -32,10 +32,15 @@
 \title{The Shapelet Score: An Optics-Sensitive PSF Quality Metric for the
 Rubin Observatory}
 
-\author{Tianqing Zhang}
-\affiliation{SLAC}
+\author[a,b,c]{Tianqing Zhang}
+\affil[a]{Kavli Institute for Particle Astrophysics and Cosmology (KIPAC),
+          Stanford University, Stanford, CA 94305, USA}
+\affil[b]{SLAC National Accelerator Laboratory, 2575 Sand Hill Road,
+          Menlo Park, CA 94025, USA}
+\affil[c]{Department of Physics and Astronomy and PITT PACC, University of
+          Pittsburgh, Pittsburgh, PA 15260, USA}
 
-\authorinfo{Send correspondence to T. Zhang: \todo{email}}
+\authorinfo{Send correspondence to T. Zhang: \texttt{tq96zhang@gmail.com}}
 
 \begin{document}
 \maketitle
@@ -649,17 +654,18 @@ given FWHM is much larger than the variation of the solid line across the whole 
 \label{results:gallery}
 
 Any quality metric should be checked against what the images actually look like.
-Figure~\ref{fig:gallery} shows four randomly drawn $i$-band raft-stacked PSFs from each
-tier, together with the residual after subtracting the fitted shapelet model.
+Figure~\ref{fig:gallery} shows three $i$-band raft-stacked PSFs from each tier, together
+with the residual after subtracting the fitted shapelet model. For the LOW and VERY HIGH
+tiers we show the extremes of the score distribution, and for the two intermediate tiers we
+show PSFs near the geometric midpoint of the tier; the intent is to display the full visual
+range that the metric spans.
 
 The progression is clear by eye. LOW-tier stamps are round and compact, and their residuals
 are consistent with noise. MEDIUM-tier stamps show mild elongation and faint structure in
 the residual. HIGH-tier stamps display an unmistakable comatic profile --- a displaced,
 asymmetric core with a one-sided flare --- and their residuals show coherent, large-scale
 structure rather than noise. VERY HIGH-tier stamps are strongly aberrated, several showing
-the double-lobed morphology characteristic of a large defocus or misalignment term. We
-emphasise that these examples were drawn at random within each tier rather than selected for
-appearance.
+the double-lobed morphology characteristic of a large misalignment term.
 
 The moment scores annotated on each panel track the tiers independently, and their ranges
 are almost disjoint: $S_{\rm moment}$ spans $0.0005$--$0.0025$ for the LOW examples,
@@ -673,15 +679,20 @@ asymmetry are close to independent. We quantify the agreement between the two sc
 \begin{center}
 \includegraphics[width=0.86\textwidth]{tier_gallery.pdf}
 \end{center}
-\caption{Example $i$-band raft-stacked PSF stamps from each quality tier, drawn at random
-from the DP2 sample. For each tier, the upper row shows the stacked star image on a
-\texttt{magma} colour scale stretched to the $99.7$th percentile of the stamp, and the lower
-row shows the residual after subtracting the best-fitting $n \le 6$ shapelet model, on a
-symmetric red--blue scale at one twelfth of the image stretch. Each stamp is $51 \times 51$
-pixels, or $10.2\arcsec$ on a side. Panel titles give the shapelet score
-$S_{\rm sh}$, the moment score $S_{\rm mom}$, and the FWHM in arcseconds. Note that the
-stamps were required to have at least $40$ contributing stars and no bright neighbour, so
-that the residuals reflect PSF structure rather than photon noise or blending.}
+\caption{Example $i$-band raft-stacked PSF stamps from each quality tier, from the DP2
+sample. Each tier occupies one row, containing three (star, residual) pairs: the left panel
+of each pair is the stacked star image on a \texttt{magma} colour scale stretched to the
+$99.7$th percentile of the stamp, and the right panel is the residual after subtracting the
+best-fitting $n \le 6$ shapelet model, on a symmetric red--blue scale at one twelfth of the
+image stretch. Each stamp is $51 \times 51$ pixels, or $10.2\arcsec$ on a side. The white
+annotation in each star panel gives the shapelet score $S_{\rm sh}$, the moment score
+$S_{\rm mom}$, and the FWHM in arcseconds. Note the selection: for the LOW and VERY HIGH
+tiers we deliberately show the extremes --- the lowest- and highest-scoring PSFs
+respectively --- so that the figure spans the full range of the metric, while for MEDIUM and
+HIGH we show PSFs closest to the geometric midpoint of the tier, which are typical rather
+than extreme. In all cases the stamps were required to have at least $40$ contributing stars
+and no bright neighbour, so that the residuals reflect PSF structure rather than photon
+noise or blending.}
 \label{fig:gallery}
 \end{figure}
 
@@ -893,11 +904,14 @@ change in the plotted fractions.
 \begin{center}
 \includegraphics[width=\textwidth]{score_timeseries.pdf}
 \end{center}
-\caption{Visit-median shapelet score against time over the full baseline. Each point is one
-(visit, band) combination, coloured by band using the scheme of Figure~\ref{fig:dist}; the
-solid black line is the median over all visits in each night, broken across observing gaps
-longer than five days. Horizontal dashed lines mark the tier boundaries at $0.002$ (green),
-$0.005$ (orange) and $0.02$ (red). Note the logarithmic vertical axis.}
+\caption{Visit-median shapelet score over the full baseline, split into five rows read left
+to right and top to bottom. Each point is one (visit, band) combination, coloured by band
+using the scheme of Figure~\ref{fig:dist}, and the solid black line is the median over all
+visits in each night. Horizontal dashed lines mark the tier boundaries at $0.002$ (green),
+$0.005$ (orange) and $0.02$ (red). Note that the horizontal axis places observed nights
+consecutively and does not run linearly in calendar time: nights on which no data were taken
+occupy no space. Tick labels give the date of the corresponding night, with the year
+indicated at the lower left of each row. The vertical axis is logarithmic.}
 \label{fig:timeseries}
 \end{figure}
 
