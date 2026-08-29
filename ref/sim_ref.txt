@@ -1,0 +1,25 @@
+
+We also fit a Shapelets model to these data to remove extreme asymmetric PSFs
+from the sample caused by the Rubin optics.  %\todo[inline]{TQ: please explain the shapelets score and cut here}
+The shapelet model decomposes the 2-D image into the functional form
+\begin{equation}
+    I(r,\theta) = \frac{1}{\sigma}\sum_{nm}b_{nm}\psi_{nm}(r/\sigma, \theta)
+\end{equation}
+where $n = p+q$ and $m = p-q$. $\psi_{nm}(r/\sigma, \theta)$ is the shapelet eigenfunction
+\begin{equation}
+    \psi_{pq} = \frac{(-1)^q}{\sqrt{\pi}} \sqrt{\frac{q!}{p!}}r^{m} e^{im\theta - r^2/2} L_q^{(m)}(r^2).
+\end{equation}
+where $L_q^{(m)}(x)$ are the generalized Laguerre polynomials. 
+We compute shapelet decomposition using \texttt{galsim.Shapelet.fit}, and use the \texttt{HSM} adaptive $\sigma$ as the scale length $\sigma$. We fit each Data Preview 2 image up to the 6th order ($n \leq 6$). To separate the effect of atmosphere and optics, we simulated 1000 atmospheric PSFs by Moffat PSFs with different $\beta$ parameters, and identified a series of non-Gaussian ($n>2$) $b_{nm}$ that are sensitive to the optical effect and not affected by atmosphere. They are 
+\begin{equation}
+    \mathbf{b} = [b_{31}, b_{31}^*, b_{33}, b_{33}^*, b_{51}, b_{51}^*,b_{53}, b_{53}^*,b_{55}, b_{55}^*,b_{66}, b_{66}^*].
+\end{equation}
+The inner product of $\mathbf{b}$ is the so-called ``shapelet score'' (Zhang et al. \textit{in prep.})
+\begin{equation}
+    SC = \langle \mathbf{b} , \mathbf{b} \rangle,
+\end{equation}
+which we used to eliminate optical asymmetric PSFs. Upon visual inspection, we set requirement of the shapelet score to $SC < 0.005$ for the PSFs that enter the simulation. 
+
+For this simulation, we used PSFs from $i$-band images taken during January 2026. 
+For the January data, the shapelet score cut removes 14\% of the images.
+These PSFs have size size and ellipticity as shown in figure \ref{fig:psfprop}.

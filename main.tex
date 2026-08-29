@@ -28,7 +28,8 @@
 \newcommand{\bpq}{b_{pq}}
 \newcommand{\arcsec}{\ensuremath{^{\prime\prime}}}
 
-\title{\todo{title}}
+\title{The Shapelet Score: An Optics-Sensitive PSF Quality Metric for the
+Rubin Observatory}
 
 \author{Tianqing Zhang}
 \affiliation{SLAC}
@@ -39,10 +40,7 @@
 \maketitle
 
 \begin{abstract}
-\todo{abstract: 150--250 words. Problem (second-moment metrics are
-atmosphere-dominated and blind to optical asymmetry) $\rightarrow$ the two scores
-$\rightarrow$ dataset and scale $\rightarrow$ headline quantitative results
-$\rightarrow$ application as an observatory monitor.}
+\todo{abstract --- write last, once the results are final.}
 \end{abstract}
 
 \keywords{Rubin Observatory, LSST, point spread function, shapelets, image quality,
@@ -52,13 +50,64 @@ active optics, wavefront sensing}
 % ============================================================================
 \section{INTRODUCTION}
 \label{intro:0}
-% (1) wide-field survey landscape and why PSF quality matters
-% (2) the gap: FWHM and ellipticity are second-moment, atmosphere-dominated,
-%     and do not flag optical asymmetry (coma, trefoil) from AOS failure modes
-% (3) what this paper does: two dimensionless scores, measured across DP2 and
-%     post-DP2, validated against AOS Zernikes, deployed as a nightly monitor
-% (4) paper layout
-\todo{introduction}
+The NSF-DOE Vera C. Rubin Observatory will carry out the Legacy Survey of Space and Time
+(LSST), imaging the southern sky in six bands over ten years with the 3.2-gigapixel LSST
+Camera (LSSTCam) on the 8.4\,m Simonyi Survey Telescope \cite{Ivezic2019}. Many of the
+survey's headline science cases --- and cosmic shear in particular --- depend on how well
+we understand the point spread function (PSF). The PSF delivered by a ground-based
+telescope is a convolution of atmospheric turbulence, the optical system, and the detector,
+and errors in modelling it propagate directly into galaxy shape measurements and hence into
+cosmological parameter constraints \cite{HirataSeljak2003, Jarvis2021, Zhang2023}.
+Monitoring the quality of the delivered PSF, night by night and across the focal plane, is
+therefore both an operational requirement for the observatory and a prerequisite for the
+survey's precision-cosmology goals.
+
+In practice, image quality is almost always summarised by second-moment quantities: the
+full width at half maximum (FWHM) and the two components of the PSF ellipticity. These are
+natural choices, they are cheap to compute, and they capture the dominant behaviour of the
+PSF. They are also, however, dominated by the atmosphere. Ground-layer seeing sets the FWHM
+and contributes most of the ellipticity, so a visit taken through good seeing will report
+excellent second-moment image quality even when the optical system is misaligned. The
+failure modes that the Rubin active optics system (AOS) exists to correct --- coma,
+trefoil, and higher-order asymmetric aberrations arising from mirror figure error, hexapod
+misalignment, or incomplete AOS convergence \cite{Xin2015} --- are precisely the modes to
+which second moments are least sensitive. A PSF can be compact, nearly round, and still be
+badly aberrated. We note that the observatory does track wavefront information directly,
+through the Zernike coefficients estimated at the four corner wavefront sensors, but those
+estimates sample only the corners of the focal plane and are derived from a separate
+curvature-sensing analysis rather than from the science images themselves.
+
+This motivates a metric that is built from the science images, is sensitive to exactly the
+asymmetric optical modes that second moments miss, and is insensitive to the atmosphere by
+construction. In this work we present such a metric. We decompose each PSF into a polar
+shapelet basis \cite{Refregier2003, MasseyRefregier2005, BernsteinJarvis2002} --- the
+Gauss-Laguerre eigenfunctions of the two-dimensional quantum harmonic oscillator --- and
+show, using a simulated population of atmospheric PSFs, that the shapelet coefficients
+split cleanly into two groups: those that respond strongly to atmospheric size and
+ellipticity variation, and those that do not respond at all. The second group is exactly
+the set of modes with odd azimuthal index $m$, which vanish identically for any
+point-symmetric profile. We define the \emph{shapelet score} as the fraction of total
+shapelet power carried by those odd-$m$ modes, and a companion \emph{moment score} built
+from the third-order adaptive moments of the same stars. Both are dimensionless, both are
+computed per PSF, and neither requires any external calibration.
+
+We measure these scores for $1{,}468{,}222$ raft-stacked PSFs drawn from $71{,}015$ LSSTCam
+visits spanning 2025 April to 2026 May, covering both the Data Preview 2 (DP2) processing
+\cite{DP2} and the subsequent nightly-validation processing. We show that the shapelet
+score is essentially independent of the PSF size, that it correlates strongly with the
+independently measured moment score, that it responds to AOS wavefront Zernike gradients
+across the focal plane, and that it isolates nights and visits with visibly aberrated PSFs
+that standard FWHM-based metrics do not flag. We therefore propose the shapelet score as an
+image-quality metric that is complementary to --- rather than a replacement for --- PSF
+size and the AOS-derived metrics already in use at the observatory.
+
+The paper is organized as follows. In Section~\ref{data:0} we describe the LSSTCam data,
+the PSF stamp extraction, and the auxiliary moment and wavefront catalogs. In
+Section~\ref{method:0} we set out the shapelet formalism, present the atmospheric
+simulation that motivates the mode selection, and define both scores. In
+Section~\ref{results:0} we present the measured score distributions, validate the scores
+visually and against the higher-order moments, and demonstrate their behaviour as a
+function of observing conditions and of time. We conclude in Section~\ref{conclusion:0}.
 
 
 % ============================================================================

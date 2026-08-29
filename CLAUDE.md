@@ -85,6 +85,13 @@ Do not edit anything under `../` unless I explicitly ask. Read it, and re-derive
 to 2026-05-13). Visit IDs are `YYYYMMDDNNNNN`; the night is `str(visit_id)[:8]` and
 `day_obs = visit_id // 100_000`.
 
+> **DECISION (2026-08-29).** The paper presents **two epochs on an equal footing**: DP2
+> (`dp2all`) and post-DP2 (`postdp2`). To keep the figure count inside the SPIE page
+> budget, show both epochs *within the same axes* wherever possible — two colours, two
+> line styles, or two rows of one figure — rather than duplicating whole figures. The
+> `dp2post20251115` tag is a sub-selection of DP2 and is not shown separately unless a
+> specific point needs it.
+
 **Science rafts** (21, corner rafts R00/R04/R40/R44 excluded):
 `R01 R02 R03 R10 R11 R12 R13 R14 R20 R21 R22 R23 R24 R30 R31 R32 R33 R34 R41 R42 R43`.
 Detector→raft always via `lsst.obs.lsst.LsstCam.getCamera()`, `det.getName().split('_')[0]`.
@@ -131,15 +138,33 @@ atmospheric seeing profile, and any point-symmetric optical PSF all have zero po
 odd-`N` shapelet modes. Odd-`N` power is therefore a direct, dimensionless measure of the
 non-atmospheric, asymmetric (coma-, trefoil-like) aberration content of the PSF.
 
-> **DECISION (2026-08-28).** The code in `../scripts/shapelet_psf.py` uses
-> `list(range(6,10)) + list(range(15,24))`, which additionally includes indices 21, 22, 23
-> — `Re/Im(b60)` and `Re(b51)` — but not `Im(b51)`, `b42` or `b33`. That slice is
-> rotationally incomplete (it is not closed under rotation of the PSF) and mixes parities.
-> The paper adopts `range(15,21)` instead: pure odd-`N`. **Every score in the paper must be
-> recomputed under this definition** — the tier thresholds, percentile tables, and Pearson
-> correlations quoted in `../shapelet_analysis.ipynb` all predate this change and must not
-> be copied into the text without re-derivation. Mention the difference from the shipped
-> `shapeletsIqScore` in the text if the comparison is made.
+In the $(n,m)$ labelling used in the paper (with $n = p+q$, $m = p-q$), the retained modes
+are exactly $b_{33}, b_{31}, b_{55}, b_{53}, b_{51}$ — every mode with **odd $m$** available
+at $n \le 6$. Note that $n$ and $m$ always share parity, so "odd $n$" and "odd $m$" select
+the same set.
+
+> **DECISION (2026-08-28, re-confirmed 2026-08-29 with simulation evidence).**
+> Three candidate masks were compared:
+>
+> | mask | modes | atm. leakage (median) | real-data P95 ($i$) |
+> |---|---|---|---|
+> | **adopted** `range(15,21)` | odd $m$ only | **1.3e-32** (machine zero) | 0.00609 |
+> | `range(15,23)` | + $b_{66}$, as in `ref/sim_ref.txt` | 5.2e-10 | 0.00611 |
+> | `range(15,24)` | shipped code | 6.5e-9 | 0.00614 |
+>
+> The adopted mask has *identically* zero atmospheric leakage because a point-symmetric
+> profile cannot generate odd-$m$ power — a symmetry argument, not an empirical one. The
+> variants agree at $r = 0.9984$ with 99.89% tier agreement on real data, and $b_{66}$
+> contributes a median 0.16% of the score, so nothing is lost by dropping it. The shipped
+> `range(15,24)` additionally includes `Re(b64)` but not `Im(b64)`, making it **not
+> rotationally invariant**.
+>
+> **Consequences.** (1) `ref/sim_ref.txt` lists $b_{66}$ in its equation and must be
+> updated to match. (2) Every score in the paper must be recomputed under this definition;
+> the tier thresholds, percentile tables and Pearson correlations in
+> `../shapelet_analysis.ipynb` all predate the change and must not be copied into the text
+> without re-derivation. (3) If comparing to the DM-stack `shapeletsIqScore`, state the
+> difference.
 
 ### Moment score
 
