@@ -664,20 +664,23 @@ The progression is clear by eye. LOW-tier stamps are round and compact, and thei
 are consistent with noise. MEDIUM-tier stamps show mild elongation and faint structure in
 the residual. HIGH-tier stamps display an unmistakable comatic profile --- a displaced,
 asymmetric core with a one-sided flare --- and their residuals show coherent, large-scale
-structure rather than noise. VERY HIGH-tier stamps are strongly aberrated, several showing
-the double-lobed morphology characteristic of a large misalignment term.
+structure rather than noise. VERY HIGH-tier stamps are strongly aberrated, one of them
+showing the double-lobed morphology characteristic of a large misalignment term.
 
 The moment scores annotated on each panel track the tiers independently, and their ranges
-are almost disjoint: $S_{\rm moment}$ spans $0.0005$--$0.0025$ for the LOW examples,
-$0.0064$--$0.0222$ for MEDIUM, $0.0228$--$0.0595$ for HIGH and $0.055$--$0.171$ for VERY
-HIGH. We also note that the FWHM values annotated on the panels are interleaved across
-tiers, ranging from $0.82\arcsec$ to $1.59\arcsec$ within the HIGH and VERY HIGH tiers
-alone, reinforcing the conclusion of Section~\ref{results:fwhm} that PSF size and PSF
-asymmetry are close to independent. We quantify the agreement between the two scores next.
+are disjoint across all four tiers: $\smom$ spans $2.7 \times 10^{-6}$ to $3.8 \times
+10^{-5}$ for the LOW examples, $0.0076$--$0.0154$ for MEDIUM, $0.0376$--$0.0525$ for HIGH
+and $0.095$--$0.236$ for VERY HIGH. Since the moment score is computed from the pipeline's
+adaptive moments and shares no machinery with the shapelet fit, this ordering is a
+non-trivial consistency check. We also note that the FWHM values annotated on the panels are
+interleaved across tiers --- the LOW examples have the \emph{largest} FWHM of any row, at
+$1.17$--$1.84\arcsec$, while the HIGH examples span $0.92$--$1.36\arcsec$ --- reinforcing
+the conclusion of Section~\ref{results:fwhm} that PSF size and PSF asymmetry are close to
+independent. We quantify the agreement between the two scores next.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.86\textwidth]{tier_gallery.pdf}
+\includegraphics[width=\textwidth]{tier_gallery.pdf}
 \end{center}
 \caption{Example $i$-band raft-stacked PSF stamps from each quality tier, from the DP2
 sample. Each tier occupies one row, containing three (star, residual) pairs: the left panel
