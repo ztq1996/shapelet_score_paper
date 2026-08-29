@@ -273,6 +273,8 @@ def apply_style():
     })
 
 
-# Single-column and full-width figure sizes for the SPIE two-column layout.
-FIG_COL = (3.5, 2.6)
-FIG_WIDE = (7.0, 2.6)
+# SPIE proceedings are single-column with a ~6.5 in text width. Figures are
+# drawn at 7.0 in and included at \textwidth, so they are very slightly
+# downscaled; fonts are sized to stay legible after that.
+FIG_WIDE = (7.0, 2.9)      # full text width
+FIG_HALF = (3.4, 2.6)      # two side by side

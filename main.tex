@@ -41,7 +41,28 @@ Rubin Observatory}
 \maketitle
 
 \begin{abstract}
-\todo{abstract --- write last, once the results are final.}
+Image quality at the Vera C. Rubin Observatory is usually summarised by the PSF full width
+at half maximum and ellipticity. Both are second-moment quantities, and both are dominated
+by the atmosphere, so neither is sensitive to the asymmetric optical aberrations --- coma
+and trefoil --- that the active optics system exists to correct. A visit can be taken in
+excellent seeing and still deliver a badly aberrated PSF. We present an image-quality metric
+that is sensitive to exactly those aberrations and blind to the atmosphere by construction.
+Decomposing each PSF into polar shapelets, we show using a simulated population of
+point-symmetric atmospheric PSFs that the coefficients with odd azimuthal index $m$ vanish
+identically, at the level of double-precision round-off, while the even-$m$ coefficients
+absorb all of the atmospheric variation. We define the \emph{shapelet score} as the fraction
+of shapelet power carried by the odd-$m$ modes, together with a companion \emph{moment
+score} built from third-order adaptive moments. We measure both for $1{,}468{,}222$
+raft-stacked PSFs from $71{,}015$ LSSTCam visits taken between 2025 April and 2026 May,
+covering the Data Preview 2 processing and the subsequent nightly validation. The shapelet
+score is essentially independent of PSF size, correlating with FWHM at $|r| < 0.20$ while
+spanning two orders of magnitude at fixed seeing; it agrees with the independently
+constructed moment score at a Spearman rank correlation of $+0.923$; and it responds
+preferentially to the odd-$m$ Zernike aberrations measured by the corner wavefront sensors,
+most strongly to coma. Used as a nightly monitor, the fraction of PSFs it flags varies from
+zero to $29\%$ between nights, with coherent month-scale structure. We propose the shapelet
+score as an image-quality metric complementary to PSF size and to the existing AOS-derived
+metrics.
 \end{abstract}
 
 \keywords{Rubin Observatory, LSST, point spread function, shapelets, image quality,
@@ -899,12 +920,83 @@ Note that the vertical axis stops at $0.7$, and that all six bands are pooled.}
 % ============================================================================
 \section{CONCLUSION}
 \label{conclusion:0}
-\todo{conclusion}
+
+We set out to build a PSF image-quality metric for the Rubin Observatory that is sensitive
+to the asymmetric optical aberrations that active-optics control exists to correct, and that
+is insensitive to the atmosphere by construction rather than by calibration. We have
+presented two such metrics --- the shapelet score and the moment score --- and measured them
+for $1{,}468{,}222$ raft-stacked PSFs from $71{,}015$ LSSTCam visits spanning 2025 April to
+2026 May.
+
+Our main findings are as follows.
+
+\begin{enumerate}
+  \item \textbf{Odd-$m$ shapelet modes are exactly blind to the atmosphere.} In a simulation
+        of $1000$ point-symmetric atmospheric PSFs spanning realistic ranges of size, radial
+        profile and ellipticity, every odd-$m$ shapelet coefficient sits at or below the
+        double-precision floor, $\sigma \le 1.4 \times 10^{-16}$, while the even-$m$
+        coefficients vary by up to $7.1 \times 10^{-2}$ --- a ratio of $5 \times 10^{14}$.
+        This is a consequence of symmetry, not of the particular atmosphere model: any
+        profile satisfying $I(r,\theta) = I(r,\theta+\pi)$ has identically zero odd-$m$
+        power. The shapelet score, defined as the odd-$m$ fraction of total shapelet power,
+        has a median of $1.3 \times 10^{-32}$ on that simulated population.
+  \item \textbf{The score is close to independent of PSF size.} The correlation between the
+        score and the measured FWHM never exceeds $|r| = 0.20$ in any band or epoch. At
+        fixed FWHM the score spans a $5$th-to-$95$th percentile range of $84$--$124$, while
+        the median varies by only $1.3$--$3.1$ across the useful seeing range. Knowing the
+        seeing of a visit says almost nothing about whether its PSF is aberrated.
+  \item \textbf{Two independent metrics agree.} The shapelet score and the third-order
+        moment score, which share no machinery, correlate at a Spearman
+        $\rho_{\rm s} = +0.923$ over $607{,}948$ matched (visit, raft) measurements, with a
+        near-proportional relation $\smom \approx 3.2\,\sshape$ that is the same in all six
+        bands.
+  \item \textbf{The score tracks real optical aberration.} Compared against the AOS corner
+        wavefront sensors --- an entirely independent instrument --- the score responds most
+        strongly to the odd-$m$ Zernike aberrations. The coma modes $z_7$ and $z_8$ give
+        $\rho_{\rm s} = +0.170$ and $+0.201$ and a factor $2.05$ and $2.35$ rise in median
+        score across quintiles of field spread, against $1.10$ for the astigmatism mode
+        $z_5$.
+  \item \textbf{The score is a practical nightly monitor.} The fraction of PSFs above the
+        HIGH threshold has a median over nights of $3.2\%$ but ranges from $0\%$ to $28.9\%$,
+        with coherent month-scale structure. A single stacked bar chart, one bar per night,
+        separates good optical periods from bad ones by eye.
+\end{enumerate}
+
+Several caveats apply to this work. Our PSFs are raft-level stacks of up to $100$ stars
+drawn from a single detector per raft, so the scores are insensitive to aberration that
+varies within a raft and represent one field position per raft rather than a raft average.
+The score is a \emph{fraction} of total power, which makes it mildly conservative in poor
+seeing, as discussed in Section~\ref{results:fwhm}; a variant normalised by an external
+size estimate would remove this dilution and may be worth exploring. Photon noise projects
+onto the odd-$m$ modes and sets a floor on the score for shallow visits, which is visible as
+the weak positive correlation with sky background. The tier boundaries are round numbers
+justified against measured percentiles and visual inspection, not derived from any
+requirement on downstream science. Finally, we have compared against the corner-sensor
+Zernikes only through a four-point peak-to-peak spread, which is a crude proxy for the true
+field dependence of an aberration and almost certainly dilutes the correlations we report.
+
+Several directions follow naturally from this work. The most important is to quantify the
+impact of a shapelet-score cut on weak-lensing systematics directly, through the
+$\rho$-statistics and the two-point shear correlation function, which would turn the score
+from a monitoring metric into a calibrated selection criterion; we defer this to a companion
+analysis. The score can also be computed on the \textsc{Piff} PSF model as well as on the
+stars, and the difference between the two would isolate how much of the measured asymmetry
+the PSF model actually captures. A variant of the shapelet score has already been adopted
+into the LSST Science Pipelines as \texttt{shapeletsIqScore}, and we note that its mode set
+differs slightly from the definition adopted here. Finally, applying the score per detector
+rather than per raft would allow the field dependence of the aberrations to be mapped
+directly, at the cost of a higher noise floor per measurement.
 
 
 % ============================================================================
 \acknowledgments
-\todo{acknowledgments}
+
+\todo{acknowledgments --- funding, Rubin data rights, collaborators.}
+
+This work made use of \textsc{GalSim} \cite{Rowe2015} for the shapelet decomposition and of
+the LSST Science Pipelines for the PSF star catalogs and adaptive-moment measurements. It
+used data from the NSF-DOE Vera C. Rubin Observatory Data Preview 2 \cite{DP2} and from
+subsequent nightly-validation processing.
 
 \bibliography{main}
 \bibliographystyle{spiebib}
