@@ -732,17 +732,168 @@ depend on the filter.}
 \label{fig:comparison}
 \end{figure}
 
-\subsection{Nightly observatory monitoring}
-\label{results:monitoring}
-\todo{}
-
 \subsection{Dependence on observing conditions}
 \label{results:conditions}
-\todo{}
+
+We next ask whether the score is driven by anything other than the optics. In
+Figure~\ref{fig:conditions} we plot the visit-median score against three quantities
+available from consDB for every visit: the sky background, the AOS estimate of the delivered
+FWHM (\texttt{aos\_fwhm}), and the donut-blur FWHM (\texttt{donut\_blur\_fwhm}).
+
+The dependence on sky background is weak, with $\rho_{\rm s} = +0.12$ in DP2 and $+0.22$ in
+post-DP2, and the running median is close to flat across the full range. Some positive
+correlation is expected: a brighter sky means noisier stamps, and photon noise projects onto
+the odd-$m$ modes as well as the rest. We note that this sets a practical noise floor on the
+score for the shallowest visits, and it is one reason we stack up to $100$ stars per stamp.
+
+The two AOS quantities behave very differently from one another, and understanding why is
+instructive. The score correlates \emph{positively} with \texttt{aos\_fwhm}
+($\rho_{\rm s} = +0.45$ in DP2, $+0.25$ in post-DP2) but \emph{negatively} with
+\texttt{donut\_blur\_fwhm} ($\rho_{\rm s} = -0.33$ and $-0.57$). At first sight the negative
+sign is puzzling, since a larger donut blur should indicate a larger wavefront error and
+therefore a more aberrated PSF. The explanation is the dilution effect already identified in
+Section~\ref{results:fwhm}. We measured the correlation of each of these quantities with the
+directly measured PSF FWHM, and find that \texttt{donut\_blur\_fwhm} is very nearly a proxy
+for the delivered image size, with $\rho_{\rm s} = +0.81$ in DP2 and $+0.73$ in post-DP2,
+whereas \texttt{aos\_fwhm} tracks it much more weakly ($\rho_{\rm s} = +0.37$ and $+0.29$).
+Because the shapelet score is a fraction of total power, anything that raises the
+atmospheric contribution lowers it at fixed optical aberration. The negative correlation
+with \texttt{donut\_blur\_fwhm} is therefore the seeing-dilution trend seen through a
+seeing proxy, not evidence that larger wavefront errors produce rounder PSFs. We note that
+the positive correlation with \texttt{aos\_fwhm}, which is much less contaminated by seeing,
+is in the physically expected direction.
+
+We caution that we have taken these two consDB quantities at face value and have not traced
+their precise definitions through the AOS pipeline; the interpretation above rests on the
+measured correlations rather than on the definitions.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{score_vs_conditions.pdf}
+\end{center}
+\caption{Visit-median shapelet score against three observing-condition metrics, for DP2 (top
+row) and post-DP2 (bottom row): sky background (left column), AOS FWHM (middle column) and
+donut-blur FWHM (right column). All bands are pooled. The greyscale shows the number of
+visits per bin on a logarithmic scale, the solid orange line is the running median, and the
+green and orange dotted lines mark the MEDIUM ($0.002$) and HIGH ($0.005$) tier boundaries.
+The Spearman rank correlation is quoted in each panel. Note that the negative correlation
+with donut-blur FWHM reflects that quantity's strong correlation with the delivered PSF size
+($\rho_{\rm s} = +0.81$), combined with the dilution of a fractional score in poor seeing.}
+\label{fig:conditions}
+\end{figure}
 
 \subsection{Link to optical aberration}
 \label{results:optics}
-\todo{}
+
+The strongest test of whether the shapelet score measures optical aberration is to compare
+it against an independent optical measurement. The four corner wavefront sensors provide
+exactly that: they estimate the Zernike coefficients $z_4$--$z_{11}$ from curvature sensing,
+using neither the science pixels nor any part of our analysis. For each visit we form the
+peak-to-peak spread of each Zernike coefficient across the four corner positions, which
+measures how strongly that aberration varies over the field.
+
+Figure~\ref{fig:zernike} shows the correlation of the visit-median score with each of these
+eight field spreads. The result follows the prediction of the mode selection remarkably
+closely. The two coma modes, $z_7$ and $z_8$, show the strongest response
+($\rho_{\rm s} = +0.170$ and $+0.201$); the trefoil modes $z_9$ and $z_{10}$ follow
+($+0.070$ and $+0.101$); and the weakest response of all is the astigmatism mode $z_5$
+($+0.028$). Coma and trefoil are the odd-$m$ Zernike aberrations --- $m = 1$ and $m = 3$
+respectively --- and they are precisely the aberrations that produce odd-$m$ shapelet power.
+Defocus, astigmatism and spherical aberration have even $m$, and produce PSF distortions
+that the score is constructed to ignore. Averaging over modes, the odd-$m$ Zernikes give a
+mean $\rho_{\rm s} = +0.135$ against $+0.065$ for the even-$m$ ones.
+
+The effect is also visible in absolute terms. Between the lowest and the highest quintile of
+field spread, the median shapelet score rises by a factor of $2.35$ for $z_8$ and $2.05$ for
+$z_7$, compared with only $1.10$ for $z_5$. Given that the score spans two orders of
+magnitude, these are modest but highly significant shifts across $29{,}502$ visits.
+
+We note two limitations. First, the separation between odd-$m$ and even-$m$ Zernikes is not
+perfectly clean: the astigmatism mode $z_6$ gives a ratio of $1.42$, comparable to the
+trefoil modes, and we do not have an explanation for the asymmetry between $z_5$ and $z_6$.
+Second, and more fundamentally, the corner sensors sample the wavefront at only four field
+positions, all of them outside the science rafts, whereas the score is measured on the
+science rafts themselves. A four-point peak-to-peak spread is a crude proxy for the true
+field dependence of an aberration, and we expect this to dilute the correlations
+substantially. That a clear, correctly-ordered signal survives this mismatch is what we
+regard as the significant result.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{score_vs_zernike.pdf}
+\end{center}
+\caption{The shapelet score against the AOS wavefront Zernike coefficients, for the DP2
+epoch. \textit{Left:} Spearman rank correlation between the visit-median shapelet score and
+the peak-to-peak spread of each Zernike coefficient across the four corner wavefront
+sensors. Bars are ordered and coloured by the azimuthal order $m$ of the Zernike mode:
+orange for odd $m$ (coma, $m = 1$; trefoil, $m = 3$) and blue for even $m$ (defocus and
+spherical, $m = 0$; astigmatism, $m = 2$). Note that the odd-$m$ aberrations, which are the
+ones capable of generating odd-$m$ shapelet power, give the largest correlations.
+\textit{Right:} the visit-median score against the field spread of $z_8$, the mode with the
+strongest response, with the number of visits per bin on a logarithmic greyscale, the
+running median in orange, and the MEDIUM and HIGH tier boundaries as dotted lines.}
+\label{fig:zernike}
+\end{figure}
+
+\subsection{Nightly observatory monitoring}
+\label{results:monitoring}
+
+Finally we demonstrate the score in the role we propose for it: a nightly image-quality
+monitor. Figure~\ref{fig:timeseries} shows the visit-median score for all $69{,}053$
+(visit, band) combinations over the full $209$-night baseline from 2025 April 24 to 2026 May
+13, and Figure~\ref{fig:nightly} reduces the same data to one bar per night, giving the
+fraction of raft-stacked PSFs in each quality tier.
+
+The score varies strongly and coherently from night to night. Pooling all bands, the
+fraction of PSFs in the HIGH or VERY HIGH tiers has a median over nights of $3.2\%$, but a
+$10$th-to-$90$th percentile range of $0.1\%$ to $16.4\%$ and a night-to-night standard
+deviation of $7.0$ percentage points. The worst night in the sample, 2026 March 13, has
+$28.9\%$ of its PSFs above the HIGH threshold --- a factor of $9.2$ above the median night
+--- while several nights, including 2025 May 25 and 2025 September 20, have no PSFs above it
+at all. This is a large dynamic range for an image-quality metric, and it is the property
+that makes the score useful operationally: a bad night is unmistakable.
+
+The structure is also coherent on longer timescales. Averaging the HIGH-plus-VERY-HIGH
+fraction by month, we find $12.6\%$ in 2025 April, at the very start of LSSTCam
+commissioning, falling to $0.5\%$ in 2025 October; it then rises again to $9.0$--$9.5\%$
+through 2026 January to March before falling to $2.4\%$ by 2026 May. We emphasise that we
+make no attempt here to attribute these episodes to specific engineering interventions, and
+we have deliberately not cross-referenced the observatory's maintenance logs. What
+Figure~\ref{fig:nightly} establishes is that the score responds on the timescales on which
+the optical system actually changes, and that it does so with enough contrast to separate
+good periods from bad ones by eye.
+
+We note that these figures pool all six bands, so part of the night-to-night variation
+reflects which filters were used. We also note that the tier boundaries are absolute rather
+than percentile-based, which is what allows a genuine change in image quality to appear as a
+change in the plotted fractions.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{score_timeseries.pdf}
+\end{center}
+\caption{Visit-median shapelet score against time over the full baseline. Each point is one
+(visit, band) combination, coloured by band using the scheme of Figure~\ref{fig:dist}; the
+solid black line is the median over all visits in each night, broken across observing gaps
+longer than five days. Horizontal dashed lines mark the tier boundaries at $0.002$ (green),
+$0.005$ (orange) and $0.02$ (red). Note the logarithmic vertical axis.}
+\label{fig:timeseries}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{nightly_tiers.pdf}
+\end{center}
+\caption{Nightly image-quality summary. Each bar is one observing night, showing the
+fraction of raft-stacked PSFs falling in the MEDIUM (green), HIGH (orange) and VERY HIGH
+(red) tiers; the LOW tier makes up the remainder of each bar and is omitted so that the
+informative part of the range fills the plot. Nights are plotted sequentially rather than on
+a calendar axis, because the observing cadence is irregular; grey vertical lines mark month
+boundaries and the tick labels give the first observed night of the labelled month. Only
+nights with at least $200$ measured PSFs are shown, which retains $206$ of $209$ nights.
+Note that the vertical axis stops at $0.7$, and that all six bands are pooled.}
+\label{fig:nightly}
+\end{figure}
 
 
 % ============================================================================
