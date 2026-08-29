@@ -27,6 +27,7 @@
 \newcommand{\smom}{S_{\rm moment}}
 \newcommand{\bpq}{b_{pq}}
 \newcommand{\arcsec}{\ensuremath{^{\prime\prime}}}
+\newcommand{\ugrizy}{\ensuremath{ugrizy}}
 
 \title{The Shapelet Score: An Optics-Sensitive PSF Quality Metric for the
 Rubin Observatory}
@@ -113,45 +114,375 @@ function of observing conditions and of time. We conclude in Section~\ref{conclu
 % ============================================================================
 \section{DATA}
 \label{data:0}
-\todo{roadmap opener}
 
-\subsection{LSSTCam DP2 and post-DP2 visits}
+In this section we describe the data used in this work. In Section~\ref{data:visits} we
+define the two LSSTCam epochs we analyse. In Section~\ref{data:stamps} we describe how PSF
+star stamps are extracted and stacked, in Section~\ref{data:moments} the higher-order
+moment catalog, and in Section~\ref{data:zernike} the auxiliary wavefront and
+observing-condition metadata.
+
+\subsection{LSSTCam epochs}
 \label{data:visits}
-\todo{}
+
+All data in this work were taken with LSSTCam on the Simonyi Survey Telescope. We analyse
+two epochs, which we treat throughout on an equal footing:
+
+\begin{itemize}
+  \item \textbf{DP2} --- visits processed by the Data Preview 2 Data Release Production
+        \cite{DP2}, using Rubin Science Pipelines \texttt{v30}. We use the
+        \texttt{LSSTCam/runs/DRP/DP2/v30\_0\_0/DM-53881/stage2} collection. These visits
+        span 2025 April 24 to 2026 January 6.
+  \item \textbf{Post-DP2} --- visits processed by the nightly-validation pipelines after
+        the DP2 processing cutoff, spanning 2026 January 1 to 2026 May 13.
+\end{itemize}
+
+We note that the two epochs overlap slightly in calendar time; the distinction between them
+is one of \emph{processing}, not of observing date. The post-DP2 sample is the larger of the
+two and is the only one that extends into 2026 April and May, which matters for the
+long-baseline monitoring results of Section~\ref{results:monitoring}.
+
+Table~\ref{tab:sample} summarises the sample. In total we measure $1{,}468{,}222$
+raft-stacked PSFs from $71{,}015$ visits over \ugrizy. The $i$ band is by far the
+best-sampled, with $164{,}443$ PSFs in DP2 and $341{,}331$ in post-DP2, and we therefore use
+$i$ band for the figures that require a single representative band; results for the
+remaining bands are shown wherever they differ.
+
+\begin{table}[htbp]
+\caption{Summary of the PSF sample. ``PSFs'' counts raft-stacked PSF stamps, each of which
+is the flux-normalised mean of up to 100 stars on one detector of one raft
+(Section~\ref{data:stamps}). Visit counts are per band; the epoch totals de-duplicate
+visits observed in more than one band. Dates are the first and last night on which a visit
+in that band and epoch was taken.}
+\label{tab:sample}
+\begin{center}
+\begin{tabular}{lrrrcc}
+\toprule
+Band & Nights & Visits & PSFs & First night & Last night \\
+\midrule
+\multicolumn{6}{l}{\textit{DP2}} \\
+\quad $u$ & 38 & 2,056 & 42,698 & 2025-04-24 & 2025-12-20 \\
+\quad $g$ & 79 & 4,280 & 88,863 & 2025-04-24 & 2026-01-06 \\
+\quad $r$ & 76 & 5,063 & 104,521 & 2025-04-24 & 2026-01-05 \\
+\quad $i$ & 99 & 7,899 & 164,443 & 2025-04-24 & 2026-01-06 \\
+\quad $z$ & 79 & 5,867 & 121,771 & 2025-05-15 & 2026-01-05 \\
+\quad $y$ & 29 & 4,337 & 90,215 & 2025-05-19 & 2026-01-06 \\
+\quad all & 130 & 29,502 & 612,511 & 2025-04-24 & 2026-01-06 \\
+\addlinespace
+\multicolumn{6}{l}{\textit{Post-DP2}} \\
+\quad $u$ & 17 & 1,345 & 28,112 & 2026-01-13 & 2026-05-13 \\
+\quad $g$ & 45 & 2,794 & 58,213 & 2026-01-02 & 2026-05-13 \\
+\quad $r$ & 51 & 5,053 & 105,190 & 2026-01-03 & 2026-05-13 \\
+\quad $i$ & 73 & 16,544 & 341,331 & 2026-01-01 & 2026-05-13 \\
+\quad $z$ & 58 & 9,237 & 187,323 & 2026-01-02 & 2026-05-13 \\
+\quad $y$ & 35 & 6,540 & 135,542 & 2026-01-02 & 2026-04-28 \\
+\quad all & 85 & 41,513 & 855,711 & 2026-01-01 & 2026-05-13 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
 
 \subsection{PSF star stamps}
 \label{data:stamps}
-\todo{}
+
+We build our PSF sample from image cutouts of stars that the pipeline used to constrain the
+PSF model. For DP2 we select stars from the \texttt{refit\_psf\_star} catalog; for post-DP2
+we use the \texttt{single\_visit\_star} catalog restricted to
+\texttt{calib\_psf\_used = True}. In both cases we take the star centroids from
+\texttt{slot\_Centroid\_x} and \texttt{slot\_Centroid\_y}, and cut stamps directly from the
+\texttt{preliminary\_visit\_image} pixels.
+
+We restrict the analysis to the 21 science rafts, excluding the four corner rafts
+(\texttt{R00}, \texttt{R04}, \texttt{R40}, \texttt{R44}) which carry the guide and
+wavefront sensors. For each visit and each science raft we select one detector at random,
+draw up to 100 stars from that detector, cut a $51 \times 51$ pixel ($10.2\arcsec \times
+10.2\arcsec$ at the $0.2\arcsec$ pixel scale) stamp around each star, normalise each stamp
+to unit flux, and average them. This yields one stacked PSF image per raft per visit, or up
+to 21 per visit. Stars whose stamps would extend past a detector edge are rejected. Across
+the $75{,}929$ visits with stamps on disk, the median number of stars contributing to a
+stamp is $60$, with a $16$--$84\%$ range of $28$--$100$, and the median number of rafts
+represented in a visit is the full $21$.
+
+We stack for two reasons. First, averaging $\sim\!10^2$ flux-normalised stars suppresses
+photon noise by an order of magnitude, so that the high-order shapelet coefficients we are
+interested in are measured against a much reduced noise floor. Second, a raft-level stamp
+is the natural unit for the optical aberrations we are trying to detect: coma and trefoil
+vary smoothly across the focal plane on scales much larger than a single detector, whereas
+the atmospheric contribution is common to the whole focal plane within a visit. We note two
+consequences of this choice that we return to in Section~\ref{results:0}. Stacking
+suppresses any aberration that varies \emph{within} a raft, so our scores are a lower bound
+on the true per-star asymmetry; and because we draw from a single detector per raft, a
+stamp samples one quadrant of the raft's field position rather than the raft mean.
 
 \subsection{Higher-order moment catalog}
 \label{data:moments}
-\todo{}
 
-\subsection{Active-optics wavefront Zernikes}
+For the moment score of Section~\ref{method:moment_score}, and for the comparison in
+Section~\ref{results:score_comparison}, we use the adaptive-moment measurements produced by
+the LSST Science Pipelines for the same PSF stars. Second moments come from the HSM adaptive
+moments \cite{HirataSeljak2003, BernsteinJarvis2002} via the \texttt{slot\_Shape} slot;
+third- and fourth-order moments come from the
+\texttt{ext\_shapeHSM\_HigherOrderMomentsSource} plugin, which measures the normalised
+moments $M_{pq}$ in the coordinate frame whitened by the adaptive second moments, making
+them dimensionless \cite{Zhang2023}. The corresponding
+\texttt{ext\_shapeHSM\_HigherOrderMomentsPSF} columns give the same quantities for the PSF
+model, which we use to form model-minus-star residuals.
+
+From the per-star measurements we form, for each visit, the median of every moment over all
+stars in each science raft, and the median over the whole focal plane. This gives a
+per-(visit, raft) moment table matched to the stamp sample described above. We also record
+the size $T = I_{xx} + I_{yy}$ and the two ellipticity components
+$e_1 = (I_{xx} - I_{yy})/T$ and $e_2 = 2 I_{xy}/T$.
+
+\subsection{Wavefront and observing-condition metadata}
 \label{data:zernike}
-\todo{}
+
+We take three classes of auxiliary metadata from the Consolidated Database (consDB), matched
+to our visits by \texttt{visit\_id}.
+
+\textbf{Wavefront Zernikes.} The Rubin AOS estimates the wavefront by curvature sensing on
+the four corner wavefront sensors \cite{Xin2015}, which are read out as detectors 191, 195,
+199 and 203. From the \texttt{ccdvisit1\_quicklook} table we retrieve the annular Zernike
+coefficients $z_4$ through $z_{11}$ in the Noll ordering \cite{Noll1976} --- defocus,
+astigmatism, coma, trefoil and spherical --- for each of the four corners. We use both the
+median over the four corners and, as a proxy for the aberration gradient across the field,
+the peak-to-peak spread $\max_j z_i^{(j)} - \min_j z_i^{(j)}$ over the four corner
+positions $j$.
+
+\textbf{Delivered image quality.} We use \texttt{aos\_fwhm}, the AOS estimate of the
+delivered FWHM, and \texttt{donut\_blur\_fwhm}, the contribution to the FWHM inferred from
+the donut images on the wavefront sensors. Both are independent of our shapelet
+measurement and provide the natural comparison baseline in
+Section~\ref{results:conditions}.
+
+\textbf{Sky background.} We use \texttt{sky\_bg} from \texttt{ccdvisit1\_quicklook}, taken
+as the median across detectors within a visit, as a proxy for the photon noise level in the
+stamps.
 
 
 % ============================================================================
 \section{PSF QUALITY SCORES}
 \label{method:0}
-\todo{roadmap opener}
+
+In this section we define the two scores. In Section~\ref{method:shapelet} we set out the
+shapelet formalism and how we fit it. In Section~\ref{method:atm} we use a simulated
+atmospheric PSF population to determine which shapelet modes respond to the atmosphere and
+which do not; this is the measurement that motivates the definition. In
+Section~\ref{method:shapelet_score} we define the shapelet score, in
+Section~\ref{method:moment_score} the moment score, and in Section~\ref{method:tiers} the
+quality tiers we use to summarise them.
 
 \subsection{Shapelet decomposition of the PSF}
 \label{method:shapelet}
-\todo{}
+
+Shapelets are the eigenfunctions of the two-dimensional quantum harmonic oscillator, a
+complete orthonormal basis in which a localised image can be expanded to a chosen maximum
+order \cite{Refregier2003, BernsteinJarvis2002}. We use the polar (Gauss--Laguerre) form
+\cite{MasseyRefregier2005}, in which the basis functions carry a definite azimuthal
+dependence $e^{im\theta}$ and therefore separate the image into components of explicit
+rotational symmetry. This is the property we exploit throughout.
+
+We write the surface brightness of a PSF as
+
+\begin{equation}
+I(r, \theta) = \frac{1}{\sigma^2} \sum_{pq} b_{pq}\,
+               \psi_{pq}\!\left(\frac{r}{\sigma}, \theta\right),
+\label{eq:shapelet}
+\end{equation}
+
+where $\sigma$ is an overall scale length, $b_{pq}$ are the shapelet coefficients, and the
+basis functions are
+
+\begin{equation}
+\psi_{pq}(r, \theta) = \frac{(-1)^q}{\sqrt{\pi}} \sqrt{\frac{q!}{p!}}\;
+                       r^{m} e^{im\theta} e^{-r^2/2} L_q^{(m)}(r^2),
+\label{eq:basis}
+\end{equation}
+
+with $L_q^{(m)}$ the generalised Laguerre polynomials. The two indices $p$ and $q$ count
+quanta of positive and negative angular momentum; we label modes instead by the order
+$n = p + q$ and the azimuthal index $m = p - q$, so that $n$ and $m$ always have the same
+parity. Requiring $I(r,\theta)$ to be real imposes $b_{pq} = b_{qp}^{*}$, so each mode with
+$m > 0$ contributes one real and one imaginary coefficient, while $m = 0$ modes contribute
+a single real coefficient.
+
+We truncate at $n \le 6$, which gives $28$ coefficients. Figure~\ref{fig:basis} shows the
+resulting basis functions arranged by order. We fit each stacked PSF stamp using
+\textsc{GalSim} \cite{Rowe2015}: we first measure the adaptive moments of the stamp with
+\texttt{FindAdaptiveMom}, which implements the HSM algorithm \cite{HirataSeljak2003}, and
+adopt the resulting $\sigma_{\rm HSM}$ (converted to arcseconds) as the shapelet scale
+$\sigma$; we then solve the linear least-squares problem for $b_{pq}$ with
+\texttt{Shapelet.fit} in surface-brightness normalisation. Using the adaptive-moment size as
+the shapelet scale is what makes the decomposition approximately scale-free: a
+well-fit PSF concentrates its power in the low-order modes regardless of how large it is,
+so the coefficients measure PSF \emph{shape} rather than PSF size. Throughout, we quote
+FWHM as $2.3548\,\sigma_{\rm HSM}$.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.72\textwidth]{shapelet_basis.pdf}
+\end{center}
+\caption{The 28 polar shapelet basis functions used in this work, truncated at order
+$n \le 6$ and arranged by order, with $n$ increasing downwards. Each panel is labelled by
+$(n, m)$ and by whether it is the real or imaginary part of the coefficient; red and blue
+denote positive and negative surface brightness on a symmetric scale. Modes drawn with a
+thick orange border are the odd-$m$, $n \geq 3$ modes that enter the shapelet score
+(Section~\ref{method:shapelet_score}). Modes with a blue border are the $n = 1$ centroid
+modes, which are odd in $m$ but encode a translation of the stamp rather than an asymmetry
+of the profile, and are excluded. Grey modes have even $m$ and are excluded. Note that the
+odd-$m$ modes are precisely those that change sign under a $180^{\circ}$ rotation.}
+\label{fig:basis}
+\end{figure}
+
+\subsection{Which modes respond to the atmosphere?}
+\label{method:atm}
+
+The central question for defining the score is which of the 28 coefficients carry
+information about the optics and which merely track the atmosphere. We answer it with a
+simulation.
+
+We generate $1000$ realisations of an atmospheric PSF. Each realisation is the sum of two
+Moffat profiles with independently drawn parameters: FWHM uniform on $[0.5, 1.2]\arcsec$,
+Moffat $\beta$ uniform on $[2.5, 4.5]$, and shear components $g_1, g_2$ drawn from a normal
+distribution of width $0.03$ and clipped at $|g| < 0.3$. The two-component sum gives the
+profile more freedom than a single Moffat, so that the population spans a realistic range of
+size, ellipticity, and radial profile shape. Crucially, each component is centred at the
+origin, so every realisation is point-symmetric: the population contains atmospheric
+variation and, by construction, no optical asymmetry whatsoever. We fit each realisation
+with the same procedure used for the data, recovering $1000$ of $1000$ fits with measured
+FWHM spanning $0.56$--$1.32\arcsec$.
+
+Figure~\ref{fig:atm} shows the result, and it is unambiguous. The upper panel shows the
+standard deviation of each coefficient across the realisations. The even-$m$ coefficients
+vary substantially --- the largest are $(0,0)$ with $\sigma = 7.1 \times 10^{-2}$, the
+radial mode $(4,0)$ with $\sigma = 2.9 \times 10^{-2}$, and the ellipticity modes $(2,2)$
+with $\sigma \approx 2.5 \times 10^{-2}$ --- and together they carry $99.96\%$ of the median
+total power. Every odd-$m$ coefficient, by contrast, has $\sigma \le 1.4 \times 10^{-16}$:
+they are zero at the level of double-precision round-off. The ratio of the largest even-$m$
+to the largest odd-$m$ variation is $5 \times 10^{14}$.
+
+This is not a coincidence of our particular parameter choices, and we emphasise that it is
+not an empirical result that could fail for a different atmosphere model. A profile that
+satisfies $I(r, \theta) = I(r, \theta + \pi)$ has, by the orthogonality of $e^{im\theta}$,
+identically zero projection onto every basis function with odd $m$. Any point-symmetric PSF
+--- a Gaussian, a Moffat, a Kolmogorov profile, an elliptical version of any of these, a sum
+of such components, and equally an optical PSF from a perfectly aligned telescope --- has no
+odd-$m$ power at all. Odd-$m$ power can only be produced by a genuine asymmetry.
+
+The lower panel of Figure~\ref{fig:atm} makes the same point in terms of correlations with
+the input parameters. The even-$m$ coefficients correlate with the atmospheric FWHM at up to
+$|r| = 0.45$, whereas no odd-$m$ coefficient exceeds $|r| = 0.086$ with FWHM or $|r| = 0.056$
+with $|g|$, consistent with noise given $1000$ realisations. We note that the residual
+odd-$m$ values are set by floating-point arithmetic in the fit, not by any physical effect.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{atm_coeff_variation.pdf}
+\end{center}
+\caption{Response of each shapelet coefficient to atmospheric PSF variation, measured on
+$1000$ simulated point-symmetric two-component Moffat PSFs. Bars are coloured by mode class:
+orange for the odd-$m$, $n \geq 3$ modes that enter the score, blue for the $n = 1$ centroid
+modes, grey for even-$m$ modes; the orange shading marks the score modes. \textit{Top:} the
+standard deviation of each coefficient across realisations, on a logarithmic scale. The
+dotted line marks the double-precision floor at $10^{-16}$. All odd-$m$ coefficients sit at
+or below this floor, roughly fourteen orders of magnitude below the even-$m$ coefficients.
+\textit{Bottom:} the Pearson correlation coefficient of each shapelet coefficient with the
+input FWHM (dark red) and with the input ellipticity magnitude $|g|$ (green). Note that the
+vertical scale is linear here and spans $\pm 0.55$; the odd-$m$ correlations are consistent
+with zero at this sample size.}
+\label{fig:atm}
+\end{figure}
 
 \subsection{The shapelet score}
 \label{method:shapelet_score}
-\todo{}
+
+Motivated by Section~\ref{method:atm}, we define the shapelet score as the fraction of the
+total shapelet power carried by the odd-$m$ modes:
+
+\begin{equation}
+\sshape = \frac{\displaystyle\sum_{n \geq 3,\; m\ \mathrm{odd}} |b_{nm}|^2}
+               {\displaystyle\sum_{nm} |b_{nm}|^2} .
+\label{eq:shapelet_score}
+\end{equation}
+
+At $n \le 6$ the numerator runs over five modes --- $b_{33}$, $b_{31}$, $b_{55}$, $b_{53}$
+and $b_{51}$ --- or ten of the 28 real coefficients once real and imaginary parts are
+counted separately. The score is dimensionless, bounded in $[0, 1]$, and invariant under
+rotation of the PSF, since rotating by an angle $\phi$ multiplies $b_{nm}$ by $e^{im\phi}$
+and leaves $|b_{nm}|^2$ unchanged. Normalising by the total power makes it independent of
+the flux normalisation of the stamp, and, because $\sigma$ is set by the adaptive moments,
+largely independent of the PSF size --- a claim we test directly on data in
+Section~\ref{results:fwhm}.
+
+Two exclusions deserve comment. First, we exclude the $n = 1$ modes, which are odd in $m$
+but describe a displacement of the profile rather than a distortion of it. A stamp whose
+centroid is offset from the fitted centre acquires $n = 1$ power without being asymmetric,
+so including these modes would make the score sensitive to stamp registration. This matters
+in practice: in the $i$-band data the $n = 1$ modes carry a median fractional power of
+$1.8 \times 10^{-4}$, roughly a quarter of the typical score, so the exclusion is
+numerically significant and not merely a matter of principle. Second, we truncate at
+$n \le 6$. Higher orders would add further odd-$m$ modes, but at fixed stamp size and noise
+level the highest-order coefficients are increasingly poorly constrained, and we find that
+$n \le 6$ already captures the asymmetries visible by eye
+(Section~\ref{results:gallery}).
+
+Evaluated on the simulated atmospheric population of Section~\ref{method:atm}, the score has
+a median of $1.3 \times 10^{-32}$ and a maximum of $1.2 \times 10^{-31}$. In other words,
+the atmosphere alone produces a score $29$ orders of magnitude below the smallest threshold
+we will use on real data. Any measured score is therefore attributable to the optics, to the
+detector, or to noise --- never to seeing.
 
 \subsection{The moment score}
 \label{method:moment_score}
-\todo{}
+
+We also construct a second, independent metric from the third-order adaptive moments
+described in Section~\ref{data:moments}, both as a cross-check on the shapelet score and
+because moments are already computed by the pipeline for every star. Following
+Ref.~\citenum{Zhang2023}, we form the spin-1 and spin-3 combinations of the normalised
+third moments $M_{pq}$,
+
+\begin{align}
+c_{11} &= M_{30} + M_{12},  &  c_{12} &= M_{21} + M_{03}, \label{eq:coma}\\
+c_{31} &= M_{30} - 3 M_{12}, &  c_{32} &= 3 M_{21} - M_{03}, \label{eq:trefoil}
+\end{align}
+
+where $(c_{11}, c_{12})$ transform as a spin-1 object under rotation and describe the
+coma-like asymmetry of the PSF, and $(c_{31}, c_{32})$ transform as spin-3 and describe the
+trefoil-like asymmetry. The moment score is the weighted sum of their squared moduli,
+
+\begin{equation}
+\smom = 3\left(c_{11}^2 + c_{12}^2\right) + \left(c_{31}^2 + c_{32}^2\right),
+\label{eq:moment_score}
+\end{equation}
+
+which, like the shapelet score, is dimensionless and rotationally invariant. The factor of
+three up-weights the coma term; we adopt it for consistency with the metric already in use
+for observatory monitoring, and we note that the choice affects the normalisation of
+$\smom$ but not its rank ordering strongly, since coma and trefoil are themselves
+correlated.
+
+The two scores are built from the same physical information --- the odd-$m$, and hence
+asymmetric, content of the PSF --- but by completely different routes: one from a
+least-squares basis expansion of the image, the other from weighted pixel moments. Their
+agreement, which we quantify in Section~\ref{results:score_comparison}, is therefore a
+meaningful validation of both.
 
 \subsection{Score tiers}
 \label{method:tiers}
-\todo{}
+
+For operational use it is convenient to reduce the score to a small number of quality
+classes. We adopt four tiers, with boundaries at $\sshape = 0.002$, $0.005$ and $0.02$:
+
+\begin{itemize}
+  \item \textbf{LOW} ($\sshape < 0.002$): clean, symmetric PSFs.
+  \item \textbf{MEDIUM} ($0.002 \le \sshape < 0.005$): mild asymmetry.
+  \item \textbf{HIGH} ($0.005 \le \sshape < 0.02$): clearly visible coma or trefoil.
+  \item \textbf{VERY HIGH} ($\sshape \ge 0.02$): strongly aberrated PSFs.
+\end{itemize}
+
+These boundaries are round numbers chosen to sit near the $80$th, $95$th and $99$th
+percentiles of the global distribution; we justify them against the measured percentiles in
+Section~\ref{results:distributions} and against visual inspection in
+Section~\ref{results:gallery}.
 
 
 % ============================================================================
@@ -161,6 +492,10 @@ function of observing conditions and of time. We conclude in Section~\ref{conclu
 
 \subsection{Score distributions}
 \label{results:distributions}
+\todo{}
+
+\subsection{Independence from PSF size}
+\label{results:fwhm}
 \todo{}
 
 \subsection{Visual validation by tier}

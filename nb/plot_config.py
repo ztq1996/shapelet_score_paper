@@ -115,15 +115,40 @@ def bvec_path(band, tag, piff=False):
 #   idx 21-27   Re/Im b60, Re/Im b51,     N=6  m=6,4,2,0
 #               Re/Im b42, b33
 #
-# The paper's shapelet score is the fraction of power in the parity-ODD modes
-# (N = 3 and N = 5).  A Gaussian core, an elliptical atmospheric profile, and
-# any point-symmetric optical PSF all have zero odd-N power.
+# The paper's shapelet score is the fraction of power in the odd-m modes with
+# n >= 3.  A Gaussian core, an elliptical atmospheric profile, and any
+# point-symmetric optical PSF all have identically zero odd-m power.
+#
+# n=1 (m=1, idx 1-2) is odd-m but is EXCLUDED: those two coefficients encode the
+# residual centroid offset of the stamp relative to the adaptive-moment centroid,
+# i.e. a registration artifact, not a PSF asymmetry.  On real i-band data they
+# carry a median fractional power of ~1e-4, roughly 20% of the score, so the
+# exclusion is numerically significant and not merely cosmetic.
 #
 # NOTE: this deliberately differs from NON_GAUSS_NON_ATMOSPHERE in
 # ../scripts/shapelet_psf.py, which uses range(15, 24) and so picks up a
-# rotationally incomplete slice of N=6 (Re/Im b60 and Re b51 only).
+# rotationally incomplete slice of n=6 (Re/Im b_66 and Re b_64 only).
 BMAX = 6
-ODD_ORDER = list(range(6, 10)) + list(range(15, 21))
+
+def _odd_m_indices(bmax=BMAX, n_min=3):
+    """Indices of coefficients with odd m and n >= n_min, in GalSim bvec order."""
+    out = []
+    for n in range(bmax + 1):
+        for q in range(n // 2 + 1):
+            p = n - q
+            m = p - q
+            idx = n * (n + 1) // 2 + 2 * q
+            if m % 2 == 1 and n >= n_min:
+                out.extend([idx, idx + 1])       # Re and Im
+    return sorted(out)
+
+
+ODD_ORDER = _odd_m_indices()
+assert ODD_ORDER == list(range(6, 10)) + list(range(15, 21)), ODD_ORDER
+
+# The n=1 dipole (centroid) modes, excluded from the score but tracked as a
+# diagnostic of stamp registration.
+CENTROID_MODES = [1, 2]
 
 # The order-3-only subset, for an apples-to-apples comparison against the
 # third-order moment score.
