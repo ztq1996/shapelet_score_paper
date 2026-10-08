@@ -47,10 +47,11 @@ Rubin Observatory}
 
 \begin{abstract}
 Image quality at the Vera C. Rubin Observatory is usually summarised by the PSF full width
-at half maximum and ellipticity, both second-moment quantities dominated by the atmosphere
-and insensitive to the asymmetric optical aberrations --- coma and trefoil --- that the
-active optics system exists to correct. A visit can be taken in excellent seeing and still
-deliver a badly aberrated PSF. We present a metric sensitive to exactly those aberrations
+at half maximum and ellipticity, both second-moment quantities dominated by the atmosphere.
+Neither is sensitive to the asymmetric optical aberrations that the active optics system
+exists to correct, chiefly coma and trefoil, so a visit can be taken in excellent seeing and
+still deliver a badly aberrated PSF. We present a metric sensitive to exactly those
+aberrations
 and blind to the atmosphere by construction. Decomposing each PSF into polar shapelets, we
 show on simulated point-symmetric atmospheric PSFs that the coefficients with odd azimuthal
 index $m$ vanish to double-precision round-off, while the even-$m$ coefficients absorb all
@@ -76,7 +77,7 @@ active optics, wavefront sensing}
 The NSF-DOE Vera C. Rubin Observatory will carry out the Legacy Survey of Space and Time
 (LSST), imaging the southern sky in six bands over ten years with the 3.2-gigapixel LSST
 Camera (LSSTCam) on the 8.4\,m Simonyi Survey Telescope \cite{Ivezic2019}. Many of the
-survey's headline science cases --- cosmic shear in particular --- depend on how well we
+survey's headline science cases, and cosmic shear in particular, depend on how well we
 understand the point spread function (PSF), which for a ground-based telescope is a
 convolution of atmospheric turbulence, the optical system, and the detector. Errors in
 modelling it propagate directly into galaxy shape measurements and hence into cosmological
@@ -90,19 +91,19 @@ cheap to compute and capture the dominant behaviour of the PSF, but they are als
 by the atmosphere. Ground-layer seeing sets the FWHM and contributes most of the
 ellipticity, so a visit taken through good seeing will report excellent second-moment image
 quality even when the optical system is misaligned. The failure modes that the Rubin active
-optics system (AOS) exists to correct --- coma, trefoil, and higher-order asymmetric
-aberrations from mirror figure error, hexapod misalignment, or incomplete AOS convergence
-\cite{Xin2015} --- are precisely those to which second moments are least sensitive: a PSF
-can be compact, nearly round, and still be badly aberrated. The observatory does track the
-wavefront directly through Zernike coefficients estimated at the four corner wavefront
-sensors, but those sample only the corners of the focal plane and come from a separate
-curvature-sensing analysis, not from the science images.
+optics system (AOS) exists to correct are precisely those to which second moments are least
+sensitive: coma, trefoil, and higher-order asymmetric aberrations from mirror figure error,
+hexapod misalignment, or incomplete AOS convergence \cite{Xin2015}. A PSF can be compact,
+nearly round, and still be badly aberrated. The observatory does track the wavefront
+directly through Zernike coefficients estimated at the four corner wavefront sensors, but
+those sample only the corners of the focal plane and come from a separate curvature-sensing
+analysis external to the science images.
 
 This motivates a metric built from the science images, sensitive to exactly the asymmetric
 optical modes that second moments miss, and insensitive to the atmosphere by construction.
-We decompose each PSF into a polar shapelet basis
-\cite{Refregier2003, MasseyRefregier2005, BernsteinJarvis2002} --- the Gauss-Laguerre
-eigenfunctions of the two-dimensional quantum harmonic oscillator --- and show, using a
+We decompose each PSF into a polar shapelet basis, the Gauss-Laguerre eigenfunctions of the
+two-dimensional quantum harmonic oscillator
+\cite{Refregier2003, MasseyRefregier2005, BernsteinJarvis2002}, and show, using a
 simulated population of atmospheric PSFs, that the coefficients split cleanly into those
 that respond strongly to atmospheric size and ellipticity variation and those that do not
 respond at all. The second group is exactly the set of modes with odd azimuthal index $m$,
@@ -113,9 +114,8 @@ dimensionless, computed per PSF, and require no external calibration.
 
 We measure these scores for $1{,}468{,}222$ raft-stacked PSFs drawn from $71{,}015$ LSSTCam
 visits spanning 2025 April to 2026 May, covering both the Data Preview 2 (DP2) processing
-\cite{DP2} and subsequent nightly validation, and propose the shapelet score as a metric
-complementary to --- rather than a replacement for --- PSF size and the AOS-derived metrics
-already in use.
+\cite{DP2} and subsequent nightly validation. We propose the shapelet score as a complement
+to the PSF size and AOS-derived metrics already in use, rather than a replacement for them.
 
 The paper is organized as follows. Section~\ref{data:0} describes the LSSTCam data and the
 auxiliary catalogs. Section~\ref{method:0} sets out the shapelet formalism, presents the
@@ -143,8 +143,8 @@ Data Preview 2 Data Release Production \cite{DP2} with Rubin Science Pipelines \
 April 24 to 2026 January 6; and \textbf{post-DP2}, visits processed by the
 nightly-validation pipelines after the DP2 cutoff, spanning 2026 January 1 to 2026 May 13.
 
-We note that the two epochs overlap slightly in calendar time; the distinction between them
-is one of \emph{processing}, not of observing date. Post-DP2 is the larger sample and the
+We note that the two epochs overlap slightly in calendar time, since the distinction between
+them is one of \emph{processing} rather than observing date. Post-DP2 is the larger sample and the
 only one extending into 2026 April and May, which matters for the long-baseline monitoring
 of Section~\ref{results:monitoring}.
 
@@ -210,7 +210,8 @@ trying to detect: coma and trefoil vary smoothly across the focal plane on scale
 larger than a single detector, whereas the atmospheric contribution is common to the whole
 focal plane within a visit. Two consequences follow: stacking suppresses aberration varying
 \emph{within} a raft, so our scores are a lower bound on the true per-star asymmetry, and
-drawing from one detector means a stamp samples one quadrant of the raft, not the raft mean.
+drawing from one detector means a stamp samples one quadrant of the raft rather than its
+mean field position.
 
 \subsection{Higher-order moment catalog}
 \label{data:moments}
@@ -232,10 +233,10 @@ to our visits by \texttt{visit\_id}.
 
 \textbf{Wavefront Zernikes.} The Rubin AOS estimates the wavefront by curvature sensing on
 the four corner wavefront sensors \cite{Xin2015}. From the \texttt{ccdvisit1\_quicklook}
-table we retrieve the annular Zernike coefficients $z_4$ through $z_{11}$ in the Noll
-ordering \cite{Noll1976} --- defocus, astigmatism, coma, trefoil and spherical --- at each
-corner, and form the peak-to-peak spread $\max_j z_i^{(j)} - \min_j z_i^{(j)}$ over the four
-corner positions $j$ as a proxy for the aberration gradient across the field.
+table we retrieve the annular Zernike coefficients $z_4$ through $z_{11}$ at each corner in
+the Noll ordering \cite{Noll1976}, covering defocus, astigmatism, coma, trefoil and
+spherical, and form the peak-to-peak spread $\max_j z_i^{(j)} - \min_j z_i^{(j)}$ over the
+four corner positions $j$ as a proxy for the aberration gradient across the field.
 
 \textbf{Delivered image quality.} We use \texttt{aos\_fwhm}, the AOS estimate of the
 delivered FWHM, and \texttt{donut\_blur\_fwhm}, the FWHM contribution inferred from the
@@ -264,7 +265,7 @@ complete orthonormal basis in which a localised image can be expanded to a chose
 order \cite{Refregier2003, BernsteinJarvis2002}. We use the polar (Gauss--Laguerre) form
 \cite{MasseyRefregier2005}, whose basis functions carry a definite azimuthal dependence
 $e^{im\theta}$ and therefore separate the image into components of explicit rotational
-symmetry --- the property we exploit throughout.
+symmetry. This is the property we exploit throughout.
 
 We write the surface brightness of a PSF as
 
@@ -340,23 +341,22 @@ recovering all $1000$ fits with measured FWHM spanning $0.56$--$1.32\arcsec$.
 
 Figure~\ref{fig:atm} shows the result, and it is unambiguous. The upper panel gives the
 standard deviation of each coefficient across realisations. The even-$m$ coefficients vary
-substantially --- the largest being $(0,0)$ at $\sigma = 7.1 \times 10^{-2}$ --- and
-together carry $99.96\%$ of the median total power. Every odd-$m$ coefficient has
+substantially, the largest being $(0,0)$ at $\sigma = 7.1 \times 10^{-2}$, and together
+carry $99.96\%$ of the median total power. Every odd-$m$ coefficient has
 $\sigma \le 1.4 \times 10^{-16}$: zero at the level of double-precision round-off, a ratio
 of $5 \times 10^{14}$ between the largest even-$m$ and odd-$m$ variation.
 
-This is not a coincidence of our particular parameter choices, and we emphasise that it is
-not an empirical result that could fail for a different atmosphere model. A profile that
-satisfies $I(r, \theta) = I(r, \theta + \pi)$ has, by the orthogonality of $e^{im\theta}$,
-identically zero projection onto every basis function with odd $m$. Any point-symmetric PSF
---- a Gaussian, a Moffat, a Kolmogorov profile, an elliptical version of any of these, and
-equally an optical PSF from a perfectly aligned telescope --- has no odd-$m$ power at all.
-Odd-$m$ power can only be produced by a genuine asymmetry.
+This follows from symmetry alone, and therefore holds for any atmosphere model. A profile
+that satisfies $I(r, \theta) = I(r, \theta + \pi)$ has, by the orthogonality of
+$e^{im\theta}$, identically zero projection onto every basis function with odd $m$. Any
+point-symmetric PSF therefore has no odd-$m$ power at all, whether a Gaussian, a Moffat, a
+Kolmogorov profile, an elliptical version of any of these, or the PSF of a perfectly aligned
+telescope. Odd-$m$ power can only be produced by a genuine asymmetry.
 
 The lower panel makes the same point in terms of correlations with the input parameters: the
 even-$m$ coefficients correlate with the atmospheric FWHM at up to $|r| = 0.45$, whereas the
 odd-$m$ coefficients show no appreciable correlation with either input. Their residual
-values are set by floating-point arithmetic in the fit, not by any physical effect.
+values are set by floating-point arithmetic in the fit.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -388,19 +388,19 @@ total shapelet power carried by the odd-$m$ modes:
 \label{eq:shapelet_score}
 \end{equation}
 
-At $n \le 6$ the numerator runs over five modes --- $b_{33}$, $b_{31}$, $b_{55}$, $b_{53}$
-and $b_{51}$ --- or ten of the 28 real coefficients once real and imaginary parts are
-counted separately. The score is dimensionless, bounded in $[0, 1]$, and rotationally
-invariant, since rotating by $\phi$ multiplies $b_{nm}$ by $e^{im\phi}$ and leaves
-$|b_{nm}|^2$ unchanged. Normalising by the total power makes it independent of the stamp
-flux normalisation, and, because $\sigma$ is set by the adaptive moments, largely
-independent of PSF size --- a claim we test directly in Section~\ref{results:fwhm}.
+At $n \le 6$ the numerator runs over five modes, $b_{33}$, $b_{31}$, $b_{55}$, $b_{53}$ and
+$b_{51}$, or ten of the 28 real coefficients once real and imaginary parts are counted
+separately. The score is dimensionless, bounded in $[0, 1]$, and rotationally invariant,
+since rotating by $\phi$ multiplies $b_{nm}$ by $e^{im\phi}$ and leaves $|b_{nm}|^2$
+unchanged. Normalising by the total power makes it independent of the stamp flux
+normalisation, and, because $\sigma$ is set by the adaptive moments, largely independent of
+PSF size. We test this last claim directly in Section~\ref{results:fwhm}.
 
 Two exclusions deserve comment. First, we exclude the $n = 1$ modes, which are odd in $m$
 but describe a displacement of the profile rather than a distortion of it: a stamp whose
 centroid is offset from the fitted centre acquires $n = 1$ power without being asymmetric,
 so including them would make the score sensitive to stamp registration. This matters in
-practice --- in the $i$-band data the $n = 1$ modes carry a median fractional power of
+practice, since in the $i$-band data the $n = 1$ modes carry a median fractional power of
 $1.8 \times 10^{-4}$, roughly a quarter of the typical score. Second, we truncate at
 $n \le 6$; higher orders would add further odd-$m$ modes, but at fixed stamp size and noise
 level they are increasingly poorly constrained, and we find $n \le 6$ already captures the
@@ -409,7 +409,7 @@ asymmetries visible by eye (Section~\ref{results:gallery}).
 On the simulated atmospheric population of Section~\ref{method:atm} the score has a median
 of $1.3 \times 10^{-32}$, some $29$ orders of magnitude below the smallest threshold we will
 use on real data. Any measured score is therefore attributable to the optics, the detector,
-or noise --- never to seeing.
+or noise. Seeing alone cannot produce one.
 
 \subsection{The moment score}
 \label{method:moment_score}
@@ -438,10 +438,10 @@ three up-weights the coma term; we adopt it for consistency with the metric alre
 for observatory monitoring, and note that the choice affects the normalisation of $\smom$
 but not strongly its rank ordering, since coma and trefoil are themselves correlated.
 
-The two scores capture the same physical information --- the asymmetric, odd-$m$ content of
-the PSF --- but by completely different routes, a least-squares basis expansion of the image
-versus weighted pixel moments, sharing no machinery. We quantify their agreement in
-Section~\ref{results:score_comparison}.
+The two scores capture the same physical information, the asymmetric odd-$m$ content of the
+PSF, but reach it by completely different routes: a least-squares basis expansion of the
+image, versus weighted pixel moments. They share no machinery. We quantify their agreement
+in Section~\ref{results:score_comparison}.
 
 \subsection{Score tiers}
 \label{method:tiers}
@@ -483,7 +483,7 @@ Figure~\ref{fig:dist} shows the distribution of the shapelet score in each band,
 epochs, and Table~\ref{tab:percentiles} lists the corresponding percentiles. The
 distribution is broad and strongly right-skewed: it peaks near $S_{\rm shapelet} \approx
 10^{-4}$ and extends over more than two decades, with a long tail above $10^{-2}$. This
-shape is what makes the score useful --- most PSFs are clean, and the metric spends its
+shape is what makes the score useful: most PSFs are clean, and the metric spends its
 dynamic range on the minority that are not.
 
 The distributions are similar in all six bands but shift systematically to higher scores
@@ -492,8 +492,8 @@ with wavelength: in DP2 the median rises from $1.8 \times 10^{-4}$ in $u$ to $4.
 that the redder bands see better seeing, so a fixed optical aberration represents a larger
 fraction of the total PSF power, and that the $u$ band has the fewest and faintest stars per
 stamp, so its scores are the most affected by noise. Comparing epochs, post-DP2 is shifted
-to modestly higher scores in $i$, $z$ and $y$ --- the $i$-band median rises from
-$4.0 \times 10^{-4}$ to $7.6 \times 10^{-4}$ --- while $u$ improves. We caution against
+to modestly higher scores in $i$, $z$ and $y$, the $i$-band median rising from
+$4.0 \times 10^{-4}$ to $7.6 \times 10^{-4}$, while $u$ improves. We caution against
 reading this as a simple degradation, since post-DP2 covers a period of active work on the
 telescope optics, and Section~\ref{results:monitoring} shows that most of it is driven by a
 limited number of nights rather than a uniform shift.
@@ -605,8 +605,8 @@ midpoint, so that the figure spans the full visual range of the metric.
 
 The progression is clear by eye. LOW-tier stamps are round and compact, with residuals
 consistent with noise; MEDIUM-tier stamps show mild elongation and faint residual structure;
-HIGH-tier stamps display an unmistakable comatic profile --- a displaced, asymmetric core
-with a one-sided flare --- and coherent, large-scale residual structure rather than noise;
+HIGH-tier stamps display an unmistakable comatic profile, a displaced, asymmetric core with
+a one-sided flare, together with coherent, large-scale residual structure;
 and VERY HIGH-tier stamps are strongly aberrated, one showing the double-lobed morphology
 characteristic of a large misalignment term.
 
@@ -615,8 +615,8 @@ four: $\smom$ spans $2.7 \times 10^{-6}$ to $3.8 \times 10^{-5}$ for the LOW exa
 $0.0076$--$0.0154$ for MEDIUM, $0.0376$--$0.0525$ for HIGH and $0.095$--$0.236$ for VERY
 HIGH. Since the moment score shares no machinery with the shapelet fit, this ordering is a
 non-trivial consistency check. The annotated FWHM values, by contrast, are interleaved
-across tiers --- the LOW examples have the \emph{largest} FWHM of any row, at
-$1.17$--$1.84\arcsec$, against $0.92$--$1.36\arcsec$ for HIGH --- reinforcing the conclusion
+across tiers. The LOW examples have the \emph{largest} FWHM of any row, at
+$1.17$--$1.84\arcsec$, against $0.92$--$1.36\arcsec$ for HIGH, reinforcing the conclusion
 of Section~\ref{results:fwhm} that PSF size and PSF asymmetry are close to independent.
 
 \begin{figure}[htbp]
@@ -631,8 +631,8 @@ best-fitting $n \le 6$ shapelet model, on a symmetric red--blue scale at one twe
 image stretch. Each stamp is $51 \times 51$ pixels, or $10.2\arcsec$ on a side. The white
 annotation in each star panel gives the shapelet score $S_{\rm sh}$, the moment score
 $S_{\rm mom}$, and the FWHM in arcseconds. Note the selection: for the LOW and VERY HIGH
-tiers we deliberately show the extremes --- the lowest- and highest-scoring PSFs
-respectively --- so that the figure spans the full range of the metric, while for MEDIUM and
+tiers we deliberately show the extremes, the lowest- and highest-scoring PSFs respectively,
+so that the figure spans the full range of the metric, while for MEDIUM and
 HIGH we show PSFs closest to the geometric midpoint of the tier, which are typical rather
 than extreme. In all cases the stamps were required to have at least $40$ contributing stars
 and no bright neighbour, so that the residuals reflect PSF structure rather than photon
@@ -644,7 +644,7 @@ noise or blending.}
 \label{results:score_comparison}
 
 As set out in Section~\ref{method:moment_score}, the two scores share no machinery, so their
-agreement is a genuine test rather than a tautology. We match them per (visit, raft, band)
+agreement is a genuine test. We match them per (visit, raft, band)
 over the DP2 epoch, for which the per-raft moment catalog is available, taking the median
 shapelet score of the PSFs in each raft. This yields $607{,}948$ matched measurements, shown
 in Figure~\ref{fig:comparison}.
@@ -653,7 +653,7 @@ We find that the two scores are strongly correlated, with a Spearman rank correl
 $\rho_{\rm s} = +0.923$ over the full matched sample, consistent across bands and ranging
 only from $+0.908$ in $r$ to $+0.936$ in $u$ (Table~\ref{tab:rho}). The relation is close to
 a power law over three decades, $\smom \propto \sshape^{\alpha}$ with $\alpha = 0.95$ and a
-scatter of $0.24$ dex --- that is, very nearly proportional, with
+scatter of $0.24$ dex, that is, very nearly proportional, with
 $\smom \approx 3.2\,\sshape$. As the right panel of Figure~\ref{fig:comparison} shows, the
 median relation is essentially identical in all six bands. This band-independence is a
 useful practical property: a single threshold in either score means the same thing
@@ -723,10 +723,10 @@ PSF. The explanation is the dilution effect identified in Section~\ref{results:f
 with the measured PSF FWHM at $\rho_{\rm s} = +0.81$ in DP2 and $+0.73$ in post-DP2, whereas
 \texttt{aos\_fwhm} tracks it much more weakly ($+0.37$). Because the score is a fraction of
 total power, anything that raises the atmospheric contribution lowers it at fixed
-aberration. The negative correlation is therefore the seeing-dilution trend seen through a
-seeing proxy, not evidence that larger wavefront errors produce rounder PSFs; the positive
-correlation with \texttt{aos\_fwhm}, much less contaminated by seeing, is in the expected
-direction. We caution that we have taken both consDB quantities at face value without
+aberration. The negative correlation therefore reflects seeing dilution viewed through a
+seeing proxy, and does not imply that larger wavefront errors produce rounder PSFs. The
+positive correlation with \texttt{aos\_fwhm}, much less contaminated by seeing, is in the
+expected direction. We caution that we have taken both consDB quantities at face value without
 tracing their definitions through the AOS pipeline, so this interpretation rests on the
 measured correlations.
 
@@ -763,10 +763,10 @@ $z_{10}$ and $z_9$, and by only $1.10$ for $z_5$. The same ordering appears in t
 correlations in the left panel, where the two coma modes are the only ones to reach
 $\rho_{\rm s} \simeq +0.17$ and $+0.20$.
 
-This ordering is the point. Coma and trefoil are the odd-$m$ Zernike aberrations --- $m = 1$
-and $m = 3$ respectively --- and are precisely those capable of producing odd-$m$ shapelet
-power, whereas defocus, astigmatism and spherical aberration have even $m$ and produce
-distortions the score is constructed to ignore. Averaged over modes, the odd-$m$ Zernikes
+This ordering is the point. Coma and trefoil are the odd-$m$ Zernike aberrations, with
+$m = 1$ and $m = 3$ respectively, and are precisely those capable of producing odd-$m$
+shapelet power, whereas defocus, astigmatism and spherical aberration have even $m$ and
+produce distortions the score is constructed to ignore. Averaged over modes, the odd-$m$ Zernikes
 give a mean rank correlation about twice that of the even-$m$ ones. The absolute
 correlations are small, for reasons we return to below; it is their relative ordering, which
 matches the symmetry argument of Section~\ref{method:atm} with no free parameters, that we
@@ -789,9 +789,9 @@ epoch. \textit{Left:} Spearman rank correlation between the visit-median shapele
 the peak-to-peak spread of each Zernike coefficient across the four corner wavefront
 sensors. Bars are ordered and coloured by the azimuthal order $m$ of the Zernike mode:
 orange for odd $m$ (coma, $m = 1$; trefoil, $m = 3$) and blue for even $m$ (defocus and
-spherical, $m = 0$; astigmatism, $m = 2$). Note that the absolute correlations are small ---
-the corner sensors sample only four field positions, all outside the science rafts --- so it
-is the ordering of the bars rather than their length that carries the result: the odd-$m$
+spherical, $m = 0$; astigmatism, $m = 2$). Note that the absolute correlations are small,
+because the corner sensors sample only four field positions, all outside the science rafts,
+so it is the ordering of the bars rather than their length that carries the result: the odd-$m$
 aberrations, which are the ones capable of generating odd-$m$ shapelet power, rank highest.
 \textit{Right:} the visit-median score against the field spread of $z_8$, the mode with the
 strongest response, with the number of visits per bin on a logarithmic greyscale, the
@@ -811,8 +811,8 @@ raft-stacked PSFs in each quality tier.
 The score varies strongly and coherently from night to night. Pooling all bands, the
 fraction of PSFs in the HIGH or VERY HIGH tiers has a median over nights of $3.2\%$, but a
 $10$th-to-$90$th percentile range of $0.1\%$ to $16.4\%$. The worst night, 2026 March 13,
-has $28.9\%$ of its PSFs above the HIGH threshold --- a factor of $9.2$ above the median
-night --- while several nights have none at all. This dynamic range is what makes the score
+has $28.9\%$ of its PSFs above the HIGH threshold, a factor of $9.2$ above the median night,
+while several nights have none at all. This dynamic range is what makes the score
 useful operationally: a bad night is unmistakable.
 
 The structure is also coherent on longer timescales. Averaging the HIGH-plus-VERY-HIGH
@@ -864,7 +864,7 @@ Note that the vertical axis stops at $0.7$, and that all six bands are pooled.}
 We set out to build a PSF image-quality metric for the Rubin Observatory sensitive to the
 asymmetric optical aberrations active-optics control exists to correct, and insensitive to
 the atmosphere by construction rather than by calibration. We have presented two such
-metrics --- the shapelet score and the moment score --- and measured them for $1{,}468{,}222$
+metrics, the shapelet score and the moment score, and measured them for $1{,}468{,}222$
 raft-stacked PSFs from $71{,}015$ LSSTCam visits spanning 2025 April to 2026 May. Our main
 findings are as follows.
 
@@ -884,7 +884,7 @@ findings are as follows.
         matched (visit, raft) measurements, with a near-proportional relation
         $\smom \approx 3.2\,\sshape$ that is the same in all six bands.
   \item \textbf{The score tracks real optical aberration.} Against the AOS corner wavefront
-        sensors --- an entirely independent instrument --- the score responds most strongly
+        sensors, an entirely independent instrument, the score responds most strongly
         to the odd-$m$ Zernikes: $z_7$ and $z_8$ give a factor $2.05$ and $2.35$ rise in
         median score between the lowest and highest quintile of field spread, against
         $1.10$ for the astigmatism mode $z_5$.
@@ -899,10 +899,10 @@ so the scores are insensitive to aberration varying within a raft and represent 
 position per raft rather than a raft average. The score is a \emph{fraction} of total power,
 which makes it mildly conservative in poor seeing (Section~\ref{results:fwhm}); a variant
 normalised by an external size estimate would remove this dilution. Photon noise sets a
-floor for shallow visits. The tier boundaries are round numbers justified against measured
-percentiles and visual inspection, not derived from any requirement on downstream science.
-Finally, the four-point spread we use for the corner-sensor Zernikes almost certainly
-dilutes the correlations we report.
+floor for shallow visits. The tier boundaries are round numbers justified only against
+measured percentiles and visual inspection, with no input from any downstream science
+requirement. Finally, the four-point spread we use for the corner-sensor Zernikes almost
+certainly dilutes the correlations we report.
 
 Several directions follow naturally. The most important is to quantify the impact of a
 shapelet-score cut on weak-lensing systematics directly, through the $\rho$-statistics and
@@ -919,7 +919,7 @@ the cost of a higher noise floor.
 % ============================================================================
 \acknowledgments
 
-\todo{acknowledgments --- funding, Rubin data rights, collaborators.}
+\todo{acknowledgments: funding, Rubin data rights, collaborators.}
 
 This work made use of \textsc{GalSim} \cite{Rowe2015} for the shapelet decomposition and of
 the LSST Science Pipelines for the PSF star catalogs and adaptive-moment measurements. It
