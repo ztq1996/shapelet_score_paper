@@ -58,8 +58,8 @@ index $m$ vanish to double-precision round-off, while the even-$m$ coefficients 
 the atmospheric variation. We define the \emph{shapelet score} as the odd-$m$ fraction of
 shapelet power, together with a companion \emph{moment score} built from third-order
 adaptive moments, and measure both for
-$1{,}468{,}222$ raft-stacked PSFs from $71{,}015$ LSSTCam visits taken between 2025 April
-and 2026 May. The score is essentially independent of PSF size, spanning two orders of
+$1{,}949{,}189$ raft-stacked PSFs from $94{,}422$ LSSTCam visits taken between 2025 April
+and 2026 July. The score is essentially independent of PSF size, spanning two orders of
 magnitude at fixed seeing; it agrees with the moment score at a Spearman rank correlation of
 $+0.923$; and it responds preferentially to the odd-$m$ Zernike aberrations measured by the
 corner wavefront sensors, most strongly to coma. Used as a nightly monitor, the fraction of
@@ -112,8 +112,8 @@ score} as the fraction of total shapelet power carried by those modes, and a com
 \emph{moment score} built from the third-order adaptive moments of the same stars. Both are
 dimensionless, computed per PSF, and require no external calibration.
 
-We measure these scores for $1{,}468{,}222$ raft-stacked PSFs drawn from $71{,}015$ LSSTCam
-visits spanning 2025 April to 2026 May, covering both the Data Preview 2 (DP2) processing
+We measure these scores for $1{,}949{,}189$ raft-stacked PSFs drawn from $94{,}422$ LSSTCam
+visits spanning 2025 April to 2026 July, covering both the Data Preview 2 (DP2) processing
 \cite{DP2} and subsequent nightly validation. We propose the shapelet score as a complement
 to the PSF size and AOS-derived metrics already in use, rather than a replacement for them.
 
@@ -141,15 +141,16 @@ two epochs, treated throughout on an equal footing: \textbf{DP2}, visits process
 Data Preview 2 Data Release Production \cite{DP2} with Rubin Science Pipelines \texttt{v30}
 (the \texttt{LSSTCam/runs/DRP/DP2/v30\_0\_0/DM-53881/stage2} collection), spanning 2025
 April 24 to 2026 January 6; and \textbf{post-DP2}, visits processed by the
-nightly-validation pipelines after the DP2 cutoff, spanning 2026 January 1 to 2026 May 13.
+nightly-validation pipelines after the DP2 cutoff, spanning 2026 January 1 to 2026 July 13,
+the last night with science visits before the 2026 observatory shutdown.
 
 We note that the two epochs overlap slightly in calendar time, since the distinction between
 them is one of \emph{processing} rather than observing date. Post-DP2 is the larger sample and the
-only one extending into 2026 April and May, which matters for the long-baseline monitoring
+only one extending into 2026 April through July, which matters for the long-baseline monitoring
 of Section~\ref{results:monitoring}.
 
-Table~\ref{tab:sample} summarises the sample: $1{,}468{,}222$ raft-stacked PSFs from
-$71{,}015$ visits over \ugrizy. The $i$ band is by far the best-sampled, and we use it for
+Table~\ref{tab:sample} summarises the sample: $1{,}949{,}189$ raft-stacked PSFs from
+$94{,}422$ visits over \ugrizy. The $i$ band is by far the best-sampled, and we use it for
 figures requiring a single representative band; results for the remaining bands are shown
 wherever they differ.
 
@@ -175,13 +176,13 @@ Band & Nights & Visits & PSFs & First night & Last night \\
 \quad all & 130 & 29,502 & 612,511 & 2025-04-24 & 2026-01-06 \\
 \addlinespace
 \multicolumn{6}{l}{\textit{Post-DP2}} \\
-\quad $u$ & 17 & 1,345 & 28,112 & 2026-01-13 & 2026-05-13 \\
-\quad $g$ & 45 & 2,794 & 58,213 & 2026-01-02 & 2026-05-13 \\
-\quad $r$ & 51 & 5,053 & 105,190 & 2026-01-03 & 2026-05-13 \\
-\quad $i$ & 73 & 16,544 & 341,331 & 2026-01-01 & 2026-05-13 \\
-\quad $z$ & 58 & 9,237 & 187,323 & 2026-01-02 & 2026-05-13 \\
-\quad $y$ & 35 & 6,540 & 135,542 & 2026-01-02 & 2026-04-28 \\
-\quad all & 85 & 41,513 & 855,711 & 2026-01-01 & 2026-05-13 \\
+\quad $u$ & 32 & 2,511 & 51,496 & 2026-01-13 & 2026-07-13 \\
+\quad $g$ & 71 & 4,273 & 88,708 & 2026-01-02 & 2026-07-13 \\
+\quad $r$ & 83 & 9,273 & 191,248 & 2026-01-03 & 2026-07-13 \\
+\quad $i$ & 109 & 24,536 & 506,259 & 2026-01-01 & 2026-07-13 \\
+\quad $z$ & 91 & 14,509 & 295,478 & 2026-01-02 & 2026-07-13 \\
+\quad $y$ & 44 & 9,818 & 203,489 & 2026-01-02 & 2026-06-07 \\
+\quad all & 122 & 64,920 & 1,336,678 & 2026-01-01 & 2026-07-13 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -201,7 +202,15 @@ For each visit and each science raft we select one detector at random, draw up t
 from it, cut a $51 \times 51$ pixel ($10.2\arcsec$ on a side at the $0.2\arcsec$ pixel
 scale) stamp around each, normalise each to unit flux, and average them, rejecting stars
 whose stamps would cross a detector edge. This yields one stacked PSF image per raft per
-visit, up to 21 per visit, with a median of $60$ contributing stars.
+visit, up to 21 per visit. The stacking depth differs between the epochs: the median stamp
+averages $100$ stars in DP2, where $53\%$ of stamps reach the 100-star cap, but only $43$ in
+post-DP2, where $3\%$ do, reflecting the smaller number of PSF stars per detector in the
+post-DP2 catalog.
+\tianqing{New with the July extension (nb/01). The old pooled median of 60 is now 49 only
+because post-DP2 is a larger share of the sample; the per-epoch split above has always been
+there. The shallower post-DP2 stacks raise its noise floor, which may contribute to the
+higher post-DP2 medians in Section~\ref{results:distributions}; the ``$\sim\!10^2$ stars''
+below is strictly true only for DP2. Decide whether to discuss.}
 
 We stack for two reasons. First, averaging $\sim\!10^2$ flux-normalised stars suppresses
 photon noise by an order of magnitude, so the high-order coefficients are measured against a
@@ -491,18 +500,19 @@ with wavelength: in DP2 the median rises from $1.8 \times 10^{-4}$ in $u$ to $4.
 10^{-4}$ in $y$. Two plausible contributions, which we do not attempt to separate here, are
 that the redder bands see better seeing, so a fixed optical aberration represents a larger
 fraction of the total PSF power, and that the $u$ band has the fewest and faintest stars per
-stamp, so its scores are the most affected by noise. Comparing epochs, post-DP2 is shifted
-to modestly higher scores in $i$, $z$ and $y$, the $i$-band median rising from
-$4.0 \times 10^{-4}$ to $7.6 \times 10^{-4}$, while $u$ improves. We caution against
-reading this as a simple degradation, since post-DP2 covers a period of active work on the
-telescope optics, and Section~\ref{results:monitoring} shows that most of it is driven by a
-limited number of nights rather than a uniform shift.
+stamp, so its scores are the most affected by noise. Comparing epochs, post-DP2 has modestly
+higher medians in $u$, $i$, $z$ and $y$, the $i$-band median rising from
+$4.0 \times 10^{-4}$ to $4.9 \times 10^{-4}$, but a lighter upper tail: its P99 is lower
+than in DP2 in all six bands, and its P95 in all but $y$. We caution against reading the
+shift in the median as a simple degradation, since post-DP2 covers a period of active work on
+the telescope optics, and Section~\ref{results:monitoring} shows that the elevated scores are
+concentrated in 2026 January to March rather than spread uniformly over the epoch.
 
 The measured distributions bear out the tier boundaries of Section~\ref{method:tiers}.
 Pooling all bands, $S_{\rm shapelet} = 0.002$, $0.005$ and $0.02$ fall at the $87.1$st,
-$95.5$th and $99.5$th percentiles in DP2 and the $79.6$th, $93.5$th and $99.4$th in
+$95.5$th and $99.5$th percentiles in DP2 and the $85.6$th, $95.5$th and $99.6$th in
 post-DP2, giving tier occupancies of $87.1\%$ LOW, $8.4\%$ MEDIUM, $4.0\%$ HIGH and $0.5\%$
-VERY HIGH for DP2, and $79.6\%$, $13.9\%$, $5.9\%$ and $0.6\%$ for post-DP2. We note that
+VERY HIGH for DP2, and $85.6\%$, $9.9\%$, $4.1\%$ and $0.4\%$ for post-DP2. We note that
 fixing the boundaries at absolute values rather than percentiles is deliberate: a
 percentile-based threshold would by construction flag the same fraction of visits every
 night and could not register a genuine change in image quality.
@@ -526,12 +536,12 @@ Band & $N$ & P50 & P80 & P95 & P99 \\
 \quad $y$ & 90,215 & 0.00049 & 0.00179 & 0.00634 & 0.01715 \\
 \addlinespace
 \multicolumn{6}{l}{\textit{Post-DP2}} \\
-\quad $u$ & 28,112 & 0.00018 & 0.00047 & 0.00128 & 0.00301 \\
-\quad $g$ & 58,213 & 0.00032 & 0.00101 & 0.00316 & 0.00867 \\
-\quad $r$ & 105,190 & 0.00034 & 0.00112 & 0.00346 & 0.00891 \\
-\quad $i$ & 341,331 & 0.00076 & 0.00218 & 0.00609 & 0.01658 \\
-\quad $z$ & 187,323 & 0.00072 & 0.00216 & 0.00617 & 0.01548 \\
-\quad $y$ & 135,542 & 0.00105 & 0.00312 & 0.00856 & 0.01860 \\
+\quad $u$ & 51,496 & 0.00022 & 0.00054 & 0.00129 & 0.00341 \\
+\quad $g$ & 88,708 & 0.00028 & 0.00084 & 0.00257 & 0.00722 \\
+\quad $r$ & 191,248 & 0.00025 & 0.00077 & 0.00258 & 0.00745 \\
+\quad $i$ & 506,259 & 0.00049 & 0.00165 & 0.00491 & 0.01361 \\
+\quad $z$ & 295,478 & 0.00047 & 0.00156 & 0.00483 & 0.01267 \\
+\quad $y$ & 203,489 & 0.00060 & 0.00219 & 0.00679 & 0.01578 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -565,8 +575,8 @@ a change of only $30\%$ across the full useful seeing range.
 
 The more important point is the vertical extent of the distribution. Averaged over bins
 between $0.6\arcsec$ and $1.5\arcsec$, the ratio of the $95$th to the $5$th percentile at
-fixed FWHM is $84$ in DP2 and $124$ in post-DP2, whereas the median varies by only a factor
-of $1.3$ and $3.1$ over the same range. The scatter at fixed seeing is therefore one to two
+fixed FWHM is $84$ in DP2 and $106$ in post-DP2, whereas the median varies by only a factor
+of $1.3$ and $3.5$ over the same range. The scatter at fixed seeing is therefore one to two
 orders of magnitude larger than any trend with seeing: knowing the FWHM of a visit tells one
 almost nothing about whether its PSF is aberrated, and PSFs in the HIGH and VERY HIGH tiers
 are found at all seeing values, including the best.
@@ -586,7 +596,7 @@ opposite direction to any trend that would mimic aberration.
 panel) and post-DP2 (right panel). The greyscale shows the number of PSFs per bin on a
 logarithmic colour scale. The solid orange line is the median score in bins of FWHM, and the
 dashed orange lines are the $5$th and $95$th percentiles at fixed FWHM; the upper dashed
-line leaves the plotted range above $1.6\arcsec$ in the right panel. Horizontal dotted lines
+lines leave the plotted range above $\sim\!1.8\arcsec$ in both panels. Horizontal dotted lines
 mark the tier boundaries: green for MEDIUM ($0.002$), orange for HIGH ($0.005$) and red for
 VERY HIGH ($0.02$). Note that the vertical separation between the two dashed lines at any
 given FWHM is much larger than the variation of the solid line across the whole FWHM range,
@@ -714,14 +724,14 @@ the odd-$m$ modes as well as the rest; this sets a noise floor for the shallowes
 and is one reason we stack up to $100$ stars per stamp.
 
 The two AOS quantities behave very differently, and understanding why is instructive. The
-score correlates \emph{positively} with \texttt{aos\_fwhm} ($\rho_{\rm s} = +0.45$ in DP2,
-and more weakly in post-DP2) but \emph{negatively} with \texttt{donut\_blur\_fwhm}
-($\rho_{\rm s} = -0.33$ and $-0.57$). At first sight the negative sign is puzzling, since a
+score correlates \emph{positively} with \texttt{aos\_fwhm} ($\rho_{\rm s} = +0.45$ in DP2
+and $+0.40$ in post-DP2) but \emph{negatively} with \texttt{donut\_blur\_fwhm}
+($\rho_{\rm s} = -0.33$ and $-0.59$). At first sight the negative sign is puzzling, since a
 larger donut blur should indicate a larger wavefront error and therefore a more aberrated
 PSF. The explanation is the dilution effect identified in Section~\ref{results:fwhm}:
 \texttt{donut\_blur\_fwhm} is very nearly a proxy for the delivered image size, correlating
-with the measured PSF FWHM at $\rho_{\rm s} = +0.81$ in DP2 and $+0.73$ in post-DP2, whereas
-\texttt{aos\_fwhm} tracks it much more weakly ($+0.37$). Because the score is a fraction of
+with the measured PSF FWHM at $\rho_{\rm s} = +0.81$ in DP2 and $+0.77$ in post-DP2, whereas
+\texttt{aos\_fwhm} tracks it much more weakly ($+0.37$ and $+0.21$). Because the score is a fraction of
 total power, anything that raises the atmospheric contribution lowers it at fixed
 aberration. The negative correlation therefore reflects seeing dilution viewed through a
 seeing proxy, and does not imply that larger wavefront errors produce rounder PSFs. The
@@ -742,7 +752,7 @@ green and orange dotted lines mark the MEDIUM ($0.002$) and HIGH ($0.005$) tier 
 The Spearman rank correlation is quoted in each panel where it reaches
 $|\rho_{\rm s}| = 0.3$, and marked ``no appr.\ corr.'' otherwise. Note that the negative
 correlation with donut-blur FWHM reflects that quantity's strong correlation with the
-delivered PSF size ($\rho_{\rm s} = +0.81$), combined with the dilution of a fractional
+delivered PSF size ($\rho_{\rm s} = +0.81$ in DP2 and $+0.77$ in post-DP2), combined with the dilution of a fractional
 score in poor seeing.}
 \label{fig:conditions}
 \end{figure}
@@ -803,22 +813,23 @@ running median in orange, and the MEDIUM and HIGH tier boundaries as dotted line
 \label{results:monitoring}
 
 Finally we demonstrate the score in the role we propose for it: a nightly image-quality
-monitor. Figure~\ref{fig:timeseries} shows the visit-median score for all $69{,}053$
-(visit, band) combinations over the full $209$-night baseline from 2025 April 24 to 2026 May
+monitor. Figure~\ref{fig:timeseries} shows the visit-median score for all $92{,}460$
+(visit, band) combinations over the full $246$-night baseline from 2025 April 24 to 2026 July
 13, and Figure~\ref{fig:nightly} reduces the same data to one bar per night, the fraction of
 raft-stacked PSFs in each quality tier.
 
 The score varies strongly and coherently from night to night. Pooling all bands, the
-fraction of PSFs in the HIGH or VERY HIGH tiers has a median over nights of $3.2\%$, but a
-$10$th-to-$90$th percentile range of $0.1\%$ to $16.4\%$. The worst night, 2026 March 13,
-has $28.9\%$ of its PSFs above the HIGH threshold, a factor of $9.2$ above the median night,
+fraction of PSFs in the HIGH or VERY HIGH tiers has a median over nights of $2.2\%$, but a
+$10$th-to-$90$th percentile range of $0.0\%$ to $15.6\%$. The worst night, 2026 March 13,
+has $28.9\%$ of its PSFs above the HIGH threshold, a factor of $13.1$ above the median night,
 while several nights have none at all. This dynamic range is what makes the score
 useful operationally: a bad night is unmistakable.
 
 The structure is also coherent on longer timescales. Averaging the HIGH-plus-VERY-HIGH
 fraction by month, we find $12.6\%$ in 2025 April, at the very start of LSSTCam
 commissioning, falling to $0.5\%$ in 2025 October, rising again to $9.0$--$9.5\%$ through
-2026 January to March, and falling to $2.4\%$ by 2026 May. We make no attempt to attribute
+2026 January to March, and falling to $3.3\%$ in 2026 April and to $1.2\%$, $0.9\%$ and
+$0.5\%$ in May, June and July, the last weeks before the 2026 shutdown. We make no attempt to attribute
 these episodes to specific engineering interventions, and have deliberately not
 cross-referenced the observatory's maintenance logs. What Figure~\ref{fig:nightly}
 establishes is that the score responds on the timescales on which the optical system
@@ -851,7 +862,7 @@ fraction of raft-stacked PSFs falling in the MEDIUM (green), HIGH (orange) and V
 informative part of the range fills the plot. Nights are plotted sequentially rather than on
 a calendar axis, because the observing cadence is irregular; grey vertical lines mark month
 boundaries and the tick labels give the first observed night of the labelled month. Only
-nights with at least $200$ measured PSFs are shown, which retains $206$ of $209$ nights.
+nights with at least $200$ measured PSFs are shown, which retains $243$ of $246$ nights.
 Note that the vertical axis stops at $0.7$, and that all six bands are pooled.}
 \label{fig:nightly}
 \end{figure}
@@ -864,8 +875,8 @@ Note that the vertical axis stops at $0.7$, and that all six bands are pooled.}
 We set out to build a PSF image-quality metric for the Rubin Observatory sensitive to the
 asymmetric optical aberrations active-optics control exists to correct, and insensitive to
 the atmosphere by construction rather than by calibration. We have presented two such
-metrics, the shapelet score and the moment score, and measured them for $1{,}468{,}222$
-raft-stacked PSFs from $71{,}015$ LSSTCam visits spanning 2025 April to 2026 May. Our main
+metrics, the shapelet score and the moment score, and measured them for $1{,}949{,}189$
+raft-stacked PSFs from $94{,}422$ LSSTCam visits spanning 2025 April to 2026 July. Our main
 findings are as follows.
 
 \begin{enumerate}
@@ -877,8 +888,8 @@ findings are as follows.
         $I(r,\theta) = I(r,\theta+\pi)$ has identically zero odd-$m$ power.
   \item \textbf{The score is close to independent of PSF size.} We find no appreciable
         correlation with the measured FWHM in any band or epoch. At fixed FWHM the score
-        spans a $5$th-to-$95$th percentile range of $84$--$124$, while the median varies by
-        only $1.3$--$3.1$ across the seeing range.
+        spans a $5$th-to-$95$th percentile range of $84$--$106$, while the median varies by
+        only $1.3$--$3.5$ across the seeing range.
   \item \textbf{Two independent metrics agree.} The shapelet and third-order moment scores,
         which share no machinery, correlate at $\rho_{\rm s} = +0.923$ over $607{,}948$
         matched (visit, raft) measurements, with a near-proportional relation
@@ -889,7 +900,7 @@ findings are as follows.
         median score between the lowest and highest quintile of field spread, against
         $1.10$ for the astigmatism mode $z_5$.
   \item \textbf{The score is a practical nightly monitor.} The fraction of PSFs above the
-        HIGH threshold has a median over nights of $3.2\%$ but ranges from $0\%$ to $28.9\%$,
+        HIGH threshold has a median over nights of $2.2\%$ but ranges from $0\%$ to $28.9\%$,
         with coherent month-scale structure that separates good optical periods from bad
         ones by eye.
 \end{enumerate}

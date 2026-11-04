@@ -78,12 +78,19 @@ Do not edit anything under `../` unless I explicitly ask. Read it, and re-derive
 | `shapelet_bvec/piff_shapelet_{band}_{tag}.npz` | Same, fitted to Piff-model stamps |
 | `psf_moments_allbands.pq` | 29,502 visits × 490 cols: `visit_id, band`, `z4…z11`, `z{4..11}_{191,195,199,203}`, observing conditions, FoV-median moments + residuals, and per-raft `{T,e1,e2,c11,c12,c31,c32,rho4,e4_1,e4_2}_{raft}` + `d*` residuals for 21 science rafts |
 | `dp2_visit_info.pq` | `visit_id, aos_fwhm, donut_blur_fwhm, band, sky_bg` (29,502 rows) |
-| `post_dp2_visit_info.pq` | adds `coma_1, coma_2, trefoil_1, trefoil_2` (44,692 rows) |
+| `post_dp2_visit_info.pq` | adds `coma_1, coma_2, trefoil_1, trefoil_2` (69,420 rows, day_obs 20251216–20260713; the May-2026 version is kept as `post_dp2_visit_info_to20260514.pq`) |
 | `shapelet_vs_moments_raft_dp2.pq` | Per (visit, raft, band) shapelet power + moment score + `z4…z11` |
 
-**Tags**: `dp2all` (all DP2), `dp2post20251115` (DP2 after 2025-11-15), `postdp2` (2026-01-13
-to 2026-05-13). Visit IDs are `YYYYMMDDNNNNN`; the night is `str(visit_id)[:8]` and
+**Tags**: `dp2all` (all DP2), `dp2post20251115` (DP2 after 2025-11-15), `postdp2` (2026-01-01
+to 2026-07-13). Visit IDs are `YYYYMMDDNNNNN`; the night is `str(visit_id)[:8]` and
 `day_obs = visit_id // 100_000`.
+
+> **EXTENSION (2026-11-04).** `postdp2` was extended from 2026-05-13 to 2026-07-13, the last
+> on-sky night before the 2026 shutdown, using `nightlyValidation/67` and `/68` (repo `main`).
+> The new rows were fitted with `../scripts/extend_shapelet_library.py`, which appends to the
+> May libraries without refitting them; the May versions are kept as
+> `shapelet_{band}_postdp2_to20260513.npz`. Post-DP2 stamps stack a median of 43 stars
+> versus 100 for DP2 (`nb/01`), so the two epochs have different noise floors.
 
 > **DECISION (2026-08-29).** The paper presents **two epochs on an equal footing**: DP2
 > (`dp2all`) and post-DP2 (`postdp2`). To keep the figure count inside the SPIE page

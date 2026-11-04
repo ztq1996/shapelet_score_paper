@@ -83,7 +83,7 @@ TAGS = ['dp2all', 'dp2post20251115', 'postdp2']
 TAG_LABELS = {
     'dp2all':          'DP2',
     'dp2post20251115': 'DP2, after 2025-11-15',
-    'postdp2':         'Post-DP2, 2026-01-13 to 2026-05-13',
+    'postdp2':         'Post-DP2, 2026-01-01 to 2026-07-13',
 }
 TAG_VISIT_INFO = {
     'dp2all':          DP2_VISIT_INFO_PQ,
