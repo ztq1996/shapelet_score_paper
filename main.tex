@@ -174,16 +174,10 @@ stamps and how they are stacked (Section~\ref{data:stamps}), the higher-order mo
 
 All data in this work were taken with LSSTCam on the Simonyi Survey Telescope. We analyse
 two epochs, treated throughout on an equal footing: \textbf{DP2}, visits processed by the
-Data Preview 2 Data Release Production \cite{DP2} with Rubin Science Pipelines \texttt{v30}
-(the \texttt{LSSTCam/runs/DRP/DP2/v30\_0\_0/DM-53881/stage2} collection), spanning 2025
-April 24 to 2026 January 6; and \textbf{post-DP2}, visits processed by the
-nightly-validation pipelines after the DP2 cutoff, spanning 2026 January 1 to 2026 July 13,
-the last night with science visits before the 2026 observatory shutdown.
-
-We note that the two epochs overlap slightly in calendar time, since the distinction between
-them is one of \emph{processing} rather than observing date. Post-DP2 is the larger sample and the
-only one extending into 2026 April through July, which matters for the long-baseline monitoring
-of Section~\ref{results:monitoring}.
+Data Preview 2 Data Release Production \cite{DP2} with Rubin Science Pipelines
+\texttt{v30}, spanning 2025 April 24 to 2026 January 6; and \textbf{post-DP2}, visits
+processed by the nightly-validation pipelines after the DP2 cutoff, spanning 2026 January
+1 to 2026 July 13.
 
 Table~\ref{tab:sample} summarises the sample: $1{,}949{,}189$ raft-stacked PSFs from
 $94{,}422$ visits over \ugrizy. The $i$ band is by far the best-sampled, and we use it for
@@ -193,32 +187,31 @@ wherever they differ.
 \begin{table}[htbp]
 \caption{Summary of the PSF sample. ``PSFs'' counts raft-stacked PSF stamps, each of which
 is the flux-normalised mean of up to 100 stars on one detector of one raft
-(Section~\ref{data:stamps}). Visit counts are per band; the epoch totals de-duplicate
-visits observed in more than one band. Dates are the first and last night on which a visit
-in that band and epoch was taken.}
+(Section~\ref{data:stamps}). Night and visit counts are per band; the epoch totals
+de-duplicate nights and visits observed in more than one band.}
 \label{tab:sample}
 \begin{center}
-\begin{tabular}{lrrrcc}
+\begin{tabular}{lrrr}
 \toprule
-Band & Nights & Visits & PSFs & First night & Last night \\
+Band & Nights & Visits & PSFs \\
 \midrule
-\multicolumn{6}{l}{\textit{DP2}} \\
-\quad $u$ & 38 & 2,056 & 42,698 & 2025-04-24 & 2025-12-20 \\
-\quad $g$ & 79 & 4,280 & 88,863 & 2025-04-24 & 2026-01-06 \\
-\quad $r$ & 76 & 5,063 & 104,521 & 2025-04-24 & 2026-01-05 \\
-\quad $i$ & 99 & 7,899 & 164,443 & 2025-04-24 & 2026-01-06 \\
-\quad $z$ & 79 & 5,867 & 121,771 & 2025-05-15 & 2026-01-05 \\
-\quad $y$ & 29 & 4,337 & 90,215 & 2025-05-19 & 2026-01-06 \\
-\quad all & 130 & 29,502 & 612,511 & 2025-04-24 & 2026-01-06 \\
+\multicolumn{4}{l}{\textit{DP2}} \\
+\quad $u$ & 38 & 2,056 & 42,698 \\
+\quad $g$ & 79 & 4,280 & 88,863 \\
+\quad $r$ & 76 & 5,063 & 104,521 \\
+\quad $i$ & 99 & 7,899 & 164,443 \\
+\quad $z$ & 79 & 5,867 & 121,771 \\
+\quad $y$ & 29 & 4,337 & 90,215 \\
+\quad all & 130 & 29,502 & 612,511 \\
 \addlinespace
-\multicolumn{6}{l}{\textit{Post-DP2}} \\
-\quad $u$ & 32 & 2,511 & 51,496 & 2026-01-13 & 2026-07-13 \\
-\quad $g$ & 71 & 4,273 & 88,708 & 2026-01-02 & 2026-07-13 \\
-\quad $r$ & 83 & 9,273 & 191,248 & 2026-01-03 & 2026-07-13 \\
-\quad $i$ & 109 & 24,536 & 506,259 & 2026-01-01 & 2026-07-13 \\
-\quad $z$ & 91 & 14,509 & 295,478 & 2026-01-02 & 2026-07-13 \\
-\quad $y$ & 44 & 9,818 & 203,489 & 2026-01-02 & 2026-06-07 \\
-\quad all & 122 & 64,920 & 1,336,678 & 2026-01-01 & 2026-07-13 \\
+\multicolumn{4}{l}{\textit{Post-DP2}} \\
+\quad $u$ & 32 & 2,511 & 51,496 \\
+\quad $g$ & 71 & 4,273 & 88,708 \\
+\quad $r$ & 83 & 9,273 & 191,248 \\
+\quad $i$ & 109 & 24,536 & 506,259 \\
+\quad $z$ & 91 & 14,509 & 295,478 \\
+\quad $y$ & 44 & 9,818 & 203,489 \\
+\quad all & 122 & 64,920 & 1,336,678 \\
 \bottomrule
 \end{tabular}
 \end{center}
