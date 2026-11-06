@@ -133,14 +133,24 @@ population of atmospheric PSFs, spanning a realistic range of size, ellipticity 
 profile shape, to show that the score is decoupled from the atmospheric component of the
 PSF: across the simulated population the odd-$m$ coefficients stay at the level of
 numerical round-off, while the even-$m$ coefficients absorb all of the atmospheric
-variation. We also construct a companion \emph{moment score} from the third-order adaptive
-moments of the same stars, which gives an independent cross-check built from entirely
-different machinery.
+variation.
 
-We measure these scores for $1{,}949{,}189$ raft-stacked PSFs drawn from $94{,}422$ LSSTCam
-visits spanning April 2025 to July 2026, covering both the Data Preview 2 (DP2) processing
-\cite{DP2} and subsequent nightly validation. We propose the shapelet score as a complement
-to the PSF size and AOS-derived metrics already in use, rather than a replacement for them.
+We measure the shapelet score for $1{,}949{,}189$ raft-stacked PSFs drawn from $94{,}422$
+LSSTCam visits spanning April 2025 to July 2026, covering both the Data Preview 2 (DP2)
+processing \cite{DP2} and subsequent nightly validation. Inspecting stacked PSF images
+across the range of the score, we demonstrate that it is a good metric for PSF
+irregularity: low-scoring stamps are round and compact, while high-scoring stamps show the
+displaced cores and one-sided flares characteristic of coma and trefoil. We also compute a
+complementary \emph{moment score} from the spin-1 (coma) and spin-3 (trefoil) combinations
+of the third-order adaptive moments of the same stars, built from entirely different
+machinery, and find the two scores in close agreement, at a Spearman rank correlation of
+$\rho_{\rm s} = +0.923$. We then study how the shapelet score correlates with a range of
+other quantities: the delivered PSF size, the sky background, the AOS estimates of image
+quality, and the wavefront Zernike coefficients measured at the corner sensors. In
+addition, we release per-visit and per-night logs of the shapelet score \tianqing{TODO:
+where will these logs be released, and in what format?}, so that they can be used directly
+as a record of delivered image quality. We propose the shapelet score as a complement to
+the PSF size and AOS-derived metrics already in use.
 
 The paper is organized as follows. Section~\ref{data:0} describes the LSSTCam data and the
 auxiliary catalogs. Section~\ref{method:0} sets out the shapelet formalism, presents the
