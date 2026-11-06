@@ -29,7 +29,7 @@
 \newcommand{\arcsec}{\ensuremath{^{\prime\prime}}}
 \newcommand{\ugrizy}{\ensuremath{ugrizy}}
 
-\title{The Shapelet Score: An Optics-Sensitive PSF Quality Metric for the
+\title{Shapelet Score: An Optics-Sensitive Image Quality Metric for the
 Rubin Observatory}
 
 % \author[a,b,c]{Tianqing Zhang}
@@ -48,27 +48,19 @@ Rubin Observatory}
 \begin{abstract}
 Image quality at the Vera C. Rubin Observatory is usually summarised by the PSF full width
 at half maximum and ellipticity, both second-moment quantities dominated by the atmosphere.
-Neither is sensitive to the asymmetric optical aberrations that the active optics system
-exists to correct, chiefly coma and trefoil, so a visit can be taken in excellent seeing and
-still deliver a badly aberrated PSF. We present a metric sensitive to exactly those
-aberrations
+Neither is sensitive to the asymmetric optical aberrations, chiefly coma and trefoil, so a visit can be taken in excellent seeing and still deliver a badly asymmetric PSF, which makes it unsuitable for many science analyses.  
+We present the \emph{shapelet score} as a metric sensitive to exactly those aberrations
 and blind to the atmosphere by construction. Decomposing each PSF into polar shapelets, we
 show on simulated point-symmetric atmospheric PSFs that the coefficients with odd azimuthal
-index $m$ vanish to double-precision round-off, while the even-$m$ coefficients absorb all
+index $m$ vanish, while the even-$m$ coefficients absorb all
 the atmospheric variation. We define the \emph{shapelet score} as the odd-$m$ fraction of
-shapelet power, together with a companion \emph{moment score} built from third-order
-adaptive moments, and measure both for
-$1{,}949{,}189$ raft-stacked PSFs from $94{,}422$ LSSTCam visits taken between 2025 April
-and 2026 July. The score is essentially independent of PSF size, spanning two orders of
-magnitude at fixed seeing; it agrees with the moment score at a Spearman rank correlation of
-$+0.923$; and it responds preferentially to the odd-$m$ Zernike aberrations measured by the
-corner wavefront sensors, most strongly to coma. Used as a nightly monitor, the fraction of
-PSFs it flags ranges from zero to $29\%$ between nights. We propose it as an image-quality
-metric complementary to PSF size and to the existing AOS-derived metrics.
+shapelet power.
+We measure the shapelet score on for $1{,}949{,}189$ raft-stacked PSFs from $94{,}422$ LSSTCam visits taken between 2025 April and 2026 July. 
+We show visual evidence that the shapelet score strongly correlates with the irregularity of the PSF. We demonstrate that the shapelet score can be used as a nightly monitor metric for image quality. 
+We propose the shapelet score as an image-quality metric complementary to PSF size and to the existing AOS-derived metrics.
 \end{abstract}
 
-\keywords{Rubin Observatory, LSST, point spread function, shapelets, image quality,
-active optics, wavefront sensing}
+\keywords{Rubin Observatory, point spread function, image quality, active optics}
 
 
 % ============================================================================
@@ -79,13 +71,13 @@ The NSF-DOE Vera C. Rubin Observatory will carry out the Legacy Survey of Space 
 Camera (LSSTCam) on the 8.4\,m Simonyi Survey Telescope \cite{Ivezic2019}. Many of the
 survey's headline science cases, and cosmic shear in particular, depend on how well we
 understand the point spread function (PSF), which for a ground-based telescope is a
-convolution of atmospheric turbulence, the optical system, and the detector. Errors in
+convolution of atmospheric PSF, the optical system, dome seeing and the detector. Errors in
 modelling it propagate directly into galaxy shape measurements and hence into cosmological
 parameter constraints \cite{HirataSeljak2003, Jarvis2021, Zhang2023}, so monitoring the
 delivered PSF night by night and across the focal plane is both an operational requirement
 and a prerequisite for the survey's precision-cosmology goals.
 
-In practice, image quality is almost always summarised by second-moment quantities: the
+In practice, image quality is often summarised by second-moment quantities: the
 full width at half maximum (FWHM) and the two components of the PSF ellipticity. These are
 cheap to compute and capture the dominant behaviour of the PSF, but they are also dominated
 by the atmosphere. Ground-layer seeing sets the FWHM and contributes most of the
@@ -113,7 +105,7 @@ score} as the fraction of total shapelet power carried by those modes, and a com
 dimensionless, computed per PSF, and require no external calibration.
 
 We measure these scores for $1{,}949{,}189$ raft-stacked PSFs drawn from $94{,}422$ LSSTCam
-visits spanning 2025 April to 2026 July, covering both the Data Preview 2 (DP2) processing
+visits spanning April 2025 to July 2026, covering both the Data Preview 2 (DP2) processing
 \cite{DP2} and subsequent nightly validation. We propose the shapelet score as a complement
 to the PSF size and AOS-derived metrics already in use, rather than a replacement for them.
 
