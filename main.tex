@@ -86,19 +86,38 @@ a prerequisite for the survey's precision-cosmology goals. That monitoring has t
 only how large and how elliptical the delivered PSF is, but also how irregular and
 asymmetric it is.
 
-In practice, image quality is often summarised by second-moment quantities: the
-full width at half maximum (FWHM) and the two components of the PSF ellipticity. These are
-cheap to compute and capture the dominant behaviour of the PSF, but they are also dominated
-by the atmosphere. Ground-layer seeing sets the FWHM and contributes most of the
-ellipticity, so a visit taken through good seeing will report excellent second-moment image
-quality even when the optical system is misaligned. The failure modes that the Rubin active
-optics system (AOS) exists to correct are precisely those to which second moments are least
-sensitive: coma, trefoil, and higher-order asymmetric aberrations from mirror figure error,
-hexapod misalignment, or incomplete AOS convergence \cite{Xin2015}. A PSF can be compact,
-nearly round, and still be badly aberrated. The observatory does track the wavefront
-directly through Zernike coefficients estimated at the four corner wavefront sensors, but
-those sample only the corners of the focal plane and come from a separate curvature-sensing
-analysis external to the science images.
+In practice, image quality is often summarised by second-moment quantities: the full width
+at half maximum (FWHM) and the two components of the PSF ellipticity. These are cheap to
+compute and capture the dominant behaviour of the PSF, but for our purpose they have two
+shortcomings. The first is that they are dominated by the atmosphere. Ground-layer seeing
+sets the FWHM and contributes most of the ellipticity, so a visit taken through good
+seeing will report excellent second-moment image quality even when the optical system is
+misaligned. The failure modes that the Rubin active optics system (AOS) exists to correct
+are precisely those to which second moments are least sensitive: coma, trefoil, and
+higher-order asymmetric aberrations from mirror figure error, hexapod misalignment, or
+incomplete AOS convergence \cite{Xin2015}. A compact, nearly round PSF can still be badly
+aberrated, and an aberration of this kind can sit undetected behind a reassuring FWHM.
+
+The second shortcoming is that an irregular PSF degrades measurements in its own right,
+whatever its size. Standard centroiding algorithms return a biased position in the
+presence of an asymmetric PSF; in SDSS this bias was typically a few tens of
+milliarcseconds (mas) and could reach $100$\,mas, and had to be measured from the PSF
+model and removed explicitly \cite{Pier2003}. More generally, inaccuracies in the PSF
+model propagate directly into measured positions, and astrometry is more sensitive to them
+than photometry is \cite{AndersonKing2000}. For weak lensing, the moments of the PSF
+beyond second order propagate into the inferred shear and contribute a systematic that the
+second-moment description does not capture \cite{Zhang2023}. A small but irregular PSF
+therefore carries a cost of its own, over and above what it indicates about the state of
+the optics.
+
+The observatory already measures the wavefront directly, through annular Zernike
+coefficients estimated by curvature sensing at the four corner wavefront sensors
+\cite{Xin2015}, and these are a powerful and well-established diagnostic of the optical
+state. They are, however, measured at only four positions at the edge of the focal plane,
+while a metric computed from the science images themselves samples the full focal plane
+and describes the PSF that the science measurements actually see. We regard the two as
+complementary: an independent handle on image quality, derived from a different instrument
+and a different analysis path, is valuable in its own right.
 
 This motivates a metric built from the science images, sensitive to exactly the asymmetric
 optical modes that second moments miss, and insensitive to the atmosphere by construction.
