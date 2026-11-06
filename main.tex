@@ -146,11 +146,12 @@ of the third-order adaptive moments of the same stars, built from entirely diffe
 machinery, and find the two scores in close agreement, at a Spearman rank correlation of
 $\rho_{\rm s} = +0.923$. We then study how the shapelet score correlates with a range of
 other quantities: the delivered PSF size, the sky background, the AOS estimates of image
-quality, and the wavefront Zernike coefficients measured at the corner sensors. In
-addition, we release per-visit and per-night logs of the shapelet score \tianqing{TODO:
-where will these logs be released, and in what format?}, so that they can be used directly
-as a record of delivered image quality. We propose the shapelet score as a complement to
-the PSF size and AOS-derived metrics already in use.
+quality, and the wavefront Zernike coefficients measured at the corner sensors. The score
+is computed by the LSST Science Pipelines and published per detector and visit in the
+\texttt{DetectorVisitProcessingSummary} table of the Rubin science data model schemas
+\cite{SDMSchemas}, so it is available directly as a record of delivered image quality. We
+propose the shapelet score as a complement to the PSF size and AOS-derived metrics already
+in use.
 
 The paper is organized as follows. Section~\ref{data:0} describes the LSSTCam data and the
 auxiliary catalogs. Section~\ref{method:0} sets out the shapelet formalism, presents the
@@ -954,12 +955,16 @@ Several directions follow naturally. The most important is to quantify the impac
 shapelet-score cut on weak-lensing systematics directly, through the $\rho$-statistics and
 the two-point shear correlation function, which would turn the score from a monitoring
 metric into a calibrated selection criterion; we defer this to a companion analysis. The
-score can also be computed on the \textsc{Piff} PSF model, and the difference from the star
-measurement would isolate how much of the asymmetry the model captures. A variant has
-already been adopted into the LSST Science Pipelines as \texttt{shapeletsIqScore}, with a
-mode set differing slightly from the definition used here. Finally, applying the score per
-detector rather than per raft would map the field dependence of the aberrations directly, at
-the cost of a higher noise floor.
+score can also be computed on the \textsc{Piff} PSF model, and the difference from the
+star measurement would isolate how much of the asymmetry the model captures. Variants of
+the score are already computed by the LSST Science Pipelines and published in the
+\texttt{DetectorVisitProcessingSummary} table \cite{SDMSchemas}, as
+\texttt{shapeletsOnlyIqScore}, built from the non-atmospheric coefficients alone, and
+\texttt{shapeletsIqScore}, which adds the median centroid offset to them. The former is
+the closer analogue of the score defined here, which excludes the $n = 1$ centroid modes
+for the reasons given in Section~\ref{method:shapelet_score}, although the mode sets still
+differ in detail. Finally, applying the score per detector rather than per raft would map
+the field dependence of the aberrations directly, at the cost of a higher noise floor.
 
 
 % ============================================================================
