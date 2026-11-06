@@ -68,14 +68,23 @@ We propose the shapelet score as an image-quality metric complementary to PSF si
 \label{intro:0}
 The NSF-DOE Vera C. Rubin Observatory will carry out the Legacy Survey of Space and Time
 (LSST), imaging the southern sky in six bands over ten years with the 3.2-gigapixel LSST
-Camera (LSSTCam) on the 8.4\,m Simonyi Survey Telescope \cite{Ivezic2019}. Many of the
-survey's headline science cases, and cosmic shear in particular, depend on how well we
-understand the point spread function (PSF), which for a ground-based telescope is a
-convolution of atmospheric PSF, the optical system, dome seeing and the detector. Errors in
-modelling it propagate directly into galaxy shape measurements and hence into cosmological
-parameter constraints \cite{HirataSeljak2003, Jarvis2021, Zhang2023}, so monitoring the
-delivered PSF night by night and across the focal plane is both an operational requirement
-and a prerequisite for the survey's precision-cosmology goals.
+Camera (LSSTCam) on the 8.4\,m Simonyi Survey Telescope \cite{Ivezic2019}. Much of the
+science LSST will deliver rests on the quality of the images it takes. Photometry,
+astrometry and galaxy shape measurement are all carried out against a model of the point
+spread function (PSF) \cite{Bosch2018}, which for a ground-based telescope is a convolution
+of atmospheric PSF, the optical system, dome seeing and the detector. A more compact PSF
+directly increases the scientific return of a given exposure: the number density of
+galaxies whose shapes can be measured is set in large part by their size relative to the
+PSF \cite{Chang2013}, and a smaller PSF separates close pairs that would otherwise be
+blended into a single detection, which is a known source of bias in shear measurement
+\cite{Dawson2016, Nourbakhsh2022}. Conversely, a PSF that is poorly modelled leaks directly
+into galaxy shape measurements and hence into cosmological parameter constraints
+\cite{HirataSeljak2003, Mandelbaum2018, Jarvis2021, Zhang2023}, at a level for which the
+survey's precision targets leave little room \cite{DESC_SRD}. Monitoring the delivered PSF
+night by night and across the focal plane is therefore both an operational requirement and
+a prerequisite for the survey's precision-cosmology goals. That monitoring has to track not
+only how large and how elliptical the delivered PSF is, but also how irregular and
+asymmetric it is.
 
 In practice, image quality is often summarised by second-moment quantities: the
 full width at half maximum (FWHM) and the two components of the PSF ellipticity. These are
