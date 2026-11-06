@@ -38,30 +38,30 @@ Rubin Observatory}
 \author[e,f]{Keith Bechtol}
 \author[g]{Merlin Fisher-Levine}
 \author[e,h]{\v{Z}eljko Ivezi\'{c}}
-\author[i]{Aaron Roodman}
 \author[e]{Anastasia Alexov}
-\author[b,i]{Andr\'{e}s Alejandro Plazas Malag\'{o}n}
-\author[j,d]{Arun Kannawadi}
-\author[k]{Claire-Alice Hebert}
-\author[l]{Craig Lage}
-\author[m]{Cyrille Doux}
-\author[n]{Elana K. Urbach}
-\author[i]{Eli S. Rykoff}
-\author[k]{Erin Scott Sheldon}
-\author[o]{Guillem Megias Homar}
-\author[p]{John Franklin Crenshaw}
-\author[i]{Joshua E. Meyers}
-\author[q]{Katherine Laliotis}
-\author[r]{Matthew R. Becker}
-\author[s]{Mike Jarvis}
-\author[v]{Phil Puxley}
-\author[d]{Pierre-Fran\c{c}ois L\'{e}get}
-\author[t]{Rachel Mandelbaum}
+\author[i]{Matthew R. Becker}
 \author[e]{Robert D. Blum}
+\author[j]{John Franklin Crenshaw}
+\author[k]{Cyrille Doux}
+\author[l]{Claire-Alice Hebert}
+\author[m]{Mike Jarvis}
+\author[n,d]{Arun Kannawadi}
+\author[o]{Craig Lage}
+\author[p]{Katherine Laliotis}
+\author[d]{Pierre-Fran\c{c}ois L\'{e}get}
 \author[d]{Robert H. Lupton}
+\author[q]{Sean Patrick MacBride}
+\author[r]{Rachel Mandelbaum}
+\author[s]{Guillem Megias Homar}
+\author[t]{Joshua E. Meyers}
+\author[b,t]{Andr\'{e}s Alejandro Plazas Malag\'{o}n}
+\author[u]{Phil Puxley}
+\author[t]{Aaron Roodman}
+\author[t]{Eli S. Rykoff}
+\author[t]{Theo Schutt}
+\author[l]{Erin Scott Sheldon}
 \author[e]{Sandrine Thomas}
-\author[u]{Sean Patrick MacBride}
-\author[i]{Theo Schutt}
+\author[v]{Elana K. Urbach}
 
 \affil[a]{Kavli Institute for Particle Astrophysics and Cosmology (KIPAC),
           Stanford University, Stanford, CA 94305, USA}
@@ -79,31 +79,31 @@ Rubin Observatory}
           Deansleigh Road, Bournemouth BH7 7DU, UK}
 \affil[h]{Department of Astronomy, University of Washington, Box 351580,
           Seattle, WA 98195, USA}
-\affil[i]{Kavli Institute for Particle Astrophysics and Cosmology,
-          SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA}
-\affil[j]{Department of Physics, Duke University, Durham, NC 27708, USA}
-\affil[k]{Brookhaven National Laboratory, Upton, NY 11973, USA}
-\affil[l]{Physics Department, University of California, One Shields Avenue,
-          Davis, CA 95616, USA}
-\affil[m]{Universit\'{e} Grenoble Alpes, CNRS/IN2P3, LPSC, 53 avenue des
-          Martyrs, F-38026 Grenoble, France}
-\affil[n]{Department of Physics, Harvard University, 17 Oxford St.,
-          Cambridge, MA 02138, USA}
-\affil[o]{Division of Physics, Mathematics and Astronomy, California Institute
-          of Technology, Pasadena, CA 91125, USA}
-\affil[p]{Institute for Data-intensive Research in Astrophysics and Cosmology,
-          University of Washington, 3910 15th Avenue NE, Seattle, WA 98195, USA}
-\affil[q]{Center for Cosmology and Astro-Particle Physics, The Ohio State
-          University, Columbus, OH 43210, USA}
-\affil[r]{High Energy Physics Division, Argonne National Laboratory,
+\affil[i]{High Energy Physics Division, Argonne National Laboratory,
           9700 South Cass Avenue, Lemont, IL 60439, USA}
-\affil[s]{University of Pennsylvania, Philadelphia, PA 19104, USA}
-\affil[t]{McWilliams Center for Cosmology and Astrophysics, Department of
-          Physics, Carnegie Mellon University, Pittsburgh, PA 15213, USA}
-\affil[u]{Physik-Institut, University of Zurich, Winterthurerstrasse 190,
+\affil[j]{Institute for Data-intensive Research in Astrophysics and Cosmology,
+          University of Washington, 3910 15th Avenue NE, Seattle, WA 98195, USA}
+\affil[k]{Universit\'{e} Grenoble Alpes, CNRS/IN2P3, LPSC, 53 avenue des
+          Martyrs, F-38026 Grenoble, France}
+\affil[l]{Brookhaven National Laboratory, Upton, NY 11973, USA}
+\affil[m]{University of Pennsylvania, Philadelphia, PA 19104, USA}
+\affil[n]{Department of Physics, Duke University, Durham, NC 27708, USA}
+\affil[o]{Physics Department, University of California, One Shields Avenue,
+          Davis, CA 95616, USA}
+\affil[p]{Center for Cosmology and Astro-Particle Physics, The Ohio State
+          University, Columbus, OH 43210, USA}
+\affil[q]{Physik-Institut, University of Zurich, Winterthurerstrasse 190,
           8057 Zurich, Switzerland}
-\affil[v]{\tianqing{TODO: affiliation for Phil Puxley. I could not verify this
+\affil[r]{McWilliams Center for Cosmology and Astrophysics, Department of
+          Physics, Carnegie Mellon University, Pittsburgh, PA 15213, USA}
+\affil[s]{Division of Physics, Mathematics and Astronomy, California Institute
+          of Technology, Pasadena, CA 91125, USA}
+\affil[t]{Kavli Institute for Particle Astrophysics and Cosmology,
+          SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA}
+\affil[u]{\tianqing{TODO: affiliation for Phil Puxley. I could not verify this
           one from authordb.yaml or from a recent paper.}}
+\affil[v]{Department of Physics, Harvard University, 17 Oxford St.,
+          Cambridge, MA 02138, USA}
 
 \authorinfo{Send correspondence to T. Zhang: \texttt{tq96zhang@gmail.com}}
 
@@ -287,34 +287,15 @@ Band & Nights & Visits & PSFs \\
 
 We build our PSF sample from cutouts of the stars the pipeline used to constrain the PSF
 model: the \texttt{refit\_psf\_star} catalog for DP2, and the \texttt{single\_visit\_star}
-catalog restricted to \texttt{calib\_psf\_used = True} for post-DP2. Stamps are cut directly
-from the \texttt{preliminary\_visit\_image} pixels at the catalog centroids. We restrict the
-analysis to the 21 science rafts, excluding the four corner rafts (\texttt{R00},
-\texttt{R04}, \texttt{R40}, \texttt{R44}) which carry the guide and wavefront sensors.
+catalog restricted to \texttt{calib\_psf\_used = True} for post-DP2. Stamps are cut
+directly from the \texttt{preliminary\_visit\_image} pixels at the catalog centroids. We
+restrict the analysis to the 21 science rafts.
 
-For each visit and each science raft we select one detector at random, draw up to 100 stars
-from it, cut a $51 \times 51$ pixel ($10.2\arcsec$ on a side at the $0.2\arcsec$ pixel
-scale) stamp around each, normalise each to unit flux, and average them, rejecting stars
-whose stamps would cross a detector edge. This yields one stacked PSF image per raft per
-visit, up to 21 per visit. The stacking depth differs between the epochs: the median stamp
-averages $100$ stars in DP2, where $53\%$ of stamps reach the 100-star cap, but only $43$ in
-post-DP2, where $3\%$ do, reflecting the smaller number of PSF stars per detector in the
-post-DP2 catalog.
-\tianqing{New with the July extension (nb/01). The old pooled median of 60 is now 49 only
-because post-DP2 is a larger share of the sample; the per-epoch split above has always been
-there. The shallower post-DP2 stacks raise its noise floor, which may contribute to the
-higher post-DP2 medians in Section~\ref{results:distributions}; the ``$\sim\!10^2$ stars''
-below is strictly true only for DP2. Decide whether to discuss.}
-
-We stack for two reasons. First, averaging $\sim\!10^2$ flux-normalised stars suppresses
-photon noise by an order of magnitude, so the high-order coefficients are measured against a
-much reduced noise floor. Second, a raft is the natural unit for the aberrations we are
-trying to detect: coma and trefoil vary smoothly across the focal plane on scales much
-larger than a single detector, whereas the atmospheric contribution is common to the whole
-focal plane within a visit. Two consequences follow: stacking suppresses aberration varying
-\emph{within} a raft, so our scores are a lower bound on the true per-star asymmetry, and
-drawing from one detector means a stamp samples one quadrant of the raft rather than its
-mean field position.
+For each visit and each science raft we select one detector at random, draw up to 100
+stars from it, cut a $51 \times 51$ pixel stamp around each, normalise each to unit flux,
+and average them to increase the signal-to-noise ratio of the shapelet decomposition.
+Stars whose stamps would cross a detector edge are rejected. This yields one stacked PSF
+image per raft per visit.
 
 \subsection{Higher-order moment catalog}
 \label{data:moments}
