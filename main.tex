@@ -92,23 +92,25 @@ compute and capture the dominant behaviour of the PSF, but for our purpose they 
 shortcomings. The first is that they are dominated by the atmosphere. Ground-layer seeing
 sets the FWHM and contributes most of the ellipticity, so a visit taken through good
 seeing will report excellent second-moment image quality even when the optical system is
-misaligned. The failure modes that the Rubin active optics system (AOS) exists to correct
+misaligned. The failure modes that the Rubin active optics system (AOS) attempts to correct
 are precisely those to which second moments are least sensitive: coma, trefoil, and
 higher-order asymmetric aberrations from mirror figure error, hexapod misalignment, or
 incomplete AOS convergence \cite{Xin2015}. A compact, nearly round PSF can still be badly
 aberrated, and an aberration of this kind can sit undetected behind a reassuring FWHM.
 
 The second shortcoming is that an irregular PSF degrades measurements in its own right,
-whatever its size. Standard centroiding algorithms return a biased position in the
-presence of an asymmetric PSF; in SDSS this bias was typically a few tens of
-milliarcseconds (mas) and could reach $100$\,mas, and had to be measured from the PSF
-model and removed explicitly \cite{Pier2003}. More generally, inaccuracies in the PSF
-model propagate directly into measured positions, and astrometry is more sensitive to them
-than photometry is \cite{AndersonKing2000}. For weak lensing, the moments of the PSF
-beyond second order propagate into the inferred shear and contribute a systematic that the
-second-moment description does not capture \cite{Zhang2023}. A small but irregular PSF
-therefore carries a cost of its own, over and above what it indicates about the state of
-the optics.
+whatever its size. Part of the reason is that an asymmetric PSF is harder to model. PSF
+models are interpolated across the focal plane from a finite number of stars using a basis
+of limited flexibility \cite{Jarvis2021}, so the higher-order, asymmetric structure of the
+profile is typically the part least well captured, and whatever the model misses is left
+behind as a residual. Those residuals then propagate into the measurements. Standard
+centroiding algorithms return a biased position in the presence of an asymmetric PSF
+\cite{Pier2003}, and more generally inaccuracies in the PSF model propagate directly into
+measured positions, with astrometry more sensitive to them than photometry is
+\cite{AndersonKing2000}. For weak lensing, the moments of the PSF beyond second order
+propagate into the inferred shear and contribute a systematic that the second-moment
+description does not capture \cite{Zhang2023}. A small but irregular PSF therefore carries
+a cost of its own, over and above what it indicates about the state of the optics.
 
 The observatory already measures the wavefront directly, through annular Zernike
 coefficients estimated by curvature sensing at the four corner wavefront sensors
@@ -121,16 +123,19 @@ and a different analysis path, is valuable in its own right.
 
 This motivates a metric built from the science images, sensitive to exactly the asymmetric
 optical modes that second moments miss, and insensitive to the atmosphere by construction.
-We decompose each PSF into a polar shapelet basis, the Gauss-Laguerre eigenfunctions of the
-two-dimensional quantum harmonic oscillator
-\cite{Refregier2003, MasseyRefregier2005, BernsteinJarvis2002}, and show, using a
-simulated population of atmospheric PSFs, that the coefficients split cleanly into those
-that respond strongly to atmospheric size and ellipticity variation and those that do not
-respond at all. The second group is exactly the set of modes with odd azimuthal index $m$,
-which vanish identically for any point-symmetric profile. We define the \emph{shapelet
-score} as the fraction of total shapelet power carried by those modes, and a companion
-\emph{moment score} built from the third-order adaptive moments of the same stars. Both are
-dimensionless, computed per PSF, and require no external calibration.
+We decompose each PSF into a polar shapelet basis, the Gauss-Laguerre eigenfunctions of
+the two-dimensional quantum harmonic oscillator
+\cite{Refregier2003, MasseyRefregier2005, BernsteinJarvis2002}, and propose the
+\emph{shapelet score}, defined as the fraction of the total shapelet power carried by the
+modes with odd azimuthal index $m$. Those modes vanish identically for any point-symmetric
+profile, so the score responds only to genuine asymmetry in the image. We use a simulated
+population of atmospheric PSFs, spanning a realistic range of size, ellipticity and radial
+profile shape, to show that the score is decoupled from the atmospheric component of the
+PSF: across the simulated population the odd-$m$ coefficients stay at the level of
+numerical round-off, while the even-$m$ coefficients absorb all of the atmospheric
+variation. We also construct a companion \emph{moment score} from the third-order adaptive
+moments of the same stars, which gives an independent cross-check built from entirely
+different machinery.
 
 We measure these scores for $1{,}949{,}189$ raft-stacked PSFs drawn from $94{,}422$ LSSTCam
 visits spanning April 2025 to July 2026, covering both the Data Preview 2 (DP2) processing
