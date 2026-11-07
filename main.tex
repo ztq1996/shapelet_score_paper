@@ -18,6 +18,10 @@
 
 \graphicspath{{fig/}}
 
+% SPIE templates often use \supit{...} for affiliation markers
+\providecommand{\supit}[1]{\textsuperscript{#1}}
+
+
 % ---- Draft comment macros (remove before submission) -----------------------
 \newcommand{\tianqing}[1]{\textcolor{teal}{[TZ: #1]}}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
@@ -29,86 +33,60 @@
 \newcommand{\arcsec}{\ensuremath{^{\prime\prime}}}
 \newcommand{\ugrizy}{\ensuremath{ugrizy}}
 
+\begin{document}
 \title{Shapelet Score: An Optics-Sensitive Image Quality Metric for the
 Rubin Observatory}
 
-\author[a,b,c]{Tianqing Zhang}
-\author[d]{Lauren A. MacArthur}
-\author[d]{James F. Bosch}
-\author[e,f]{Keith Bechtol}
-\author[g]{Merlin Fisher-Levine}
-\author[e,h]{\v{Z}eljko Ivezi\'{c}}
-\author[e]{Anastasia Alexov}
-\author[i]{Matthew R. Becker}
-\author[e]{Robert D. Blum}
-\author[j]{John Franklin Crenshaw}
-\author[k]{Cyrille Doux}
-\author[l]{Claire-Alice Hebert}
-\author[m]{Mike Jarvis}
-\author[n,d]{Arun Kannawadi}
-\author[o]{Craig Lage}
-\author[p]{Katherine Laliotis}
-\author[d]{Pierre-Fran\c{c}ois L\'{e}get}
-\author[d]{Robert H. Lupton}
-\author[q]{Sean Patrick MacBride}
-\author[r]{Rachel Mandelbaum}
-\author[s]{Guillem Megias Homar}
-\author[t]{Joshua E. Meyers}
-\author[b,t]{Andr\'{e}s Alejandro Plazas Malag\'{o}n}
-\author[u]{Phil Puxley}
-\author[t]{Aaron Roodman}
-\author[t]{Eli S. Rykoff}
-\author[t]{Theo Schutt}
-\author[l]{Erin Scott Sheldon}
-\author[e]{Sandrine Thomas}
-\author[v]{Elana K. Urbach}
+% \maketitle moved below (after author/affiliation block) for SPIE class
 
-\affil[a]{Kavli Institute for Particle Astrophysics and Cosmology (KIPAC),
-          Stanford University, Stanford, CA 94305, USA}
-\affil[b]{SLAC National Accelerator Laboratory, 2575 Sand Hill Road,
-          Menlo Park, CA 94025, USA}
-\affil[c]{Department of Physics and Astronomy and PITT PACC, University of
-          Pittsburgh, Pittsburgh, PA 15260, USA}
-\affil[d]{Department of Astrophysical Sciences, Princeton University,
-          Princeton, NJ 08544, USA}
-\affil[e]{NSF-DOE Vera C. Rubin Observatory / NSF NOIRLab, 950 N. Cherry Ave.,
-          Tucson, AZ 85719, USA}
-\affil[f]{Department of Physics, University of Wisconsin-Madison, Madison,
-          WI 53706, USA}
-\affil[g]{D4D Consulting Ltd., Suite 1 Second Floor, Everdene House,
-          Deansleigh Road, Bournemouth BH7 7DU, UK}
-\affil[h]{Department of Astronomy, University of Washington, Box 351580,
-          Seattle, WA 98195, USA}
-\affil[i]{High Energy Physics Division, Argonne National Laboratory,
-          9700 South Cass Avenue, Lemont, IL 60439, USA}
-\affil[j]{Institute for Data-intensive Research in Astrophysics and Cosmology,
-          University of Washington, 3910 15th Avenue NE, Seattle, WA 98195, USA}
-\affil[k]{Universit\'{e} Grenoble Alpes, CNRS/IN2P3, LPSC, 53 avenue des
-          Martyrs, F-38026 Grenoble, France}
-\affil[l]{Brookhaven National Laboratory, Upton, NY 11973, USA}
-\affil[m]{University of Pennsylvania, Philadelphia, PA 19104, USA}
-\affil[n]{Department of Physics, Duke University, Durham, NC 27708, USA}
-\affil[o]{Physics Department, University of California, One Shields Avenue,
-          Davis, CA 95616, USA}
-\affil[p]{Center for Cosmology and Astro-Particle Physics, The Ohio State
-          University, Columbus, OH 43210, USA}
-\affil[q]{Physik-Institut, University of Zurich, Winterthurerstrasse 190,
-          8057 Zurich, Switzerland}
-\affil[r]{McWilliams Center for Cosmology and Astrophysics, Department of
-          Physics, Carnegie Mellon University, Pittsburgh, PA 15213, USA}
-\affil[s]{Division of Physics, Mathematics and Astronomy, California Institute
-          of Technology, Pasadena, CA 91125, USA}
-\affil[t]{Kavli Institute for Particle Astrophysics and Cosmology,
-          SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA}
-\affil[u]{\tianqing{TODO: affiliation for Phil Puxley. I could not verify this
-          one from authordb.yaml or from a recent paper.}}
-\affil[v]{Department of Physics, Harvard University, 17 Oxford St.,
-          Cambridge, MA 02138, USA}
+
+
+
+\author{%
+Tianqing Zhang\supit{a,b,c}, Lauren A. MacArthur\supit{d}, James F. Bosch\supit{d},
+Keith Bechtol\supit{e,f}, Merlin Fisher-Levine\supit{g}, \v{Z}eljko Ivezi\'{c}\supit{e,h},
+Anastasia Alexov\supit{e}, Matthew R. Becker\supit{i}, Robert D. Blum\supit{e},
+John Franklin Crenshaw\supit{j}, Cyrille Doux\supit{k}, Claire-Alice Hebert\supit{l},
+Mike Jarvis\supit{m}, Arun Kannawadi\supit{n,d}, Craig Lage\supit{o},
+Katherine Laliotis\supit{p}, Pierre-Fran\c{c}ois L\'{e}get\supit{d}, Robert H. Lupton\supit{d},
+Sean Patrick MacBride\supit{q}, Rachel Mandelbaum\supit{r}, Guillem Megias Homar\supit{s},
+Joshua E. Meyers\supit{t}, Andr\'{e}s Alejandro Plazas Malag\'{o}n\supit{b,t}, Phil Puxley\supit{u},
+Aaron Roodman\supit{t}, Eli S. Rykoff\supit{t}, Theo Schutt\supit{t}, Erin Scott Sheldon\supit{l},
+Sandrine Thomas\supit{e}, Elana K. Urbach\supit{v}%
+}
+
 
 \authorinfo{Send correspondence to T. Zhang: \texttt{tq96zhang@gmail.com}}
 
-\begin{document}
+
 \maketitle
+
+{\footnotesize
+\noindent\supit{a}Kavli Institute for Particle Astrophysics and Cosmology (KIPAC), Stanford University, Stanford, CA 94305, USA\\
+\supit{b}SLAC National Accelerator Laboratory, 2575 Sand Hill Road, Menlo Park, CA 94025, USA\\
+\supit{c}Department of Physics and Astronomy and PITT PACC, University of Pittsburgh, Pittsburgh, PA 15260, USA\\
+\supit{d}Department of Astrophysical Sciences, Princeton University, Princeton, NJ 08544, USA\\
+\supit{e}NSF-DOE Vera C. Rubin Observatory / NSF NOIRLab, 950 N. Cherry Ave., Tucson, AZ 85719, USA\\
+\supit{f}Department of Physics, University of Wisconsin-Madison, Madison, WI 53706, USA\\
+\supit{g}D4D Consulting Ltd., Suite 1 Second Floor, Everdene House, Deansleigh Road, Bournemouth BH7 7DU, UK\\
+\supit{h}Department of Astronomy, University of Washington, Box 351580, Seattle, WA 98195, USA\\
+\supit{i}High Energy Physics Division, Argonne National Laboratory, 9700 South Cass Avenue, Lemont, IL 60439, USA\\
+\supit{j}Institute for Data-intensive Research in Astrophysics and Cosmology, University of Washington, 3910 15th Avenue NE, Seattle, WA 98195, USA\\
+\supit{k}Universit\'{e} Grenoble Alpes, CNRS/IN2P3, LPSC, 53 avenue des Martyrs, F-38026 Grenoble, France\\
+\supit{l}Brookhaven National Laboratory, Upton, NY 11973, USA\\
+\supit{m}University of Pennsylvania, Philadelphia, PA 19104, USA\\
+\supit{n}Department of Physics, Duke University, Durham, NC 27708, USA\\
+\supit{o}Physics Department, University of California, One Shields Avenue, Davis, CA 95616, USA\\
+\supit{p}Center for Cosmology and Astro-Particle Physics, The Ohio State University, Columbus, OH 43210, USA\\
+\supit{q}Physik-Institut, University of Zurich, Winterthurerstrasse 190, 8057 Zurich, Switzerland\\
+\supit{r}McWilliams Center for Cosmology and Astrophysics, Department of Physics, Carnegie Mellon University, Pittsburgh, PA 15213, USA\\
+\supit{s}Division of Physics, Mathematics and Astronomy, California Institute of Technology, Pasadena, CA 91125, USA\\
+\supit{t}Kavli Institute for Particle Astrophysics and Cosmology, SLAC National Accelerator Laboratory, Menlo Park, CA 94025, USA\\
+\supit{u}\tianqing{TODO: affiliation for Phil Puxley. I could not verify this one from authordb.yaml or from a recent paper.}\\
+\supit{v}Department of Physics, Harvard University, 17 Oxford St., Cambridge, MA 02138, USA\par
+}
+
+
 
 \begin{abstract}
 Image quality at the Vera C. Rubin Observatory is usually summarised by the PSF full width
