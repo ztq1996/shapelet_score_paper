@@ -394,56 +394,40 @@ modes to be the ones sensitive to the non-atmospheric, non-Gaussian content of t
 \label{fig:basis}
 \end{figure}
 
-\subsection{Which modes respond to the atmosphere?}
+\subsection{Atmosphere-insensitive shapelet modes}
 \label{method:atm}
 
-Which of the 28 coefficients carry information about the optics, and which merely track the
-atmosphere? We answer this with a simulation.
+In this section, we use a simple image simulation to demonstrate which shapelet
+coefficients are insensitive to the atmospheric PSF.
 
 We generate $1000$ realisations of an atmospheric PSF, each the sum of two Moffat profiles
 with independently drawn parameters: FWHM uniform on $[0.5, 1.2]\arcsec$, Moffat $\beta$
 uniform on $[2.5, 4.5]$, and shear components $g_1, g_2$ drawn from a normal distribution of
-width $0.03$ and clipped at $|g| < 0.3$. The two-component sum gives more freedom than a
-single Moffat, so the population spans a realistic range of size, ellipticity, and radial
-profile shape. Crucially, each component is centred at the origin, so every realisation is
-point-symmetric: the population contains atmospheric variation and, by construction, no
-optical asymmetry whatsoever. We fit each with the same procedure used for the data,
-recovering all $1000$ fits with measured FWHM spanning $0.56$--$1.32\arcsec$.
+width $0.03$ and clipped at $|g| < 0.3$. We use a two-component profile to mimic the more
+realistic case of a changing atmospheric PSF, which can vary in size, shape and radial
+profile within a single exposure. Crucially, each component is centred at the origin, so
+every realisation is point-symmetric: the population contains atmospheric variation and, by
+construction, no optical asymmetry whatsoever. We fit each with the same procedure used for
+the data, recovering all $1000$ fits with measured FWHM spanning $0.56$--$1.32\arcsec$.
 
-Figure~\ref{fig:atm} shows the result, and it is unambiguous. The upper panel gives the
-standard deviation of each coefficient across realisations. The even-$m$ coefficients vary
-substantially, the largest being $(0,0)$ at $\sigma = 7.1 \times 10^{-2}$, and together
-carry $99.96\%$ of the median total power. Every odd-$m$ coefficient has
-$\sigma \le 1.4 \times 10^{-16}$: zero at the level of double-precision round-off, a ratio
-of $5 \times 10^{14}$ between the largest even-$m$ and odd-$m$ variation.
-
-This follows from symmetry alone, and therefore holds for any atmosphere model. A profile
-that satisfies $I(r, \theta) = I(r, \theta + \pi)$ has, by the orthogonality of
-$e^{im\theta}$, identically zero projection onto every basis function with odd $m$. Any
-point-symmetric PSF therefore has no odd-$m$ power at all, whether a Gaussian, a Moffat, a
-Kolmogorov profile, an elliptical version of any of these, or the PSF of a perfectly aligned
-telescope. Odd-$m$ power can only be produced by a genuine asymmetry.
-
-The lower panel makes the same point in terms of correlations with the input parameters: the
-even-$m$ coefficients correlate with the atmospheric FWHM at up to $|r| = 0.45$, whereas the
-odd-$m$ coefficients show no appreciable correlation with either input. Their residual
-values are set by floating-point arithmetic in the fit.
+Figure~\ref{fig:atm} shows the sensitivity of each shapelet coefficient to the variable
+atmospheric PSF, as the standard deviation of the coefficient across realisations. The
+even-$m$ coefficients vary substantially, whereas every odd-$m$ coefficient has
+$\sigma \le 1.4 \times 10^{-16}$, zero at the level of double-precision round-off. The
+odd-$m$ coefficients are therefore effectively insensitive to atmospheric variation. This
+follows from symmetry alone: any point-symmetric PSF has no odd-$m$ power at all, whether a
+Gaussian, a Moffat, a Kolmogorov profile, an elliptical version of any of these, or the PSF
+of a perfectly aligned telescope.
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=\textwidth]{atm_coeff_variation.pdf}
 \end{center}
 \caption{Response of each shapelet coefficient to atmospheric PSF variation, measured on
-$1000$ simulated point-symmetric two-component Moffat PSFs. Bars are coloured by mode class:
-orange for the odd-$m$, $n \geq 3$ modes that enter the score, blue for the $n = 1$ centroid
-modes, grey for even-$m$ modes; the orange shading marks the score modes. \textit{Top:} the
-standard deviation of each coefficient across realisations, on a logarithmic scale. The
-dotted line marks the double-precision floor at $10^{-16}$. All odd-$m$ coefficients sit at
-or below this floor, roughly fourteen orders of magnitude below the even-$m$ coefficients.
-\textit{Bottom:} the Pearson correlation coefficient of each shapelet coefficient with the
-input FWHM (dark red) and with the input ellipticity magnitude $|g|$ (green). Note that the
-vertical scale is linear here and spans $\pm 0.55$; the odd-$m$ correlations are consistent
-with zero at this sample size.}
+$1000$ simulated point-symmetric two-component Moffat PSFs. The bars give the standard
+deviation of each coefficient across realisations, on a logarithmic scale, and are coloured
+by mode class: orange for the odd-$m$, $n \geq 3$ modes that enter the score, blue for the
+$n = 1$ centroid modes, grey for even-$m$ modes; the orange shading marks the score modes.}
 \label{fig:atm}
 \end{figure}
 
