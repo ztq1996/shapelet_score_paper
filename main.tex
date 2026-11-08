@@ -445,9 +445,8 @@ total shapelet power carried by the odd-$m$ modes:
 
 At $n \le 6$ the numerator runs over five modes, $b_{33}$, $b_{31}$, $b_{55}$, $b_{53}$ and
 $b_{51}$, or ten of the 28 real coefficients once real and imaginary parts are counted
-separately. The score is dimensionless, bounded in $[0, 1]$, and rotationally invariant,
-since a rotation changes only the phase of $b_{nm}$ and leaves $|b_{nm}|^2$
-unchanged. Normalising by the total power makes it independent of the stamp flux
+separately. The score is dimensionless, bounded in $[0, 1]$, and rotationally invariant.
+Normalising by the total power makes it independent of the stamp flux
 normalisation, and, because $\sigma$ is set by the adaptive moments, largely independent of
 PSF size. We test this last claim directly in Section~\ref{results:fwhm}.
 
@@ -456,15 +455,16 @@ but describe a displacement of the profile rather than a distortion of it: a sta
 centroid is offset from the fitted centre acquires $n = 1$ power without being asymmetric,
 so including them would make the score sensitive to stamp registration. This matters in
 practice, since in the $i$-band data the $n = 1$ modes carry a median fractional power of
-$1.8 \times 10^{-4}$, roughly a quarter of the typical score. Second, we truncate at
+$1.8 \times 10^{-4}$, roughly a quarter of the typical score. The LSST Science Pipelines
+publish both choices for every detector-visit in the
+\texttt{DetectorVisitProcessingSummary} table of the Rubin science data model schemas
+\cite{SDMSchemas}: \texttt{shapeletsOnlyIqScore} is built from the non-atmospheric
+coefficients alone, while \texttt{shapeletsIqScore} additionally includes power from the
+median offset between the centroids used in the decomposition and those of the centroid
+slot. The score we define here is the analogue of the former. Second, we truncate at
 $n \le 6$; higher orders would add further odd-$m$ modes, but at fixed stamp size and noise
 level they are increasingly poorly constrained, and we find $n \le 6$ already captures the
 asymmetries visible by eye (Section~\ref{method:tiers}).
-
-On the simulated atmospheric population of Section~\ref{method:atm} the score has a median
-of $1.3 \times 10^{-32}$, some $29$ orders of magnitude below the smallest threshold we will
-use on real data. Any measured score is therefore attributable to the optics, the detector,
-or noise. Seeing alone cannot produce one.
 
 \subsection{The moment score}
 \label{method:moment_score}
@@ -1019,14 +1019,12 @@ shapelet-score cut on weak-lensing systematics directly, through the $\rho$-stat
 the two-point shear correlation function, which would turn the score from a monitoring
 metric into a calibrated selection criterion; we defer this to a companion analysis. The
 score can also be computed on the \textsc{Piff} PSF model, and the difference from the
-star measurement would isolate how much of the asymmetry the model captures. Variants of
-the score are already computed by the LSST Science Pipelines and published in the
-\texttt{DetectorVisitProcessingSummary} table \cite{SDMSchemas}, as
-\texttt{shapeletsOnlyIqScore}, built from the non-atmospheric coefficients alone, and
-\texttt{shapeletsIqScore}, which adds the median centroid offset to them. The former is
-the closer analogue of the score defined here, which excludes the $n = 1$ centroid modes
-for the reasons given in Section~\ref{method:shapelet_score}, although the mode sets still
-differ in detail. Finally, applying the score per detector rather than per raft would map
+star measurement would isolate how much of the asymmetry the model captures. The score is
+already computed by the LSST Science Pipelines and published in the
+\texttt{DetectorVisitProcessingSummary} table \cite{SDMSchemas}, in the two variants
+described in Section~\ref{method:shapelet_score}. The \texttt{shapeletsOnlyIqScore} variant
+is the closer analogue of the score defined here, although the mode sets still differ in
+detail. Finally, applying the score per detector rather than per raft would map
 the field dependence of the aberrations directly, at the cost of a higher noise floor.
 
 
