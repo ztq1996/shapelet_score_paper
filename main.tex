@@ -94,8 +94,8 @@ at half maximum and ellipticity, both second-moment quantities dominated by the 
 Neither is sensitive to the asymmetric optical aberrations, chiefly coma and trefoil, so a visit can be taken in excellent seeing and still deliver a badly asymmetric PSF, which makes it unsuitable for many science analyses.  
 We present the \emph{shapelet score} as a metric sensitive to exactly those aberrations
 and blind to the atmosphere by construction. Decomposing each PSF into polar shapelets, we
-show on simulated point-symmetric atmospheric PSFs that the coefficients with odd azimuthal
-index $m$ vanish, while the even-$m$ coefficients absorb all
+show on simulated point-symmetric atmospheric PSFs that the coefficients with odd spin $m$
+vanish, while the even-$m$ coefficients absorb all
 the atmospheric variation. We define the \emph{shapelet score} as the odd-$m$ fraction of
 shapelet power.
 We measure the shapelet score on for $1{,}949{,}189$ raft-stacked PSFs from $94{,}422$ LSSTCam visits taken between 2025 April and 2026 July. 
@@ -171,7 +171,7 @@ We decompose each PSF into a polar shapelet basis, the Gauss-Laguerre eigenfunct
 the two-dimensional quantum harmonic oscillator
 \cite{Refregier2003, MasseyRefregier2005, BernsteinJarvis2002}, and propose the
 \emph{shapelet score}, defined as the fraction of the total shapelet power carried by the
-modes with odd azimuthal index $m$. Those modes vanish identically for any point-symmetric
+modes with odd spin $m$. Those modes vanish identically for any point-symmetric
 profile, so the score responds only to genuine asymmetry in the image. We use a simulated
 population of atmospheric PSFs, spanning a realistic range of size, ellipticity and radial
 profile shape, to show that the score is decoupled from the atmospheric component of the
@@ -348,28 +348,26 @@ complete orthonormal basis in which a localised image can be expanded to a chose
 order \cite{Refregier2003, BernsteinJarvis2002}. We use the polar (Gauss--Laguerre) form
 \cite{MasseyRefregier2005}, whose basis functions carry a definite azimuthal dependence
 $e^{im\theta}$ and therefore separate the image into components of explicit rotational
-symmetry. This is the property we exploit throughout.
-
+symmetry. 
 We write the surface brightness of a PSF as
-
 \begin{equation}
 I(r, \theta) = \frac{1}{\sigma^2} \sum_{pq} b_{pq}\,
                \psi_{pq}\!\left(\frac{r}{\sigma}, \theta\right),
 \label{eq:shapelet}
 \end{equation}
-
 where $\sigma$ is an overall scale length, $b_{pq}$ are the shapelet coefficients, and the
 basis functions are
-
 \begin{equation}
 \psi_{pq}(r, \theta) = \frac{(-1)^q}{\sqrt{\pi}} \sqrt{\frac{q!}{p!}}\;
                        r^{m} e^{im\theta} e^{-r^2/2} L_q^{(m)}(r^2),
 \label{eq:basis}
 \end{equation}
-
 with $L_q^{(m)}$ the generalised Laguerre polynomials. The indices $p$ and $q$ count quanta
 of positive and negative angular momentum; we label modes instead by the order $n = p + q$
-and the azimuthal index $m = p - q$, so that $n$ and $m$ always have the same parity.
+and the spin $m = p - q$, so that $n$ and $m$ always have the same parity. We call $m$ the
+spin because it is the spin weight of the mode under rotation: rotating the image by an
+angle $\phi$ multiplies $b_{nm}$ by $e^{i m \phi}$. This is the same sense in which the
+third-moment combinations of Section~\ref{method:moment_score} are spin-1 and spin-3.
 Requiring $I(r,\theta)$ to be real imposes $b_{pq} = b_{qp}^{*}$, so each $m > 0$ mode
 contributes one real and one imaginary coefficient and each $m = 0$ mode a single real one.
 
@@ -380,8 +378,7 @@ implements the HSM algorithm \cite{HirataSeljak2003}, adopt the resulting
 $\sigma_{\rm HSM}$ (in arcseconds) as the shapelet scale $\sigma$, and solve the linear
 least-squares problem for $b_{pq}$ with \texttt{Shapelet.fit} in surface-brightness
 normalisation. Setting the scale from the adaptive moments is what makes the decomposition
-approximately scale-free, so the coefficients measure PSF \emph{shape} rather than PSF size.
-Throughout, we quote FWHM as $2.3548\,\sigma_{\rm HSM}$.
+approximately scale-free. Throughout, we quote FWHM as $2.3548\,\sigma_{\rm HSM}$.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -389,8 +386,8 @@ Throughout, we quote FWHM as $2.3548\,\sigma_{\rm HSM}$.
 \end{center}
 \caption{The 28 polar shapelet basis functions used in this work, truncated at order
 $n \le 6$ and arranged as a pyramid, with the radial order $n$ increasing downwards and the
-azimuthal index $|m|$ increasing outwards from the centre of each row. Horizontal position
-within a row is the signed azimuthal index: the imaginary (sine) component sits at $-m$ to
+spin $|m|$ increasing outwards from the centre of each row. Horizontal position
+within a row is the signed spin: the imaginary (sine) component sits at $-m$ to
 the left of centre and the real (cosine) component at $+m$ to the right, so that the purely
 radial $m = 0$ modes lie on the centre line and each row is mirror-symmetric about it. Note
 that odd-$n$ rows contain no $m = 0$ mode, so for those rows the centre line falls between
@@ -474,7 +471,7 @@ total shapelet power carried by the odd-$m$ modes:
 At $n \le 6$ the numerator runs over five modes, $b_{33}$, $b_{31}$, $b_{55}$, $b_{53}$ and
 $b_{51}$, or ten of the 28 real coefficients once real and imaginary parts are counted
 separately. The score is dimensionless, bounded in $[0, 1]$, and rotationally invariant,
-since rotating by $\phi$ multiplies $b_{nm}$ by $e^{im\phi}$ and leaves $|b_{nm}|^2$
+since a rotation changes only the phase of $b_{nm}$ and leaves $|b_{nm}|^2$
 unchanged. Normalising by the total power makes it independent of the stamp flux
 normalisation, and, because $\sigma$ is set by the adaptive moments, largely independent of
 PSF size. We test this last claim directly in Section~\ref{results:fwhm}.
