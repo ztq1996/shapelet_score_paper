@@ -471,8 +471,9 @@ asymmetries visible by eye (Section~\ref{method:tiers}).
 
 We construct a second, independent metric from the third-order adaptive moments of
 Section~\ref{data:moments}, both as a cross-check and because moments are already computed
-by the pipeline for every star. Following Ref.~\citenum{Zhang2023}, we form the spin-1 and
-spin-3 combinations of the normalised third moments $M_{pq}$,
+by the LSST Science Pipelines \cite{Pipelines2026} for every star. Following
+Ref.~\citenum{Zhang2023}, we form the spin-1 and spin-3 combinations of the normalised
+third moments $M_{pq}$,
 
 \begin{align}
 c_{11} &= M_{30} + M_{12},  &  c_{12} &= M_{21} + M_{03}, \label{eq:coma}\\
@@ -493,10 +494,10 @@ three up-weights the coma term; we adopt it for consistency with the metric alre
 for observatory monitoring, and note that the choice affects the normalisation of $\smom$
 but not strongly its rank ordering, since coma and trefoil are themselves correlated.
 
-The two scores capture the same physical information, the asymmetric odd-$m$ content of the
-PSF, but reach it by completely different routes: a least-squares basis expansion of the
-image, versus weighted pixel moments. They share no machinery. We quantify their agreement
-in Section~\ref{results:score_comparison}.
+We note that the two scores capture the same physical information, the asymmetric odd-$m$
+content of the PSF, but one reaches it by a least-squares basis expansion of the image and
+the other by weighted pixel moments. We quantify their agreement in
+Section~\ref{results:score_comparison}.
 
 \subsection{Score tiers and visual validation}
 \label{method:tiers}
