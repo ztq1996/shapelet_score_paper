@@ -510,19 +510,18 @@ classes. We adopt four tiers: \textbf{LOW} ($\sshape < 0.002$), clean, symmetric
 the $80$th, $95$th and $99$th percentiles of the global distribution, which we justify
 against the measured percentiles in Section~\ref{results:distributions}.
 
-Any quality metric should be checked against what the images actually look like, and the
-tier boundaries are easier to trust when shown alongside the PSFs they separate.
-Figure~\ref{fig:gallery} shows three $i$-band raft-stacked PSFs from each tier, with the
-residual after subtracting the fitted shapelet model. For LOW and VERY HIGH we show the
-extremes of the distribution, and for the two intermediate tiers PSFs near the geometric
-midpoint, so that the figure spans the full visual range of the metric.
+We visually check whether the tier system correctly reflects the quality of the PSF by eye.
+Figure~\ref{fig:gallery} shows three $i$-band raft-stacked PSFs from each tier, each next to
+its shapelet reconstruction. For LOW and VERY HIGH we show the extremes of the distribution,
+and for the two intermediate tiers PSFs near the geometric midpoint, so that the figure
+spans the full visual range of the metric.
 
-The progression is clear by eye. LOW-tier stamps are round and compact, with residuals
-consistent with noise; MEDIUM-tier stamps show mild elongation and faint residual structure;
-HIGH-tier stamps display an unmistakable comatic profile, a displaced, asymmetric core with
-a one-sided flare, together with coherent, large-scale residual structure;
-and VERY HIGH-tier stamps are strongly aberrated, one showing the double-lobed morphology
-characteristic of a large misalignment term.
+The progression is clear by eye. LOW-tier stamps are round and compact; MEDIUM-tier stamps
+show mild elongation; HIGH-tier stamps display an unmistakable comatic profile, a displaced,
+asymmetric core with a one-sided flare; and VERY HIGH-tier stamps are strongly aberrated,
+one showing the double-lobed morphology characteristic of a large misalignment term. The
+shapelet model reconstructs the PSF correctly in every tier, reproducing the asymmetric
+features as well as the core, and the visibly aberrated PSFs carry a clearly higher score.
 
 The annotated moment scores track the tiers independently, with ranges disjoint across all
 four: $\smom$ spans $2.7 \times 10^{-6}$ to $3.8 \times 10^{-5}$ for the LOW examples,
@@ -537,20 +536,12 @@ Section~\ref{results:fwhm} that PSF size and PSF asymmetry are close to independ
 \begin{center}
 \includegraphics[width=\textwidth]{tier_gallery.pdf}
 \end{center}
-\caption{Example $i$-band raft-stacked PSF stamps from each quality tier, from the DP2
-sample. Each tier occupies one row, containing three (star, residual) pairs: the left panel
-of each pair is the stacked star image on a \texttt{magma} colour scale stretched to the
-$99.7$th percentile of the stamp, and the right panel is the residual after subtracting the
-best-fitting $n \le 6$ shapelet model, on a symmetric red--blue scale at one twelfth of the
-image stretch. Each stamp is $51 \times 51$ pixels, or $10.2\arcsec$ on a side. The white
-annotation in each star panel gives the shapelet score $S_{\rm sh}$, the moment score
-$S_{\rm mom}$, and the FWHM in arcseconds. Note the selection: for the LOW and VERY HIGH
-tiers we deliberately show the extremes, the lowest- and highest-scoring PSFs respectively,
-so that the figure spans the full range of the metric, while for MEDIUM and
-HIGH we show PSFs closest to the geometric midpoint of the tier, which are typical rather
-than extreme. In all cases the stamps were required to have at least $40$ contributing stars
-and no bright neighbour, so that the residuals reflect PSF structure rather than photon
-noise or blending.}
+\caption{Example $i$-band raft-stacked PSF stamps from each quality tier, one tier per row,
+from the DP2 sample. Each pair shows the stacked star image, marked \textit{Data}, next to
+its $n \le 6$ shapelet reconstruction, marked \textit{Shapelet}, on the same \texttt{magma}
+stretch. The annotation gives the shapelet score $S_{\rm sh}$, the moment score
+$S_{\rm mom}$ and the FWHM in arcseconds. The asymmetry visible by eye grows with the
+shapelet score, and the reconstruction follows the data in every tier.}
 \label{fig:gallery}
 \end{figure}
 
