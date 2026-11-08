@@ -385,21 +385,12 @@ approximately scale-free. Throughout, we quote FWHM as $2.3548\,\sigma_{\rm HSM}
 \includegraphics[width=0.72\textwidth]{shapelet_basis.pdf}
 \end{center}
 \caption{The 28 polar shapelet basis functions used in this work, truncated at order
-$n \le 6$ and arranged as a pyramid, with the radial order $n$ increasing downwards and the
-spin $|m|$ increasing outwards from the centre of each row. Horizontal position
-within a row is the signed spin: the imaginary (sine) component sits at $-m$ to
-the left of centre and the real (cosine) component at $+m$ to the right, so that the purely
-radial $m = 0$ modes lie on the centre line and each row is mirror-symmetric about it. Note
-that odd-$n$ rows contain no $m = 0$ mode, so for those rows the centre line falls between
-the two $m = \pm 1$ panels. Each panel is labelled by $(n, m)$ and by whether it is the real
-or imaginary part of the coefficient; red and blue denote positive and negative surface
-brightness on a symmetric scale. Each panel spans
-$\pm 5\sigma$ about the centre, where $\sigma$ is the shapelet scale. Modes drawn with a
+$n \le 6$. Each panel is labelled $(n,m)$Re or $(n,m)$Im according to whether it is the real
+or imaginary part of the coefficient; the $m = 0$ modes have a real part only. Red and blue
+denote positive and negative surface brightness on a symmetric scale. Modes drawn with a
 thick orange border are the odd-$m$, $n \geq 3$ modes that enter the shapelet score
-(Section~\ref{method:shapelet_score}). Modes with a blue border are the $n = 1$ centroid
-modes, which are odd in $m$ but encode a translation of the stamp rather than an asymmetry
-of the profile, and are excluded. Grey modes have even $m$ and are excluded. Note that the
-odd-$m$ modes are precisely those that change sign under a $180^{\circ}$ rotation.}
+(Section~\ref{method:shapelet_score}); all other modes are excluded. We expect the retained
+modes to be the ones sensitive to the non-atmospheric, non-Gaussian content of the PSF.}
 \label{fig:basis}
 \end{figure}
 
