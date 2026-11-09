@@ -538,10 +538,9 @@ Section~\ref{results:fwhm} that PSF size and PSF asymmetry are close to independ
 \end{center}
 \caption{Example $i$-band raft-stacked PSF stamps from each quality tier, one tier per row,
 from the DP2 sample. Each pair shows the stacked star image, marked \textit{Data}, next to
-its $n \le 6$ shapelet reconstruction, marked \textit{Shapelet}, on the same \texttt{magma}
-stretch. The annotation gives the shapelet score $S_{\rm sh}$, the moment score
-$S_{\rm mom}$ and the FWHM in arcseconds. The asymmetry visible by eye grows with the
-shapelet score, and the reconstruction follows the data in every tier.}
+its $n \le 6$ shapelet reconstruction, marked \textit{Shapelet}. The annotation gives the shapelet score $S_{\rm sh}$, the moment score
+$S_{\rm mom}$ and the FWHM in arcseconds. The asymmetry visible by eye correlates with the
+shapelet score, and the shapelet reconstruction matches the data closely in every example.}
 \label{fig:gallery}
 \end{figure}
 
@@ -550,20 +549,14 @@ shapelet score, and the reconstruction follows the data in every tier.}
 \section{RESULTS}
 \label{results:0}
 
-In this section we present the measured scores. Section~\ref{results:distributions} gives
-the score distributions and uses them to justify the tier boundaries, and
-Section~\ref{results:fwhm} tests the claim that the score is independent of PSF size.
-Section~\ref{results:score_comparison} compares the two scores.
-Sections~\ref{results:conditions} and \ref{results:optics} examine the dependence on
-observing conditions, including the wind, and on the AOS wavefront estimates, and
-Section~\ref{results:monitoring} demonstrates the score as a nightly monitoring tool.
-
-Throughout we compare quantities measured over samples of $10^4$ to $10^5$ visits. At these
-sample sizes a correlation coefficient of even a few hundredths is formally distinguishable
-from zero while carrying almost no practical information about an individual visit. We
-therefore quote correlation coefficients only where they reach $|\rho_{\rm s}| \gtrsim 0.3$,
-and describe weaker relationships qualitatively; where we report no appreciable correlation,
-the measured coefficient is below that threshold.
+In this section we present the measured shapelet scores.
+Section~\ref{results:distributions} gives the score distributions and uses them to justify
+the tier boundaries, and Section~\ref{results:fwhm} tests the claim that the score is
+independent of PSF size. Section~\ref{results:score_comparison} compares the shapelet
+score with the moment score. Sections~\ref{results:conditions} and \ref{results:optics}
+examine the dependence on observing conditions, including the wind, and on the AOS
+wavefront estimates, and Section~\ref{results:monitoring} demonstrates the score as a
+nightly monitoring tool.
 
 \subsection{Score distributions}
 \label{results:distributions}
@@ -571,9 +564,8 @@ the measured coefficient is below that threshold.
 Figure~\ref{fig:dist} shows the distribution of the shapelet score in each band, for both
 epochs, and Table~\ref{tab:percentiles} lists the corresponding percentiles. The
 distribution is broad and strongly right-skewed: it peaks near $S_{\rm shapelet} \approx
-10^{-4}$ and extends over more than two decades, with a long tail above $10^{-2}$. This
-shape is what makes the score useful: most PSFs are clean, and the metric spends its
-dynamic range on the minority that are not.
+10^{-4}$ and extends over more than two orders of magnitude, with a long tail above
+$10^{-2}$.
 
 The distributions are similar in all six bands but shift systematically to higher scores
 with wavelength: in DP2 the median rises from $1.8 \times 10^{-4}$ in $u$ to $4.9 \times
@@ -588,40 +580,38 @@ shift in the median as a simple degradation, since post-DP2 covers a period of a
 the telescope optics, and Section~\ref{results:monitoring} shows that the elevated scores are
 concentrated in 2026 January to March rather than spread uniformly over the epoch.
 
-The measured distributions bear out the tier boundaries of Section~\ref{method:tiers}.
-Pooling all bands, $S_{\rm shapelet} = 0.002$, $0.005$ and $0.02$ fall at the $87.1$st,
-$95.5$th and $99.5$th percentiles in DP2 and the $85.6$th, $95.5$th and $99.6$th in
-post-DP2, giving tier occupancies of $87.1\%$ LOW, $8.4\%$ MEDIUM, $4.0\%$ HIGH and $0.5\%$
-VERY HIGH for DP2, and $85.6\%$, $9.9\%$, $4.1\%$ and $0.4\%$ for post-DP2. We note that
-fixing the boundaries at absolute values rather than percentiles is deliberate: a
-percentile-based threshold would by construction flag the same fraction of visits every
-night and could not register a genuine change in image quality.
+The measured distributions bear out the tier boundaries of Section~\ref{method:tiers}. The
+last four columns of Table~\ref{tab:percentiles} give the resulting tier occupancy of each
+band in each epoch.
 
 \begin{table}[htbp]
-\caption{Percentiles of the shapelet score by band and epoch. $N$ is the number of
-raft-stacked PSFs. The tier boundaries used in this work are $0.002$, $0.005$ and $0.02$,
-which may be compared directly with the P80, P95 and P99 columns.}
+\caption{Percentiles of the shapelet score and tier occupancy, by band and epoch. $N$ is the
+number of raft-stacked PSFs. The tier boundaries used in this work are $0.002$, $0.005$ and
+$0.02$, which may be compared directly with the P80, P95 and P99 columns. The last four
+columns give the percentage of PSFs falling in each tier.}
 \label{tab:percentiles}
 \begin{center}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrrrrrrrr}
 \toprule
-Band & $N$ & P50 & P80 & P95 & P99 \\
+ & & & & & & \multicolumn{4}{c}{tier fraction (\%)} \\
+\cmidrule(l){7-10}
+Band & $N$ & P50 & P80 & P95 & P99 & LOW & MED & HIGH & V.\,HIGH \\
 \midrule
-\multicolumn{6}{l}{\textit{DP2}} \\
-\quad $u$ & 42,698 & 0.00018 & 0.00053 & 0.00189 & 0.00681 \\
-\quad $g$ & 88,863 & 0.00029 & 0.00088 & 0.00271 & 0.00902 \\
-\quad $r$ & 104,521 & 0.00030 & 0.00100 & 0.00370 & 0.01272 \\
-\quad $i$ & 164,443 & 0.00040 & 0.00151 & 0.00527 & 0.01479 \\
-\quad $z$ & 121,771 & 0.00039 & 0.00145 & 0.00520 & 0.01597 \\
-\quad $y$ & 90,215 & 0.00049 & 0.00179 & 0.00634 & 0.01715 \\
+\multicolumn{10}{l}{\textit{DP2}} \\
+\quad $u$ & 42,698 & 0.00018 & 0.00053 & 0.00189 & 0.00681 & 95.3 & 3.2 & 1.5 & 0.07 \\
+\quad $g$ & 88,863 & 0.00029 & 0.00088 & 0.00271 & 0.00902 & 92.4 & 5.4 & 2.0 & 0.26 \\
+\quad $r$ & 104,521 & 0.00030 & 0.00100 & 0.00370 & 0.01272 & 89.7 & 6.8 & 3.1 & 0.43 \\
+\quad $i$ & 164,443 & 0.00040 & 0.00151 & 0.00527 & 0.01479 & 84.6 & 10.0 & 4.8 & 0.55 \\
+\quad $z$ & 121,771 & 0.00039 & 0.00145 & 0.00520 & 0.01597 & 85.3 & 9.5 & 4.5 & 0.69 \\
+\quad $y$ & 90,215 & 0.00049 & 0.00179 & 0.00634 & 0.01715 & 81.9 & 11.4 & 6.0 & 0.74 \\
 \addlinespace
-\multicolumn{6}{l}{\textit{Post-DP2}} \\
-\quad $u$ & 51,496 & 0.00022 & 0.00054 & 0.00129 & 0.00341 \\
-\quad $g$ & 88,708 & 0.00028 & 0.00084 & 0.00257 & 0.00722 \\
-\quad $r$ & 191,248 & 0.00025 & 0.00077 & 0.00258 & 0.00745 \\
-\quad $i$ & 506,259 & 0.00049 & 0.00165 & 0.00491 & 0.01361 \\
-\quad $z$ & 295,478 & 0.00047 & 0.00156 & 0.00483 & 0.01267 \\
-\quad $y$ & 203,489 & 0.00060 & 0.00219 & 0.00679 & 0.01578 \\
+\multicolumn{10}{l}{\textit{Post-DP2}} \\
+\quad $u$ & 51,496 & 0.00022 & 0.00054 & 0.00129 & 0.00341 & 97.6 & 1.9 & 0.5 & 0.03 \\
+\quad $g$ & 88,708 & 0.00028 & 0.00084 & 0.00257 & 0.00722 & 92.9 & 5.3 & 1.6 & 0.19 \\
+\quad $r$ & 191,248 & 0.00025 & 0.00077 & 0.00258 & 0.00745 & 93.0 & 5.1 & 1.7 & 0.18 \\
+\quad $i$ & 506,259 & 0.00049 & 0.00165 & 0.00491 & 0.01361 & 83.8 & 11.3 & 4.3 & 0.54 \\
+\quad $z$ & 295,478 & 0.00047 & 0.00156 & 0.00483 & 0.01267 & 84.5 & 10.7 & 4.3 & 0.42 \\
+\quad $y$ & 203,489 & 0.00060 & 0.00219 & 0.00679 & 0.01578 & 78.3 & 14.0 & 7.2 & 0.56 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -632,12 +622,8 @@ Band & $N$ & P50 & P80 & P95 & P99 \\
 \includegraphics[width=\textwidth]{score_distribution.pdf}
 \end{center}
 \caption{Distribution of the shapelet score for the DP2 epoch (left panel) and the post-DP2
-epoch (right panel). Each coloured step histogram is one band, using the colour scheme
-$u$ purple, $g$ teal, $r$ orange, $i$ blue, $z$ gold, $y$ grey; the vertical axis is the
-fraction of PSFs falling in each logarithmic bin. Grey dashed vertical lines mark the tier
-boundaries at $S_{\rm shapelet} = 0.002$, $0.005$ and $0.02$, labelled along the top of the
-right panel. Note the logarithmic horizontal axis: the distribution spans more than two
-decades in all bands.}
+epoch (right panel). Each coloured step histogram is one band. Grey dashed vertical lines
+mark the tier boundaries at $S_{\rm shapelet} = 0.002$, $0.005$ and $0.02$.}
 \label{fig:dist}
 \end{figure}
 
