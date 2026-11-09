@@ -703,22 +703,39 @@ $z_{10}$ and $z_9$, and by only $1.10$ for $z_5$. The same ordering appears in t
 correlations in the left panel, where the two coma modes are the only ones to reach
 $\rho_{\rm s} \simeq +0.17$ and $+0.20$.
 
-This ordering is the point. Coma and trefoil are the odd-$m$ Zernike aberrations, with
-$m = 1$ and $m = 3$ respectively, and are precisely those capable of producing odd-$m$
-shapelet power, whereas defocus, astigmatism and spherical aberration have even $m$ and
-produce distortions the score is constructed to ignore. Averaged over modes, the odd-$m$
-Zernikes give a mean rank correlation about twice that of the even-$m$ ones. The absolute
-correlations are small, for reasons we return to below; it is their relative ordering, which
-matches the symmetry argument of Section~\ref{method:atm} with no free parameters, that we
-regard as meaningful.
+The two coma modes lead this ordering and the trefoil modes follow, which is the direction
+we would expect if the score responds to asymmetric aberration. We do not read more into
+the ordering than that. The separation between odd-$m$ and even-$m$ modes is not clean, the
+astigmatism mode $z_6$ giving a ratio of $1.42$, comparable to the trefoil modes, and we
+have no explanation for the difference between $z_5$ and $z_6$. The corner sensors also
+sample the wavefront at only four field positions, all outside the science rafts on which
+the score is measured, so the four-point spread is a crude proxy for the true field
+dependence and we expect it to dilute the correlations substantially.
 
-We note two limitations. First, the odd-$m$/even-$m$ separation is not perfectly clean: the
-astigmatism mode $z_6$ gives a ratio of $1.42$, comparable to the trefoil modes, and we have
-no explanation for the asymmetry between $z_5$ and $z_6$. Second, and more fundamentally,
-the corner sensors sample the wavefront at only four field positions, all outside the
-science rafts on which the score is measured, so the four-point spread is a crude proxy for
-the true field dependence and we expect it to dilute the correlations substantially. That a
-clear, correctly-ordered signal survives this mismatch is the significant result.
+The field spread is not the only way to use the corner measurements. Taking instead the
+\emph{magnitude} of each aberration, averaged over the four corner sensors, we find that
+defocus is by far the strongest predictor of the score, at
+$\rho_{\rm s} = +0.357$ for $|z_4|$ against $+0.188$ for the trefoil magnitude, $+0.152$ for
+astigmatism and $+0.062$ for coma. This correlation is robust in a way the others are not.
+Computed within individual nights, which removes the slow drift of the optical state, it is
+unchanged at $+0.352$ and positive on $88\%$ of the $84$ nights with at least $100$ visits.
+It is also not a proxy for the other aberrations or for PSF size: the partial rank
+correlation is $+0.353$ holding the coma magnitude fixed, $+0.343$ holding trefoil fixed and
+$+0.406$ holding the measured FWHM fixed, whereas the coma correlation falls to $-0.008$
+once $|z_4|$ is held fixed.
+
+Defocus and the asymmetric aberrations also interact, and the interaction suggests that
+defocus is what makes the others visible. Splitting the sample into quartiles of $|z_4|$,
+the rank correlation between the score and the coma magnitude rises monotonically from
+$-0.078$ in the sharpest quartile, of median $|z_4| = 0.09\,\mu$m, to $+0.070$ in the most
+defocused, of median $0.64\,\mu$m. The mirror statistic behaves the same way: the
+correlation between the score and $|z_4|$ rises from $+0.222$ in the quartile with the least
+coma to $+0.463$ in the quartile with the most. The median score itself tells the same
+story. At the sharpest focus it is flat against coma, at $2.9$, $2.4$, $2.1$ and
+$2.3 \times 10^{-4}$ across coma quartiles, whereas at the most defocused it rises
+monotonically, at $7.6$, $8.5$, $8.8$ and $9.6 \times 10^{-4}$. We suspect the mechanism is
+that a defocused PSF is partly an image of the pupil, so that a pupil asymmetry which is
+invisible at best focus prints directly onto the stamp, but we have not tested this.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -879,17 +896,19 @@ findings are as follows.
         $I(r,\theta) = I(r,\theta+\pi)$ has identically zero odd-$m$ power.
   \item \textbf{The score is close to independent of PSF size.} We find no appreciable
         correlation with the measured FWHM in any band or epoch. At fixed FWHM the score
-        spans a $5$th-to-$95$th percentile range of $84$--$106$, while the median varies by
-        only $1.3$--$3.5$ across the seeing range.
+        spans a $5$th-to-$95$th percentile range of $76$--$102$, while the median varies by
+        only $1.9$--$2.7$ across the seeing range.
   \item \textbf{Two independent metrics agree.} The shapelet and third-order moment scores,
         which share no machinery, correlate at $\rho_{\rm s} = +0.923$ over $607{,}948$
         matched (visit, raft) measurements, with a near-proportional relation
         $\smom \approx 3.2\,\sshape$ that is the same in all six bands.
   \item \textbf{The score tracks real optical aberration.} Against the AOS corner wavefront
-        sensors, an entirely independent instrument, the score responds most strongly
-        to the odd-$m$ Zernikes: $z_7$ and $z_8$ give a factor $2.05$ and $2.35$ rise in
-        median score between the lowest and highest quintile of field spread, against
-        $1.10$ for the astigmatism mode $z_5$.
+        sensors, an entirely independent instrument, the coma modes give the largest
+        response to field spread, a factor $2.05$ and $2.35$ rise in median score between
+        the lowest and highest quintile, against $1.10$ for the astigmatism mode $z_5$.
+        Taken as magnitudes rather than field spreads, defocus is the strongest predictor
+        of all, at $\rho_{\rm s} = +0.357$, and the score responds to coma only when the
+        focus is poor.
   \item \textbf{The score is a practical nightly monitor.} The fraction of PSFs above the
         HIGH threshold has a median over nights of $2.2\%$ but ranges from $0\%$ to $28.9\%$,
         with coherent month-scale structure that separates good optical periods from bad
