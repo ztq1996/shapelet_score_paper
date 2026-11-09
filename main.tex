@@ -100,7 +100,6 @@ the atmospheric variation. We define the \emph{shapelet score} as the odd-$m$ fr
 shapelet power.
 We measure the shapelet score on for $1{,}949{,}189$ raft-stacked PSFs from $94{,}422$ LSSTCam visits taken between 2025 April and 2026 July. 
 We show visual evidence that the shapelet score strongly correlates with the irregularity of the PSF. We demonstrate that the shapelet score can be used as a nightly monitor metric for image quality. 
-We also examine its dependence on the wind speed and on the wind direction relative to the telescope pointing, and find that strongly asymmetric PSFs are two to five times more common in calm conditions than at wind speeds above $9$\,m/s.
 We propose the shapelet score as an image-quality metric complementary to PSF size and to the existing AOS-derived metrics.
 \end{abstract}
 
@@ -189,11 +188,8 @@ complementary \emph{moment score} from the spin-1 (coma) and spin-3 (trefoil) co
 of the third-order adaptive moments of the same stars, built from entirely different
 machinery, and find the two scores in close agreement, at a Spearman rank correlation of
 $\rho_{\rm s} = +0.923$. We then study how the shapelet score correlates with a range of
-other quantities: the delivered PSF size, the wind speed and the wind
-direction relative to the telescope pointing, the AOS estimates of image quality, and the
-wavefront Zernike coefficients measured at the corner sensors. We include the wind because
-it flushes the dome and the telescope tube, and so can modulate the locally generated
-component of the seeing. The score
+other quantities: the delivered PSF size, the AOS estimates of image quality, and the
+wavefront Zernike coefficients measured at the corner sensors. The score
 is computed by the LSST Science Pipelines and published per detector and visit in the
 \texttt{DetectorVisitProcessingSummary} table of the Rubin science data model schemas
 \cite{SDMSchemas}, so it is available directly as a record of delivered image quality. We
@@ -307,23 +303,6 @@ four corner positions $j$ as a proxy for the aberration gradient across the fiel
 delivered FWHM, and \texttt{donut\_blur\_fwhm}, the FWHM contribution inferred from the
 donut images on the wavefront sensors. Both are independent of our shapelet measurement and
 provide the comparison baseline in Section~\ref{results:fwhm}.
-
-\textbf{Observing conditions.} From the consDB
-\texttt{exposure} table we retrieve the outside wind speed $v_{\rm wind}$ and wind
-direction $\phi_{\rm wind}$ (\texttt{wind\_speed}, \texttt{wind\_dir}), and the azimuth
-$\phi_{\rm tel}$ and altitude of the focal-plane centre at mid-exposure (\texttt{azimuth},
-\texttt{altitude}). Both angles are measured from north through east, with $\phi_{\rm wind}$
-the direction from which the wind blows. We define the relative wind direction
-\begin{equation}
-\Delta\phi = \left| \left[ (\phi_{\rm tel} - \phi_{\rm wind} + 180^\circ) \bmod 360^\circ \right] - 180^\circ \right|
-\in [0^\circ, 180^\circ],
-\label{eq:dphi}
-\end{equation}
-so that $\Delta\phi = 0^\circ$ when the telescope points into the wind, which then blows
-through the dome slit and down the telescope tube, and $\Delta\phi = 180^\circ$ when the
-wind comes from behind the dome. Close to the zenith the azimuth says little about how the
-dome slit and the tube face the wind, so wherever we use $\Delta\phi$ we keep only visits at
-altitude $< 70^\circ$, which leaves $1{,}553{,}469$ of the $1{,}949{,}189$ raft-stacked PSFs.
 
 
 % ============================================================================
@@ -551,8 +530,7 @@ shapelet score, and the shapelet reconstruction matches the data closely in ever
 In this section we present the measured shapelet scores. Section~\ref{results:distributions}
 gives the score distributions and uses them to justify the tier boundaries.
 Section~\ref{results:fwhm} examines the dependence on the three available measures of PSF
-size, and Section~\ref{results:wind} the dependence on the wind.
-Section~\ref{results:optics} relates the score to the AOS wavefront estimates, and
+size. Section~\ref{results:optics} relates the score to the AOS wavefront estimates, and
 Section~\ref{results:monitoring} demonstrates the score as a nightly monitoring tool.
 Finally, Section~\ref{results:score_comparison} compares the shapelet score with the moment
 score.
@@ -707,57 +685,6 @@ mark the tier boundaries: green for MEDIUM ($0.002$), orange for HIGH ($0.005$) 
 VERY HIGH ($0.02$). The Spearman rank correlation is quoted in each panel where it reaches
 $|\rho_{\rm s}| = 0.25$, and marked ``no appr.\ corr.'' otherwise.}
 \label{fig:fwhm}
-\end{figure}
-
-\subsection{Dependence on the wind}
-\label{results:wind}
-
-The wind can flush the dome and the telescope tube, and so may modulate the locally
-generated part of the seeing. Since most PSFs have scores close to zero, we summarise the
-wind dependence by the fraction of raft-stacked PSFs in the HIGH or VERY HIGH tier
-($\sshape \geq 0.005$), the same statistic we track nightly in
-Section~\ref{results:monitoring}. In Figure~\ref{fig:wind} we show this fraction against
-the wind speed and against the relative wind direction $\Delta\phi$ of
-Eq.~(\ref{eq:dphi}).
-
-We find that the wind speed is the stronger of the two dependences. The fraction of HIGH or
-VERY HIGH PSFs falls from $5.6\%$ (DP2) and $7.9\%$ (post-DP2) for $v_{\rm wind} < 3$\,m/s
-to $2.6\%$ and $1.5\%$ for $v_{\rm wind} \geq 9$\,m/s, and in post-DP2 the visit-median score
-anticorrelates with the wind speed at $\rho_{\rm s} = -0.34$, with a weaker trend in DP2. This
-is not the seeing dependence discussed above: at fixed measured PSF FWHM the partial rank
-correlation in post-DP2 remains $-0.31$. We suspect that in calm conditions the locally
-generated turbulence near the mirror and inside the dome is not flushed out and evolves
-slowly, leaving asymmetric structure that does not average away over an exposure, but we
-have not tested this directly.
-
-The dependence on the wind direction is weaker, and its sign is opposite to the naive
-expectation that pointing into the wind yields cleaner PSFs. For visits at altitude
-$< 70^\circ$, the fraction of HIGH or VERY HIGH PSFs is $4.2\%$ (DP2) and $5.1\%$ (post-DP2)
-for $\Delta\phi < 45^\circ$, against $3.2\%$ and $2.8\%$ for $\Delta\phi > 135^\circ$. The
-measured PSF FWHM, however, behaves as expected: in post-DP2 the median FWHM is $11\%$ larger
-with the wind from behind than with the telescope facing into it, while the DIMM seeing,
-measured outside the dome, does not change. This suggests that pointing into the wind does
-reduce the locally generated seeing, which mostly broadens the PSF symmetrically, and that
-the lower fraction of HIGH or VERY HIGH PSFs with the wind from behind at least partly
-reflects the suppression of the score by a broader PSF (Section~\ref{results:fwhm}).
-We note that $\Delta\phi$ is not assigned at random: it is tied to the azimuth, and so to the
-pointing pattern, altitude and band mix of each night, and these trends should therefore be
-read as correlations.
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=\textwidth]{score_vs_wind.pdf}
-\end{center}
-\caption{Fraction of raft-stacked PSFs in the HIGH or VERY HIGH tier
-($\sshape \geq 0.005$), in per cent, against the outside wind speed (left panel, $2$\,m/s
-bins, all visits) and against the relative wind direction $\Delta\phi$ of
-Eq.~(\ref{eq:dphi}) (right panel, $20^\circ$ bins, visits at altitude $< 70^\circ$ only).
-The slate-blue line shows DP2 and the orange line post-DP2; points sit at the bin centres,
-offset slightly between the two epochs for clarity. Error bars are $16$th--$84$th percentile
-intervals from resampling whole nights with replacement. Note that $\Delta\phi = 0^\circ$
-means the telescope points into the wind and $\Delta\phi = 180^\circ$ means the wind comes
-from behind.}
-\label{fig:wind}
 \end{figure}
 
 \subsection{Link to optical aberration}
@@ -967,12 +894,6 @@ findings are as follows.
         HIGH threshold has a median over nights of $2.2\%$ but ranges from $0\%$ to $28.9\%$,
         with coherent month-scale structure that separates good optical periods from bad
         ones by eye.
-  \item \textbf{The wind speed matters more than the wind direction.} The fraction of
-        HIGH or VERY HIGH PSFs falls from $7.9\%$ in calm conditions
-        ($v_{\rm wind} < 3$\,m/s) to $1.5\%$ above $9$\,m/s in post-DP2, and from $5.6\%$ to
-        $2.6\%$ in DP2. Pointing into the wind does not lower this fraction; its benefit
-        shows instead in the PSF FWHM, which in post-DP2 is $11\%$ smaller than with the
-        wind from behind.
 \end{enumerate}
 
 Several caveats apply. Our PSFs are raft-level stacks drawn from a single detector per raft,
@@ -983,9 +904,12 @@ is not fully understood. Photon noise sets a
 floor for shallow visits. The tier boundaries are round numbers justified only against
 measured percentiles and visual inspection, with no input from any downstream science
 requirement. Finally, the four-point spread we use for the corner-sensor Zernikes almost
-certainly dilutes the correlations we report. The wind trends are correlations only: the
-relative wind direction is tied to the pointing pattern of each night, and we have not
-separated the wind from other conditions that vary with it.
+certainly dilutes the correlations we report. We also caution that apparent correlations
+between the score and slowly varying observing conditions are easily confounded with the
+state of the optics, which itself varies on month timescales: an anticorrelation with the
+wind speed that is clear when visits are pooled ($\rho_{\rm s} = -0.34$ in post-DP2)
+vanishes within individual nights ($\rho_{\rm s} = -0.02$), because the most aberrated
+months happened to be the calmest.
 
 Several directions follow naturally. The most important is to quantify the impact of a
 shapelet-score cut on weak-lensing systematics directly, through the $\rho$-statistics and
