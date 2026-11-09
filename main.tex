@@ -1,4 +1,4 @@
-% ============================================================================
+wait% ============================================================================
 %  PSF Shapelet Score and Moment Score for the Rubin Observatory
 %  SPIE Astronomical Telescopes + Instrumentation 2026
 %
@@ -648,11 +648,27 @@ and PSFs in the HIGH and VERY HIGH tiers are found at all seeing values, includi
 best.
 
 We do note a real, if weak, effect in the post-DP2 panel, where the median score falls by a
-factor of $2.6$ between $0.8\arcsec$ and $1.5\arcsec$. We interpret this as dilution
-rather than a size dependence of the aberration: because the score is a \emph{fraction} of
-total power, a larger atmospheric contribution increases the denominator and suppresses the
-score at fixed aberration. This makes the score mildly conservative in poor seeing, in the
-opposite direction to any trend that would mimic aberration.
+factor of $2.6$ between $0.8\arcsec$ and $1.5\arcsec$. This is not a dilution of the score
+by atmospheric power entering its denominator. The denominator is almost entirely the
+lowest-order term: $b_{00}^2$ carries a median $99.3\%$ of the total shapelet power in both
+epochs, because the PSF is close to a Gaussian of the fitted scale. Since $b_{00}$ is
+proportional to the flux, and our stamps are normalised to unit flux
+(Section~\ref{data:stamps}), dividing by the total power amounts to little more than a flux
+normalisation, and leaves no appreciable atmospheric term for a larger PSF to inflate.
+Consistent with this, the un-normalised odd-$m$ power falls over the same FWHM range by a
+factor of $0.41$ in post-DP2, against $0.38$ for the score itself.
+
+We attribute most of the remaining trend to a confound between seeing and the state of the
+optics. Post-DP2 covers a period of active work on the telescope, and the intervals with
+the most aberrated PSFs happened also to be intervals of good seeing
+(Section~\ref{results:monitoring}). Stratifying by night and by band removes both the slow
+drift of the optics and the tendency of the redder bands to have better seeing and higher
+scores at the same time. Within those strata the correlation reverses sign: over
+(night, band) strata containing at least $200$ PSFs, the median Spearman coefficient is
+$+0.253$ in DP2, positive in $81\%$ of strata, and $+0.045$ in post-DP2, positive in
+$57\%$. We note that at a fixed optical state the score therefore rises very slightly with
+seeing rather than falling, and that in either direction the effect is far smaller than the
+scatter at fixed FWHM.
 
 \begin{figure}[htbp]
 \begin{center}
