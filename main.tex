@@ -630,25 +630,25 @@ mark the tier boundaries at $S_{\rm shapelet} = 0.002$, $0.005$ and $0.02$.}
 \subsection{Independence from PSF size}
 \label{results:fwhm}
 
-A metric intended to complement the FWHM is only useful if it carries information the FWHM
-does not. Figure~\ref{fig:fwhm} tests this directly, showing the $i$-band shapelet score
-against the measured PSF FWHM for both epochs.
+In this section we study a key property of the shapelet score, its independence from the
+PSF FWHM. In Figure~\ref{fig:fwhm} we show the scatter of the shapelet score against the
+measured PSF FWHM, for both epochs, with all six bands pooled.
 
-We find no appreciable correlation between the two, in any band or either epoch. The running
-median, the orange line, is close to flat: in DP2 it varies from
-$5.0 \times 10^{-4}$ at $0.6$--$0.8\arcsec$ to $3.8 \times 10^{-4}$ at $1.2$--$1.5\arcsec$,
-a change of only $30\%$ across the full useful seeing range.
+We find no appreciable correlation between the two in either epoch, with a Spearman
+coefficient of $\rho_{\rm s} = -0.043$ in DP2 and $-0.232$ in post-DP2; no individual band
+exceeds $|\rho_{\rm s}| = 0.28$.
 
 The more important point is the vertical extent of the distribution. Averaged over bins
 between $0.6\arcsec$ and $1.5\arcsec$, the ratio of the $95$th to the $5$th percentile at
-fixed FWHM is $84$ in DP2 and $106$ in post-DP2, whereas the median varies by only a factor
-of $1.3$ and $3.5$ over the same range. The scatter at fixed seeing is therefore one to two
-orders of magnitude larger than any trend with seeing: knowing the FWHM of a visit tells one
-almost nothing about whether its PSF is aberrated, and PSFs in the HIGH and VERY HIGH tiers
-are found at all seeing values, including the best.
+fixed FWHM is $76$ in DP2 and $102$ in post-DP2, whereas the running median, the orange
+line, varies by only a factor of $1.9$ and $2.7$ over the same range. The scatter at fixed
+seeing is therefore one to two orders of magnitude larger than any trend with seeing:
+knowing the FWHM of a visit tells one almost nothing about whether its PSF is aberrated,
+and PSFs in the HIGH and VERY HIGH tiers are found at all seeing values, including the
+best.
 
 We do note a real, if weak, effect in the post-DP2 panel, where the median score falls by a
-factor of $\sim\!3$ between $0.8\arcsec$ and $1.5\arcsec$. We interpret this as dilution
+factor of $2.6$ between $0.8\arcsec$ and $1.5\arcsec$. We interpret this as dilution
 rather than a size dependence of the aberration: because the score is a \emph{fraction} of
 total power, a larger atmospheric contribution increases the denominator and suppresses the
 score at fixed aberration. This makes the score mildly conservative in poor seeing, in the
@@ -658,15 +658,14 @@ opposite direction to any trend that would mimic aberration.
 \begin{center}
 \includegraphics[width=\textwidth]{score_vs_fwhm.pdf}
 \end{center}
-\caption{Shapelet score against PSF FWHM for $i$-band raft-stacked PSFs, for DP2 (left
-panel) and post-DP2 (right panel). The greyscale shows the number of PSFs per bin on a
-logarithmic colour scale. The solid orange line is the median score in bins of FWHM, and the
-dashed orange lines are the $5$th and $95$th percentiles at fixed FWHM; the upper dashed
-lines leave the plotted range above $\sim\!1.8\arcsec$ in both panels. Horizontal dotted lines
-mark the tier boundaries: green for MEDIUM ($0.002$), orange for HIGH ($0.005$) and red for
-VERY HIGH ($0.02$). Note that the vertical separation between the two dashed lines at any
-given FWHM is much larger than the variation of the solid line across the whole FWHM range,
-which is the sense in which the score is independent of PSF size.}
+\caption{Shapelet score against PSF FWHM for raft-stacked PSFs, all six bands pooled, for
+DP2 (left panel) and post-DP2 (right panel). The greyscale shows the number of PSFs per bin
+on a logarithmic colour scale. The solid orange line is the median score in bins of FWHM,
+and the dashed orange lines are the $5$th and $95$th percentiles at fixed FWHM. Horizontal
+dotted lines mark the tier boundaries: green for MEDIUM ($0.002$), orange for HIGH
+($0.005$) and red for VERY HIGH ($0.02$). The vertical separation between the two dashed
+lines at any given FWHM is much larger than the variation of the solid line across the
+whole FWHM range, which is the sense in which the score is independent of PSF size.}
 \label{fig:fwhm}
 \end{figure}
 
